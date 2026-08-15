@@ -19,7 +19,7 @@ RAW = ROOT / "data" / "raw" / "babylonian"
 HTML_DIR = RAW / "oracc_html"
 ZIPS = RAW / "oracc_json"
 
-VOLUMES = ["adart1", "adart2", "adart3"]
+VOLUMES = ["adart1", "adart2", "adart3", "adart5", "adart6"]
 UA = {"User-Agent": "Mozilla/5.0 (research; personal non-commercial corpus survey)"}
 
 LINE_RE = re.compile(r'<td[^>]*class="[^"]*xtr[^"]*"[^>]*>(.*?)</td>', re.S)
