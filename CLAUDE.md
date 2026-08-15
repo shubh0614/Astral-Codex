@@ -42,9 +42,14 @@ This is not optional. The project spans many sessions and this file is the only 
 ## Project structure (target — build out as needed)
 
 ```
-/plan.md              — full project plan (stable reference)
+/plan.md              — full project plan (stable reference, LOCKED at v3.2)
 /continuity.md         — session log (update every session)
 /CLAUDE.md             — this file
+/discovered_sources_backlog.md — reference only, NOT scheduled work. Candidate
+                          sources beyond locked V1/V2 scope, found in a post-lock
+                          sweep. Consult only after Phase 1 succeeds and only
+                          when deciding Phase 2+ additions — do not use this file
+                          as a reason to reopen plan.md or expand V1.
 /data/raw/<tradition>/ — unmodified fetched text, one dir per tradition
 /data/processed/       — cleaned (date, sky-state, text) JSON pairs
 /scripts/              — fetch, clean, schema-build scripts

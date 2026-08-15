@@ -12,3 +12,12 @@ engine/ephem/
 # Local scratch
 scratch/
 *.tmp
+
+# Bulk ORACC downloads: 30 MB of zips + 42 MB of scraped HTML, both exactly
+# reproducible from scripts/fetch_babylonian.py and
+# scripts/fetch_babylonian_translations.py. The extracted snapshot that the
+# annotation actually rests on, data/raw/babylonian/translations.jsonl, IS
+# tracked, so the "store raw first" rule still holds for anything we reason
+# from -- we just don't version 72 MB that a script regenerates.
+data/raw/babylonian/oracc_json/
+data/raw/babylonian/oracc_html/

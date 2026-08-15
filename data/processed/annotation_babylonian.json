@@ -1,0 +1,59 @@
+{
+  "tradition": "babylonian",
+  "genre": "observation",
+  "source": "ORACC ADsD, Sachs & Hunger Astronomical Diaries and Related Texts, volumes ADART 1-3 (diaries only; ADART 5 lunar/planetary and 6 goal-year held back as a different text genre)",
+  "route_note": "plan.md Section 4 names 'ORACC ADsD + Attalus.org'. The Attalus route is dead - see notes/SOURCES.md. All text here came from ORACC.",
+  "corpus": {
+    "tablets_scraped": 331,
+    "tablets_available": 407,
+    "scrape_failures": 1,
+    "translation_lines": 9102,
+    "observation_units": 7836,
+    "unit_definition": "one dated day or night entry, per plan.md Section 2's rule that a training example is one coherent observation, not one tablet. Median tablet yields 22 translated lines and many separate nightly entries."
+  },
+  "sample_method": "systematic, every 78th unit across all 7836, 100 taken, then every one read individually",
+  "sample_size": 100,
+  "annotated_by": "manual read of all 100 sampled units, 2026-08-15",
+  "criteria": {
+    "date": "year is always available from the tablet catalogue (ancient_year / date_bce). Month must be resolvable, either announced in the text or carried forward from an earlier Month N marker on the same tablet. Day comes from the entry marker itself.",
+    "usable": "recoverable year + month, at least one intact specific astronomical observation (a named body with a measured quantity and a positional relation to a named star or planet, or a complete lunar-six interval, or a named event such as a first appearance, stationary point or equinox), and enough unbroken continuous text to read as an entry",
+    "ambiguous": "astronomical content is present but either the month is unresolved, or a [...] gap breaks the observation itself, or the celestial phenomenon is real but not deterministically computable (meteor, solar halo)",
+    "reject": "weather only, river level only, market prices only, historical or political narrative, or so fragmentary that nothing survives"
+  },
+  "manual_counts": {"usable": 31, "ambiguous": 39, "reject": 30, "total": 100},
+  "manual_rates": {"usable": 0.31, "ambiguous": 0.39, "reject": 0.30},
+  "corpus_wide_classifier": {
+    "note": "scripts/segment_babylonian.py applies the same criteria mechanically to all 7836 units",
+    "usable": 2010,
+    "ambiguous": 2564,
+    "reject": 3262,
+    "rates": {"usable": 0.257, "ambiguous": 0.327, "reject": 0.416},
+    "agreement_with_manual_on_same_sample": "71/100 exact, and every disagreement is one step (usable<->ambiguous or ambiguous<->reject). There were zero usable<->reject flips, so the classifier makes no gross errors. Headline counts match closely: manual 31 usable vs classifier 30 on the identical sample."
+  },
+  "fragmentation": {
+    "note": "plan.md asked for heavily fragmentary entries to be flagged separately rather than counted as clean. They are.",
+    "units_with_zero_gaps": 2920,
+    "heavily_fragmentary_3plus_gaps": 1965,
+    "usable_units_with_zero_gaps": 807,
+    "usable_units_that_are_heavily_fragmentary": 509,
+    "comment": "807 usable units carry no [...] marker at all. That is the cleanest possible training subset and is on its own more than sixteen times the Phase 0 gate threshold. The 509 heavily fragmentary usable units meet the triple but should be held out of a first training run, or the model will learn to emit [...] as a stylistic tic exactly as plan.md warns."
+  },
+  "gate_result": {
+    "plan_gate": "plan.md Section 4: if the clean-triple count is under about 60, do not force Babylonian as the vertical slice. plan.md Section 7 gate: Babylonian corpus has >=50 clean observation units.",
+    "measured": "roughly 2,000-2,400 usable observation units corpus-wide, of which 807 are entirely free of tablet-damage gaps",
+    "verdict": "PASSES, by a very large margin. Neither fallback in plan.md Section 4 needs to be triggered. Babylonian is confirmed as the vertical slice.",
+    "caveat": "this counts only the 331 tablets scraped from ADART 1-3. ADART 5 and 6 were downloaded but excluded, and 76 catalogued tablets have no digitised text, so the ceiling is higher still."
+  },
+  "methodology_finding": {
+    "problem": "The clean-triple criterion 'continuous English text of more than two sentences' does not survive contact with this corpus at the observation-unit level, and a first pass that applied it literally reported 1.7% usable, which is wrong by a factor of about fifteen.",
+    "why": "Babylonian diary entries join their clauses with semicolons, not full stops. 'Night of the 15th, beginning of the night, the moon was 2/3 cubit in front of eta Piscium; last part of the night, Mars was 3 1/2 cubits below epsilon Leonis.' is two complete, independently datable, fully computable observations and counts as ONE sentence. Separately, the editors use '?' to mark uncertain readings, which a naive splitter counts as sentence boundaries and which inflates the count in the other direction.",
+    "resolution_used": "replaced the sentence count with the length of the longest continuous run of text uninterrupted by a [...] gap, requiring at least 60 characters. This measures what the criterion was reaching for (is there enough intact prose to constitute an entry) without depending on punctuation the corpus does not use.",
+    "flag_for_user": "This is a criterion-definition question, not a data question, so it is being reported rather than silently settled. The >2 sentence rule appears to have been written with tablet-level text in mind, while plan.md Section 2 defines the training example at the observation-unit level. Those two are in tension. The numbers above use the unit-level reading, which is the one the architecture actually consumes."
+  },
+  "other_findings": [
+    "Weather notes dominate the rejects. 'The 4th, very overcast, rain DUL.' and 'The 5th, the north wind blew.' are extremely common as standalone dated entries. The gate's insistence on a specific astronomical observation is doing real work here, not just guarding against an edge case.",
+    "About 1,100 ambiguous units carry a fully intact observation and are ambiguous only because the month was not announced before that point in my forward-tracking parse. Most of these are recoverable with a better calendar parse that also consults the tablet's months_recorded field, so the usable count is a floor, not a ceiling.",
+    "Monthly summary passages ('At that time, Jupiter was in Virgo; Venus was in Virgo, at the end of the month, in Libra; Saturn was in Libra') are a distinct and valuable unit type. They give whole-sky planetary positions in zodiacal signs and are directly computable, but they sit interleaved with commodity prices, so a keyword filter on market terms wrongly discards them.",
+    "The calendar complexity plan.md Section 4 warns about is visible immediately. Dates arrive as regnal years ('Year 7 of Alexander, king of all countries', 'AlexanderIII 7', 'SE 50') and intercalary months appear as XII2 and XVIII2 in the months_recorded field. The alignment block's confidence score will be needed from the start, not retrofitted."
+  ]
+}
