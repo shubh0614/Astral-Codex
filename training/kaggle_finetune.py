@@ -75,8 +75,14 @@ tok = AutoTokenizer.from_pretrained(MODEL)
 if tok.pad_token is None:
     tok.pad_token = tok.eos_token
 
-model = AutoModelForCausalLM.from_pretrained(
-    MODEL, quantization_config=bnb, device_map="auto", torch_dtype=torch.float16)
+try:
+    model = AutoModelForCausalLM.from_pretrained(
+        MODEL, quantization_config=bnb, device_map="auto", dtype=torch.float16)
+except TypeError:
+    # older transformers still wants torch_dtype
+    model = AutoModelForCausalLM.from_pretrained(
+        MODEL, quantization_config=bnb, device_map="auto",
+        torch_dtype=torch.float16)
 model.config.use_cache = False
 
 # %% [cell 5] dataset
@@ -102,34 +108,85 @@ peft_cfg = LoraConfig(
                     "gate_proj", "up_proj", "down_proj"],
 )
 
-args = SFTConfig(
-    output_dir=OUT,
-    num_train_epochs=EPOCHS,
-    per_device_train_batch_size=2,
-    gradient_accumulation_steps=8,
-    learning_rate=LR,
-    lr_scheduler_type="cosine",
-    warmup_ratio=0.05,
-    logging_steps=10,
-    eval_strategy="steps",
-    eval_steps=25,
-    save_strategy="steps",
-    save_steps=25,
-    save_total_limit=2,
-    load_best_model_at_end=True,
-    metric_for_best_model="eval_loss",
-    greater_is_better=False,
-    fp16=True,
-    max_length=MAX_SEQ,
-    gradient_checkpointing=True,
-    report_to="none",
-    seed=20260816,
-)
+import inspect
+import trl
 
-trainer = SFTTrainer(
-    model=model, args=args, train_dataset=ds_train, eval_dataset=ds_val,
-    peft_config=peft_cfg, processing_class=tok,
-)
+# TRL's SFTConfig signature moves between releases: warmup_ratio, max_length vs
+# max_seq_length and eval_strategy vs evaluation_strategy have all shifted.
+# Rather than pin a version that will go stale, ask the installed class what it
+# accepts and drop the rest, printing whatever got dropped.
+print("trl", trl.__version__)
+
+WANTED = {
+    "output_dir": OUT,
+    "num_train_epochs": EPOCHS,
+    "per_device_train_batch_size": 2,
+    "per_device_eval_batch_size": 2,
+    "gradient_accumulation_steps": 8,
+    "learning_rate": LR,
+    "lr_scheduler_type": "cosine",
+    "warmup_ratio": 0.05,
+    "logging_steps": 10,
+    "eval_strategy": "steps",
+    "evaluation_strategy": "steps",
+    "eval_steps": 25,
+    "save_strategy": "steps",
+    "save_steps": 25,
+    "save_total_limit": 2,
+    "load_best_model_at_end": True,
+    "metric_for_best_model": "eval_loss",
+    "greater_is_better": False,
+    "fp16": True,
+    "max_length": MAX_SEQ,
+    "max_seq_length": MAX_SEQ,
+    "gradient_checkpointing": True,
+    "report_to": "none",
+    "seed": 20260816,
+}
+
+
+def supported(cls, wanted):
+    ok = set(inspect.signature(cls.__init__).parameters)
+    for base in getattr(cls, "__mro__", []):
+        try:
+            ok |= set(inspect.signature(base.__init__).parameters)
+        except (TypeError, ValueError):
+            pass
+    # Deliberately no **kwargs shortcut. A class can accept **kwargs and still
+    # reject the key downstream, which is exactly how the first run failed.
+    keep = {k: v for k, v in wanted.items() if k in ok}
+    dropped = sorted(set(wanted) - set(keep))
+    if dropped:
+        print(f"{cls.__name__}: dropped, not supported here: {dropped}")
+    return keep
+
+
+cfg = supported(SFTConfig, WANTED)
+# only one of each aliased pair should survive; prefer the modern name
+for new, old in (("eval_strategy", "evaluation_strategy"),
+                 ("max_length", "max_seq_length")):
+    if new in cfg and old in cfg:
+        cfg.pop(old)
+
+# load_best_model_at_end needs an eval strategy; if neither alias survived,
+# evaluation never runs and the trainer would error on the mismatch
+if not ({"eval_strategy", "evaluation_strategy"} & set(cfg)):
+    print("no eval strategy accepted, disabling best-model selection")
+    for k in ("load_best_model_at_end", "metric_for_best_model",
+              "greater_is_better", "eval_steps"):
+        cfg.pop(k, None)
+
+print("passing to SFTConfig:", sorted(cfg))
+args = SFTConfig(**cfg)
+
+trainer_kwargs = supported(SFTTrainer, {
+    "model": model, "args": args, "train_dataset": ds_train,
+    "eval_dataset": ds_val, "peft_config": peft_cfg,
+    "processing_class": tok, "tokenizer": tok,
+})
+if "processing_class" in trainer_kwargs:
+    trainer_kwargs.pop("tokenizer", None)
+trainer = SFTTrainer(**trainer_kwargs)
 trainer.train()
 trainer.save_model(OUT)
 print("saved to", OUT)

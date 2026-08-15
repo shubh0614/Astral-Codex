@@ -24,6 +24,21 @@ the whole point of plan.md's model-size ladder.
 
 If it completes and cell 8 prints something that looks like a diary entry, move on.
 
+### If a cell fails on a library signature
+
+The first smoke run died with
+`SFTConfig.__init__() got an unexpected keyword argument 'warmup_ratio'`,
+because TRL's config signature has moved between releases (`warmup_ratio`,
+`max_length` vs `max_seq_length`, `eval_strategy` vs `evaluation_strategy` have
+all shifted, and so has `tokenizer` vs `processing_class` on the trainer).
+
+Cell 6 now asks the installed classes what they accept and drops the rest,
+printing the TRL version and both the dropped and the passed keys. If it fails
+again, that printout says exactly which argument the installed version wants,
+which is faster than guessing at a pin.
+
+Nothing is version-pinned on purpose. Pins go stale on Kaggle images.
+
 ## Run 2: the real one
 
 Set `SMOKE = False`, restart the session, run again. That gives
