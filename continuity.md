@@ -123,13 +123,14 @@ What is NOT solved is register: the diaries write "I did not watch" in the first
 person and qwen returns "not observed", drops the doubled "became stationary"
 construction, and drifts to modern phrasing ("3 fingers in magnitude").
 
-**Immediate next actions, in order:**
+**Training set is built and the Kaggle notebook is written.** See `training/README.md`.
 
-1. **Build the stratified training set** from the 2,288 zero-gap usable units, excluding the 1,278 date-unreliable goal-year units and quarantining the 9 evaluation cases. Cap moon-star so it does not dominate; keep every stationary, eclipse and acronychal unit.
-2. **Register comparison** against the few-shot control, which is the number a fine-tune has to beat.
-3. **QLoRA run on 1.5B**, 2 hour Kaggle cap, modest LoRA rank, per plan.md's ladder. The user has decided to proceed with fine-tuning; the conditions that keep it from being wasted are in the 2026-08-16 session entry.
-4. **Korean annotation pass**, still the only tradition without a row in the decision table.
-5. Consider Parker and Dubberstein's chronology tables to replace the computed year start and settle intercalation. Highest-value single addition to the calendar layer.
+1. **Run the fine-tune.** Smoke run first (`SMOKE = True`, 1.5B, a few minutes) to catch data-loader bugs, then the real run (`SMOKE = False`, Qwen2.5-7B-Instruct, 3 epochs). Use a **T4, not P100**: bitsandbytes 4-bit is unreliable on Pascal. Internet toggle ON, the notebook pulls data from the public repo.
+2. **Watch validation loss, not training loss.** ~25k target tokens is small enough that memorisation is the realistic failure. If eval loss turns up, cut to 2 epochs or drop LORA_R to 8.
+3. **Score the output locally** with `scripts/score_baseline.py`. The bar is qwen2.5:7b few-shot at 5/5 and 4/4.
+4. **Read `finetune_test_sample.json` by hand.** The scorer cannot see register, and register is the only open question. Check whether it writes "I did not watch" in the first person like the diaries, or falls back to "not observed" like few-shot did.
+5. **Korean annotation pass**, still the only tradition without a row in the decision table.
+6. Consider Parker and Dubberstein's chronology tables to replace the computed year start and settle intercalation. Highest-value single addition to the calendar layer.
 
 **Two user decisions are needed, these are blocking, don't guess at them:**
 
@@ -232,6 +233,11 @@ construction, and drifts to modern phrasing ("3 fingers in magnitude").
 - `scripts/verify_vision_extract.py`: scores a vision extraction against the PDF text layer.
 - `scripts/fetch_ephemeris.py` downloads DE406 into `engine/ephem/` (gitignored, 300 MB).
 - `scripts/baseline_prompt.py`, `run_baseline.py`, `score_baseline.py`, `selftest_scorer.py`: the prompt-only baseline harness. See `notes/baseline_gate.md`.
+
+- `scripts/extract_states.py` derives an OBSERVATION_STATE from each unit's diary text, with the consistency filter that drops any pair whose entry names an object or sign the state does not.
+- `scripts/build_training_set.py` produces `data/processed/train.jsonl`, `val.jsonl`, `test.jsonl` and `training_set_card.json`. Stratified, split by tablet, evaluation cases quarantined.
+- `training/kaggle_finetune.py` the QLoRA notebook, `# %%` markers are cell breaks.
+- `training/README.md` how to run it, what to watch, and what counts as a win.
 
 **Engine (built 2026-08-16):**
 - `engine/bab_calendar.py`: regnal year + month + day to Julian Day, with uncertainty and confidence. Named bab_calendar so it does not shadow the stdlib `calendar` module, which breaks Skyfield.
