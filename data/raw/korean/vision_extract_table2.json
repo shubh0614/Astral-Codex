@@ -1,0 +1,40 @@
+{
+  "source": "Analysis of historical meteor and meteor shower records (arXiv astro-ph/0501216), TABLE 2, page 21",
+  "table_caption": "Historical Korean meteor shower records compiled from the three official Korean history books (Samguksagi, Goryeosa, and Joseonwangjosillok) and Jeungbomunheonbigo",
+  "extraction_method": "vision model reading a 200 DPI PNG render of the page, no OCR, no manual copying",
+  "columns": ["date_observation_YMD", "jd", "day_of_sidereal_year", "associated_meteor_shower", "estimated_date_of_shower", "period", "ref", "note"],
+  "rows": [
+    {"date_observation_YMD": "104 2/3 -",    "jd": 1759102, "day": 82,  "shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "S, M", "note": 1},
+    {"date_observation_YMD": "454 - -",      "jd": null,    "day": null,"shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "S, M", "note": 1},
+    {"date_observation_YMD": "532 8 28",     "jd": 1915611, "day": 261, "shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "S, M", "note": 1},
+    {"date_observation_YMD": "566 6/7 -",    "jd": 1927955, "day": 190, "shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "M",    "note": 1},
+    {"date_observation_YMD": "581 3 20",     "jd": 1933347, "day": 100, "shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "S, M", "note": 1},
+    {"date_observation_YMD": "586 5/6 -",    "jd": 1935252, "day": 178, "shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "S, M", "note": 1},
+    {"date_observation_YMD": "643 11 1",     "jd": 1956218, "day": 325, "shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "S, M", "note": 1},
+    {"date_observation_YMD": "647 9/10 -",   "jd": 1957636, "day": 282, "shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "S, M", "note": 1},
+    {"date_observation_YMD": "684 11/12 -",  "jd": 1971220, "day": 351, "shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "S, M", "note": 1},
+    {"date_observation_YMD": "706 4/5 -",    "jd": 1979045, "day": 141, "shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "S, M", "note": 1},
+    {"date_observation_YMD": "718 10/11 -",  "jd": 1983622, "day": 334, "shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "S, M", "note": 1},
+    {"date_observation_YMD": "765 1 7",      "jd": 2000481, "day": 26,  "shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "S",    "note": 1},
+    {"date_observation_YMD": "801 10/11 -",  "jd": 2013921, "day": 317, "shower": "Leonids ?", "estimated_date": "801 10 11 (B)", "period": "Three Kingdoms", "ref": "S, M", "note": 1, "footnote_marker": 8},
+    {"date_observation_YMD": "848 - -",      "jd": null,    "day": null,"shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "M",    "note": 1, "footnote_marker": 9},
+    {"date_observation_YMD": "905 3/4 -",    "jd": 2051691, "day": 101, "shower": null,        "estimated_date": null,            "period": "Three Kingdoms", "ref": "S, M", "note": 1},
+    {"date_observation_YMD": "1042 7 25",    "jd": 2101854, "day": 223, "shower": "Perseids",  "estimated_date": "1042 7 25 (C)", "period": "Goryeo",         "ref": "G, M", "note": 1},
+    {"date_observation_YMD": "1095 7 25",    "jd": 2121212, "day": 223, "shower": "Perseids",  "estimated_date": "1095 7 25 (C)", "period": "Goryeo",         "ref": "G, M", "note": 3},
+    {"date_observation_YMD": "1103 9 7",     "jd": 2124178, "day": 267, "shower": null,        "estimated_date": null,            "period": "Goryeo",         "ref": "G, M", "note": 3},
+    {"date_observation_YMD": "1106 7 27",    "jd": 2125232, "day": 225, "shower": "Perseids",  "estimated_date": "1106 7 25 (C)", "period": "Goryeo",         "ref": "G, M", "note": 3},
+    {"date_observation_YMD": "1111 10 2",    "jd": 2127125, "day": 292, "shower": "Leonids",   "estimated_date": "1111 10 11 (B)","period": "Goryeo",         "ref": "G, M", "note": 3},
+    {"date_observation_YMD": "1136 4 3",     "jd": 2136075, "day": 110, "shower": null,        "estimated_date": null,            "period": "Goryeo",         "ref": "G, M", "note": 1},
+    {"date_observation_YMD": "1178 9 17",    "jd": 2151582, "day": 277, "shower": null,        "estimated_date": null,            "period": "Goryeo",         "ref": "G",    "note": 2},
+    {"date_observation_YMD": "1179 4 17",    "jd": 2151794, "day": 123, "shower": "eta Aquarids", "estimated_date": "1179 4 20 (C)", "period": "Goryeo",      "ref": "G, M", "note": 3},
+    {"date_observation_YMD": "1363 6 9",     "jd": 2219053, "day": 175, "shower": null,        "estimated_date": null,            "period": "Goryeo",         "ref": "G, M", "note": 1, "footnote_marker": 10},
+    {"date_observation_YMD": "1532 10 24",   "jd": 2280918, "day": 312, "shower": "Leonids",   "estimated_date": "1532 10 24.9 (A)","period": "Joseon",        "ref": "J, M", "note": 1}
+  ],
+  "footnote_legend": {
+    "ref_codes": {"S": "Samguksagi", "G": "Goryeosa", "J": "Joseonwangjosillok", "M": "Jeungbomunheonbigo"},
+    "note_codes": {"1": "mentioned in Imoto & Hasegawa (1958) catalogue", "2": "observation date differs from Imoto & Hasegawa (source book has a date typo)", "3": "not listed in Imoto & Hasegawa catalogue"},
+    "estimated_date_codes": {"A": "from Mason (1995)", "B": "interpolated from Mason's dates", "C": "estimated from the sidereal period of the shower"},
+    "calendar": "Julian before Oct 4 1582, Gregorian after Oct 15 1582",
+    "missing": "records with no month or day are marked with a dash"
+  }
+}
