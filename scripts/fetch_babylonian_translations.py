@@ -1,17 +1,9 @@
 """
-Scrape English translations of the Astronomical Diaries from ORACC ADsD.
+Scrape the English diary translations from ORACC and write
+data/raw/babylonian/translations.jsonl, one record per tablet.
 
-Why scrape HTML instead of using the JSON dump: the open-data zips
-(scripts/fetch_babylonian.py) contain the Akkadian transliteration and the
-lemmatisation, but NOT the English translation text. index-tra.json references
-translation files named like `X102613_project-en` that are simply absent from
-the zip. The English only exists in the rendered pages, inside <td class="t1 xtr">
-cells, one cell per tablet line.
-
-Output: data/raw/babylonian/oracc_html/<TEXTID>.html  (unmodified page)
-        data/raw/babylonian/translations.jsonl        (one record per tablet)
-
-Nothing here filters or judges quality -- that's the annotation step.
+The bulk JSON dumps carry transliteration only, so the English has to come from
+the rendered pages. See notes/SOURCES.md.
 """
 
 import json
@@ -27,8 +19,6 @@ RAW = ROOT / "data" / "raw" / "babylonian"
 HTML_DIR = RAW / "oracc_html"
 ZIPS = RAW / "oracc_json"
 
-# diary volumes only -- adart5 (lunar/planetary) and adart6 (goal-year) are a
-# different genre of text and are held back for now
 VOLUMES = ["adart1", "adart2", "adart3"]
 UA = {"User-Agent": "Mozilla/5.0 (research; personal non-commercial corpus survey)"}
 

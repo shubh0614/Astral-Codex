@@ -1,13 +1,6 @@
 """
 Parse Julius Obsequens into one record per prodigy-year entry.
-
-Obsequens structure is very regular:
-  <A CLASS="ref" NAME="12">[12]</A> ... Consuls: <B>names</B> ... { <I>163 B.C.</I> }
-  <P> prose describing the prodigies of that year
-
-So each entry has a year (consular, plus the editor's B.C. equivalent) and a
-block of prose. No cleaning or filtering here -- just structure extraction.
-Output: data/processed/roman_entries.json
+Writes data/processed/roman_entries.json. Structure extraction only.
 """
 
 import json
@@ -41,7 +34,6 @@ def main():
     out = []
     for num, body in ENTRY_RE.findall(doc):
         cm, ym = CONSUL_RE.search(body), YEAR_RE.search(body)
-        # the prose starts after the year marker
         prose = body[ym.end():] if ym else body
         prose = strip_tags(prose)
         if not prose:

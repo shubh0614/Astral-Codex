@@ -1,23 +1,10 @@
 """
-Split the scraped diary tablets into observation units and score each one
-against the clean-triple gate in plan.md Section 4.
+Split the scraped tablets into dated observation units and score each against
+the clean-triple gate in plan.md Section 4. Writes
+data/processed/babylonian_units.json.
 
-plan.md Section 2 defines one training example as one coherent observation or
-event, NOT one tablet -- a single tablet records many separate nights. So the
-unit here is the dated day/night entry, and the counts that matter are counts
-of those, not of tablets.
-
-Gate criteria, from plan.md Section 4:
-  (a) recoverable date: year + month minimum
-  (b) at least one specific astronomical observation, not merely weather or
-      river-level or market-price notes
-  (c) continuous English text of more than two sentences
-
-Fragmentary entries are scored separately rather than being silently counted
-as clean, because the raw translations are riddled with [...] tablet-damage
-gaps and the plan explicitly warns the model will otherwise learn to emit them.
-
-Output: data/processed/babylonian_units.json
+The unit is one dated night, not one tablet, per plan.md Section 2. Why the
+">2 sentences" criterion was replaced is in notes/phase0_results.md.
 """
 
 import json
@@ -28,7 +15,6 @@ ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "data" / "raw" / "babylonian" / "translations.jsonl"
 OUT = ROOT / "data" / "processed" / "babylonian_units.json"
 
-# a new dated entry starts at one of these
 DAY_RE = re.compile(
     r"(?=(?:Night of the|That night,|The)\s+\d{1,2}(?:st|nd|rd|th)\b)|(?=\bMonth\s+[IVX]+)",
 )
@@ -36,7 +22,6 @@ MONTH_RE = re.compile(r"\bMonth\s+([IVX]+₂?|[IVX]+2?)\b")
 DAY_NUM_RE = re.compile(r"\b(\d{1,2})(?:st|nd|rd|th)\b")
 
 PLANETS = r"(?:moon|sun|Venus|Mars|Mercury|Jupiter|Saturn|Sirius)"
-# Greek-lettered fixed stars, e.g. "α Tauri", "η Geminorum"
 STAR_RE = re.compile(r"[α-ω]\s*[A-Z][a-z]+")
 ZODIAC = (
     r"(?:Pisces|Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpi\w+|"
@@ -72,12 +57,6 @@ def n_sentences(t):
     return len([s for s in re.split(r"(?<=[.!?])\s+", t) if len(s.strip()) > 3])
 
 
-# An INTACT observation: a named body, a measured quantity, and a positional
-# relation to a named star or planet, with no [...] gap breaking the middle.
-# This is what "specific astronomical observation" actually looks like in the
-# diaries, and it is what the sentence-count heuristic failed to capture --
-# these entries are joined with semicolons, so a perfect observation is
-# routinely a single "sentence".
 INTACT_OBS_RE = re.compile(
     r"(?:%s)[^.;\[\]]{0,60}?"                       # a body, then a short span
     r"(?:\d|\bnn\b)[^.;\[\]]{0,40}?"                # a measurement
@@ -86,20 +65,17 @@ INTACT_OBS_RE = re.compile(
     r"north|south|passed)" % PLANETS,
     re.I,
 )
-# the lunar-six style measurements are also complete computable observations
 LUNAR_SIX_RE = re.compile(
     r"(?:sunset to moonset|moonset to sunrise|moonrise to sunset|"
     r"sunrise to moonset|sunset to moonrise|moonrise to sunrise)\s*:?\s*"
     r"\[?\s*(?:x\]?\+)?\d",
     re.I,
 )
-# named computable events
 EVENT_OBS_RE = re.compile(
     r"(?:first appearance|last appearance|became stationary|acronychal rising|"
     r"eclipse|equinox|solstice|reached\s+(?:%s))" % ZODIAC,
     re.I,
 )
-# planetary position summaries: "Jupiter was in Virgo"
 PLANET_IN_SIGN_RE = re.compile(r"(?:%s)\s+was\s+in\s+(?:%s)" % (PLANETS, ZODIAC), re.I)
 
 NARRATIVE_RE = re.compile(
@@ -115,8 +91,6 @@ def classify(unit, month_resolved, month_inferable, has_year):
     has_day = bool(unit["day"])
 
     gaps = len(ELLIPSIS_RE.findall(t))
-    # continuous, unbroken runs of text -- the real proxy for "continuous
-    # English text", replacing the sentence count
     runs = [s.strip() for s in ELLIPSIS_RE.split(t) if s.strip()]
     longest_run = max((len(s) for s in runs), default=0)
 
@@ -126,7 +100,6 @@ def classify(unit, month_resolved, month_inferable, has_year):
         or EVENT_OBS_RE.search(t)
         or PLANET_IN_SIGN_RE.search(t)
     )
-    # something astronomical is named but the observation is broken
     damaged = bool(ASTRO_RE.search(t) or STAR_RE.search(t))
 
     date_ok = has_year and month_resolved
@@ -173,10 +146,8 @@ def main():
         stream = " ".join(l["text"] for l in r["lines"])
         stream = re.sub(r"\s+", " ", stream)
 
-        # walk the stream, tracking the current month as it is announced
         pieces = [p.strip() for p in DAY_RE.split(stream) if p and p.strip()]
         cur_month = None
-        # a month named in the catalogue counts as recoverable context
         cat_month = bool((r.get("months_recorded") or "").strip(" []"))
 
         for p in pieces:

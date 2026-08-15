@@ -1,30 +1,14 @@
 """
 Run the baseline cases against a model and write outputs for scoring.
 
-No model runner or API key exists in this dev environment, so this supports
-whichever backend turns up first. Easiest path on the GTX 1650 box is ollama
-with a small model; a 7B at Q4 is borderline on 4 GB VRAM and will spill to CPU
-but it will run.
-
-  # ollama (local, no key)
   ollama pull qwen2.5:7b
   python scripts/run_baseline.py --backend ollama --model qwen2.5:7b
-
-  # any OpenAI-compatible endpoint
-  set OPENAI_API_KEY=...
-  python scripts/run_baseline.py --backend openai --model gpt-4o-mini
-
-  # anthropic
-  set ANTHROPIC_API_KEY=...
-  python scripts/run_baseline.py --backend anthropic --model claude-sonnet-5
-
-  # the non-LLM control from plan.md Section 2 -- no model, pure template
-  python scripts/run_baseline.py --backend template
-
-  # zero-shot tier instead of few-shot
+  python scripts/run_baseline.py --backend template          # no-model control
   python scripts/run_baseline.py --backend ollama --model qwen2.5:7b --shots 0
+  python scripts/run_baseline.py --backend ollama --model qwen2.5:7b \
+      --cases data/processed/baseline_cases_generalization.json
 
-Then: python scripts/score_baseline.py data/processed/baseline_run_<tag>.json
+openai and anthropic backends read OPENAI_API_KEY / ANTHROPIC_API_KEY.
 """
 
 import argparse
@@ -86,10 +70,6 @@ def call_anthropic(model, system, user):
     return r["content"][0]["text"]
 
 
-# ---- the non-LLM control -------------------------------------------------
-# plan.md Section 2: "if the fine-tuned model only marginally beats a dumb
-# template on style, that tells you something important about where the value
-# actually is." This is that dumb template.
 GREEK = {"alpha": "α", "beta": "β", "gamma": "γ",
          "delta": "δ", "epsilon": "ε", "zeta": "ζ",
          "eta": "η", "theta": "ϑ", "mu": "μ", "rho": "ρ"}

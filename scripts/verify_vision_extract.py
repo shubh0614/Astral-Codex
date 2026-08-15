@@ -1,15 +1,6 @@
 """
-Score the vision extraction of TABLE 2 against the PDF's embedded text layer.
-
-plan.md Section 4 sets a gate: test vision extraction on ONE table first, and
-if it comes back with more than 30% field errors, abandon the full harvest and
-fall back to a single narrow phenomenon. This measures that number instead of
-guessing at it.
-
-The text layer is used only as ground truth for scoring, not as the extraction
-method -- the whole point of the vision approach is that the text layer loses
-the column structure, which is exactly what makes it useless for extraction and
-still fine for spot-checking individual values.
+Score the vision extraction of TABLE 2 against the PDF text layer, for the
+Korean gate in plan.md Section 4. Result is in notes/korean_vision_test.md.
 """
 
 import json
@@ -43,7 +34,6 @@ def main():
                 hits += 1
             else:
                 misses.append((i, field, v))
-        # year out of the date string
         y = r["date_observation_YMD"].split()[0]
         checked += 1
         if y in truth_nums:
@@ -61,7 +51,6 @@ def main():
         for m in misses:
             print("   row", m[0], m[1], "=", m[2])
 
-    # sanity: does the text layer preserve column structure at all?
     print("\n--- first 12 lines of the raw text layer, for comparison ---")
     for line in [l for l in truth_text.splitlines() if l.strip()][:12]:
         print("   |", line)

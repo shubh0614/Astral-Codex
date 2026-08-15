@@ -1,0 +1,104 @@
+{
+  "model": "qwen2.5:7b",
+  "tier": "few-shot(5)",
+  "passed": 4,
+  "total": 4,
+  "results": [
+    {
+      "case": "gen-01-stationary",
+      "phenomenon": "planetary retrograde station (ABSENT from few-shot)",
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": true,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 28,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "Month X, around the 4th; Saturn was above β Virginis, 1/2 cubit away, having moved 4 fingers back to the west, and was at its eastern stationary point."
+    },
+    {
+      "case": "gen-02-last-appearance",
+      "phenomenon": "last appearance (heliacal setting) plus an explicit non-observation (ABSENT from few-shot)",
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": true,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 14,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "Month XI, the 18th; Mercury's last appearance in the west, in Pisces, not observed."
+    },
+    {
+      "case": "gen-03-lunar-eclipse",
+      "phenomenon": "partial lunar eclipse with magnitude, side, sign, position and bystanding bodies (ABSENT from few-shot)",
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": true,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 35,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "Night of the 14th, end of Libra, the moon was eclipsed at moonrise, 3 fingers in magnitude, to the east, 2 cubits behind α Librae. Jupiter in Gemini and Sirius were visible during the eclipse."
+    },
+    {
+      "case": "gen-04-acronychal-rising",
+      "phenomenon": "acronychal rising of a fixed star, unobserved, with weather (ABSENT from few-shot)",
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": true,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 14,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "Month X, the 14th; all day very overcast; acronychal rising of Sirius not observed."
+    }
+  ]
+}

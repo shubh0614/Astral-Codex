@@ -1,14 +1,9 @@
 """
 Parse the Book of Chilam Balam of Chumayel (Roys 1933) into katun-keyed units.
+Writes data/processed/maya_katun_units.json.
 
-The book is not uniform. It mixes prophecy, chronicle, ritual, creation myth,
-colonial-era land records and 19th-century baptismal notes, plus OCR noise from
-the plate captions. For Phase 0 we only care about material that is keyed to a
-katun, so this pulls every paragraph that names one and records which section
-of the book it came from -- prophecy and chronicle get counted separately,
-because a chronicle entry ("9 Ahau.") is not a prophecy.
-
-Output: data/processed/maya_katun_units.json
+The book mixes prophecy, chronicle, ritual and colonial records, so the section
+name is kept and chronicle entries are counted separately from prophecy.
 """
 
 import json

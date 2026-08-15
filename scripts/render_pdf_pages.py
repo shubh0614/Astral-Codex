@@ -1,12 +1,8 @@
 """
-Render pages of a PDF to PNG so a vision model can read the tables.
-
-plan.md Section 4 is explicit that Korean tables should NOT be pulled with OCR
-or manual copying -- screenshot the table and hand it to a vision-capable model.
-This is the screenshot half of that.
+Render PDF pages to PNG for vision extraction.
 
 usage: python scripts/render_pdf_pages.py <pdf> <outdir> [pages...]
-       with no page list it prints a page-by-page table-likeness report instead
+       with no page list, prints a per-page table-likeness report
 """
 
 import sys
@@ -21,7 +17,6 @@ def report(doc):
     print(f"{doc.page_count} pages\n")
     for i, page in enumerate(doc, start=1):
         text = page.get_text()
-        # crude table signal: many short lines that are mostly digits
         lines = [l.strip() for l in text.splitlines() if l.strip()]
         numeric = sum(1 for l in lines if sum(c.isdigit() for c in l) / max(len(l), 1) > 0.3)
         has_tbl = "Table" in text

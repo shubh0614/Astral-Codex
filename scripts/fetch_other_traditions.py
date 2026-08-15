@@ -1,16 +1,6 @@
 """
-Fetch the Roman, Vedic and Maya raw sources for the Phase 0 sample.
-
-All three are single-file fetches, unlike Babylonian which needs a scraper.
-Stores raw and unmodified under data/raw/<tradition>/.
-
-Roman  -- Julius Obsequens, Liber Prodigiorum, attalus.org translation.
-Vedic  -- Brihat Samhita, Panditabhushana V. Subrahmanya Sastri 1946 English
-          translation (the edition named in plan.md Section 4), OCR text layer
-          from archive.org.
-Maya   -- Book of Chilam Balam of Chumayel, Ralph L. Roys 1933. plan.md points
-          at sacred-texts.com, which now returns 403 to everything non-browser;
-          archive.org carries the same sacred-texts scan, public domain.
+Fetch the Roman, Vedic and Maya raw sources into data/raw/<tradition>/.
+Source choices and the two dead links are documented in notes/SOURCES.md.
 """
 
 import urllib.request

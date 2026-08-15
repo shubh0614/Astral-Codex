@@ -1,0 +1,12 @@
+{
+  "model": "qwen2.5:7b",
+  "backend": "ollama",
+  "tier": "few-shot(5)",
+  "cases_file": "data\\processed\\baseline_cases_generalization.json",
+  "outputs": {
+    "gen-01-stationary": "Month X, around the 4th; Saturn was above β Virginis, 1/2 cubit away, having moved 4 fingers back to the west, and was at its eastern stationary point.",
+    "gen-02-last-appearance": "Month XI, the 18th; Mercury's last appearance in the west, in Pisces, not observed.",
+    "gen-03-lunar-eclipse": "Night of the 14th, end of Libra, the moon was eclipsed at moonrise, 3 fingers in magnitude, to the east, 2 cubits behind α Librae. Jupiter in Gemini and Sirius were visible during the eclipse.",
+    "gen-04-acronychal-rising": "Month X, the 14th; all day very overcast; acronychal rising of Sirius not observed."
+  }
+}

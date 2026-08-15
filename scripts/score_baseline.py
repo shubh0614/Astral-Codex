@@ -1,54 +1,16 @@
 """
-Score baseline outputs against the plan.md Section 7 pass criteria.
-
-Per case, all of these must hold:
-  (a) mentions every object present in the OBSERVATION_STATE
+Score baseline outputs against the plan.md Section 7 gate. All must hold:
+  (a) mentions every object in the OBSERVATION_STATE
   (b) mentions no object absent from it
   (c) reads as a single dated entry, not a list of facts
-  (d) stays inside the observation genre -- no invented omen or prediction
-  (e) preserves the quantitative/qualitative hard facts, not just object names
+  (d) stays in the observation genre, no invented omen
+  (e) preserves the measurements, not just the object names
+  (f) keeps the pairwise relation in the right order
 
-4/5 passing -> proceed to Phase 1.
-<=1/5 passing -> the prompt needs work before any fine-tuning discussion.
+plan.md lists only (a) to (c). Why (d), (e) and (f) were added is in
+notes/baseline_gate.md.
 
-DEVIATION FROM THE LITERAL GATE TEXT, FLAGGED NOT HIDDEN
---------------------------------------------------------
-plan.md Section 7 lists only (a), (b) and (c). Criterion (d) was added after
-the scorer self-test surfaced the gap: an output reading
-
-    "The 13th, Venus' first appearance in the east in Scorpius; this portends
-     that the king will fall and there will be war."
-
-satisfies (a), (b) and (c) completely -- every hard fact preserved, no extra
-objects, one dated prose entry -- and would have PASSED the gate as written,
-while being exactly the failure the guardrail exists to prevent. It is an
-observation-genre prompt inventing an omen.
-
-This is not a new architectural idea; plan.md already treats the boundary as
-first-class. Section 2 proposes training on negative examples "under
-<GENRE=OBSERVATION>, explicitly train against adding interpretive claims that
-don't belong to that genre", and Section 8 test C is genre fidelity. The gate
-checklist simply never enumerated it. Added here rather than silently omitted,
-same as the >2-sentence issue in segment_babylonian.py.
-
-Criterion (e) was added for the same reason, after the non-LLM template control
-scored 5/5 while silently dropping the watch ("beginning of the night"), the
-latitude clause ("the moon being 1 cubit high to the north"), the month number,
-"earthshine" and the direction "in the east" -- every one of them a hard fact
-sitting in the OBSERVATION_STATE. Criterion (a) checks only object NAMES, so a
-model can discard every measurement and still pass. For a project whose whole
-premise is that hard facts must never change, that is the wrong thing to
-measure.
-
-(a) and (b) are fully mechanical and are the load-bearing part -- this is the
-deterministic whitelist that plan.md Section 2 puts ABOVE LLM-as-judge in the
-validation hierarchy. (c) is partly a judgement call, so it is heuristic here
-and carries a human_override field; the heuristic only checks the things that
-can be checked (a date marker is present, the output is prose rather than
-bullets, the length is entry-like).
-
-usage: python scripts/score_baseline.py <outputs.json>
-       outputs.json = {"model": "...", "tier": "few-shot", "outputs": {case_id: text}}
+usage: python scripts/score_baseline.py <run.json>
 """
 
 import json
@@ -70,7 +32,6 @@ INTERPRETIVE = re.compile(
 
 
 def mentions(text, token):
-    """Substring match, case-insensitive. Tokens are already lowercase stems."""
     return token.lower() in text.lower()
 
 
@@ -96,7 +57,6 @@ def score_case(case, output):
     genre_leak = bool(INTERPRETIVE.search(t))
     d = not genre_leak
 
-    # (e) the quantitative/qualitative hard facts survive, not just the names
     norm = re.sub(r"\s+", " ", t).lower()
     dropped = [
         alts[0] for alts in case.get("required_facts", [])
@@ -104,8 +64,6 @@ def score_case(case, output):
     ]
     e = not dropped
 
-    # (f) the pairwise relation survives in the right ORDER: OBJ1 <rel> OBJ2.
-    # Catches reversal and, more commonly, destruction of the pairing.
     rel_spec = case.get("required_relation")
     rel_ok, rel_detail = True, None
     if rel_spec:

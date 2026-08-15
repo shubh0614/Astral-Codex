@@ -1,4 +1,4 @@
-# Phase 0 — Corpus Viability Sprint: results
+# Phase 0: Corpus Viability Sprint: results
 
 Run 2026-08-15. Format follows plan.md Section 7.
 
@@ -7,7 +7,7 @@ Run 2026-08-15. Format follows plan.md Section 7.
 | Tradition | Genre | Candidates | Usable | Ambiguous | Reject | Usable rate |
 |---|---|---:|---:|---:|---:|---:|
 | Babylonian | observation | 100 | 31 | 39 | 30 | **31%** |
-| Korean | observation | — | — | — | — | not sampled (extraction gate only) |
+| Korean | observation | - | - | - | - | not sampled (extraction gate only) |
 | Roman | omen_interpretation | 27 | 3 | 4 | 20 | **11%** |
 | Vedic | omen_interpretation | 28 | 6 | 13 | 9 | **21%** |
 | Maya | prophecy | 26 | 14 | 3 | 9 | **54%** |
@@ -21,25 +21,25 @@ rows mean something different from what the number alone suggests.
 
 ## Per-tradition detail
 
-### Babylonian — 31% usable, gate passes decisively
+### Babylonian: 31% usable, gate passes decisively
 
 331 tablets scraped from ORACC, 9,102 translated lines, segmented into **7,836
 dated observation units**. 100 read by hand.
 
 - Corpus-wide classifier: 2,010 usable units (25.7%), agreeing with the hand
-  annotation 71/100 with no usable↔reject flips.
+  annotation 71/100 with no usable/reject flips.
 - **807 usable units contain no `[...]` gap at all.**
-- plan.md's gate is ≥50 clean observation units. Measured: roughly 2,000–2,400.
+- plan.md's gate is ≥50 clean observation units. Measured: roughly 2,000-2,400.
   Passes by a factor of about forty. Neither Section 4 fallback is needed.
 - Fragmentary entries flagged separately as instructed: 1,965 units (25%) carry
   three or more gaps; 509 of the usable ones are heavily fragmentary and should
   be held out of a first training run.
-- Ceiling is higher than measured — ADART 5 and 6 were excluded as a different
+- Ceiling is higher than measured: ADART 5 and 6 were excluded as a different
   text genre, 76 catalogued tablets have no digitised text, and ~1,100
   ambiguous units are ambiguous only because my parser failed to resolve their
   month, which a better calendar parse recovers.
 
-### Roman — 11% usable, and this is the surprise
+### Roman: 11% usable, and this is the surprise
 
 Obsequens parses cleanly into 81 entries, **every one of them dated** by
 consulship with an editorial B.C. year. Date is never the constraint. The
@@ -48,8 +48,8 @@ of blood and stones, deformed births, sweating statues, lightning strikes.
 
 Only 3 of 27 sampled entries carry a sky event the engine could compute (two
 solar eclipses and a delayed lunar crescent). A full-corpus read of every
-celestial-vocabulary hit across all 81 entries gives 5–6 hard-computable
-entries, i.e. about 7% — so the 11% sample figure is real and if anything
+celestial-vocabulary hit across all 81 entries gives 5-6 hard-computable
+entries, i.e. about 7%, so the 11% sample figure is real and if anything
 generous.
 
 **Two traps found here:**
@@ -58,7 +58,7 @@ generous.
    "Mercury" in Obsequens nearly always mean temples, statues and cult objects.
    "The spears of Mars moved" is the Regia statue. A naive whitelist scan
    reports 41% celestial content where reading gives about 18%. This matters
-   directly for the deterministic-whitelist validator in plan.md Section 2 —
+   directly for the deterministic-whitelist validator in plan.md Section 2,
    that validator would be badly wrong on Roman text.
 2. **The number depends on the question.** Measured as "date + any prodigy +
    period-voice interpretation", Obsequens scores essentially 81/81. Measured
@@ -67,37 +67,37 @@ generous.
    Roman were re-scoped to condition on prodigy *type* rather than sky state,
    it would become the healthiest corpus of the four.
 
-### Vedic — 21% usable, voice-thinness confirmed
+### Vedic: 21% usable, voice-thinness confirmed
 
 1,557 slokas extracted from the Sastri 1946 OCR, 254 in the chapters plan.md
-names (3–11, 46). 28 read.
+names (3-11, 46). 28 read.
 
 - **plan.md Section 4's voice-thinness risk is confirmed.** Every usable sloka
   is a bare conditional: "When Venus is in Hasta, the Kauravas and artists will
   suffer. There will be drought." There is no narrative, no scene, no
-  observational register — nothing that constitutes a voice to transfer. The
+  observational register, nothing that constitutes a voice to transfer. The
   longest usable entry is two sentences.
 - The 46% ambiguous rate has two very different causes that must not be
   conflated. Five of the 13 ambiguous entries are computable rules damaged only
-  by OCR truncation — fixable. The rest key on qualities the engine can never
+  by OCR truncation, fixable. The rest key on qualities the engine can never
   supply: the colour of Venus, the shape of the solar disc, the form of
   sunspots, a comet's crest direction. That half will not improve.
 - So 21% is a floor on extraction grounds and close to a ceiling on content
   grounds. The computable subset is essentially planet-in-nakshatra, eclipses
-  and heliacal risings — much narrower than the chapter list implies.
+  and heliacal risings, much narrower than the chapter list implies.
 
-### Maya — 54% usable, and the number is misleading
+### Maya: 54% usable, and the number is misleading
 
 Highest usable rate and by far the strongest voice. "Rains from a rabbit sky,
 rains from a parched sky, rains from a woodpecker sky" is distinctive and would
 be instantly recognisable in a blind evaluation. Rejects are all chronicle
-entries and Roys's editorial notes — katun-keyed but not prophecy.
+entries and Roys's editorial notes, katun-keyed but not prophecy.
 
 **But the state space is 13.** That is the entire Maya cycle, and only 9 katuns
 carry a usable prophecy in Chumayel. plan.md Section 4 flagged this as a slider
 UX problem; at the data level it is larger than that. Maya simultaneously has
 the best usable rate of the four and the smallest possible conditioning space
-of any of them — 13 states against Babylonian's thousands of dated sky states.
+of any of them, 13 states against Babylonian's thousands of dated sky states.
 
 A usable/ambiguous/reject table structurally cannot see this, which is exactly
 why it is written down here. **Do not read Maya's 54% as corpus health.**
@@ -107,7 +107,7 @@ Ahau has the sun eclipsed for five days; Katun 3 Ahau has it moved from its
 place for three months. Neither is possible. plan.md Section 2 was right to
 route Maya around the astronomy layers entirely.
 
-### Korean — extraction gate passed, not yet annotated
+### Korean: extraction gate passed, not yet annotated
 
 Different problem class, handled per plan.md Section 4's separate gate. Full
 write-up in `notes/korean_vision_test.md`.
@@ -119,9 +119,9 @@ write-up in `notes/korean_vision_test.md`.
 - **Do not trigger the narrow Halley-only fallback.** The full harvest is
   viable on extraction grounds.
 - Second finding, arguably more useful: not all of this material is tabular.
-  The Halley paper keeps its records in *prose* appendices — "September 3: A
+  The Halley paper keeps its records in *prose* appendices, "September 3: A
   comet appeared in the Samtae constellation. Its tail was directed to the west
-  and 3 Cheok long" — which needs an ordinary parser, not vision, and is closer
+  and 3 Cheok long", which needs an ordinary parser, not vision, and is closer
   to the observation genre than the tables are. Korean is two extraction
   problems, not one. The plan anticipated only the first.
 - Korean has no usable/ambiguous/reject row yet. It needs an annotation pass
@@ -131,10 +131,10 @@ write-up in `notes/korean_vision_test.md`.
 
 > If a tradition's usable rate collapses (roughly ≤20%) while the others hold
 > up well above it, cut that tradition to v2. If all five hold up reasonably
-> (even unevenly, e.g. 60–95%), keep all five.
+> (even unevenly, e.g. 60-95%), keep all five.
 
 Mechanically applied: **Roman at 11% is the one tradition below the line.**
-Vedic at 21% sits just above it. Nobody is in the 60–95% band the rule
+Vedic at 21% sits just above it. Nobody is in the 60-95% band the rule
 describes as "holding up", so the rule's second branch does not fire.
 
 That result inverts the prior. plan.md Section 9 records a reviewer arguing
@@ -152,7 +152,7 @@ narrower and more useful than "cut Roman":
 
 ## Recommendation
 
-Not a decision — this is the user's call, and it interacts with the frozen
+Not a decision, this is the user's call, and it interacts with the frozen
 research question in plan.md Section 1.5.
 
 1. **Babylonian: proceed to Phase 1.** The gate passes by a wide margin. Start
@@ -174,12 +174,12 @@ research question in plan.md Section 1.5.
 
 **The clean-triple "more than two sentences" criterion does not work at the
 observation-unit level.** Babylonian diary entries join clauses with semicolons,
-so this —
+so this,
 
 > Night of the 15th, beginning of the night, the moon was 2/3 cubit in front of
 > η Piscium; last part of the night, Mars was 3 1/2 cubits below ε Leonis.
 
-— is two complete, independently datable, fully computable observations and
+, is two complete, independently datable, fully computable observations and
 counts as *one* sentence. Applying the criterion literally scored the corpus at
 1.7% usable, wrong by roughly fifteen times. Editorial `?` marks push the count
 the other way.

@@ -1,14 +1,6 @@
 """
-Build the few-shot prompt for the prompt-only baseline gate.
-
-plan.md Section 2 runs a three-tier comparison: zero-shot, few-shot, QLoRA.
-This builds tiers 1 and 2. Fine-tuning is conditional on this failing, so this
-prompt is what decides whether the QLoRA branch is needed at all.
-
-The three few-shot examples are real diary entries from the zero-gap usable set,
-chosen to cover moon-star, moon-planet and heliacal phenomena. None of them is
-one of the five test cases -- few-shot should demonstrate the register, not leak
-the answer.
+Build the system prompt and few-shot examples for the baseline gate.
+Examples are real diary entries, none of them a test case.
 """
 
 import json
@@ -33,7 +25,6 @@ SYSTEM = (
     "- Output only the entry text. No preamble, no commentary."
 )
 
-# real entries, none of which are test cases
 FEWSHOT = [
     (
         "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n"
@@ -70,12 +61,6 @@ FEWSHOT = [
         "The 20th, Jupiter's first appearance in Leo; it was small, rising of "
         "Jupiter to sunrise: 11° 40'; (ideal) first appearance on the 19th.",
     ),
-    # --- added after the first qwen2.5:7b run scored 3/5 -------------------
-    # Both failures landed on phenomenon types absent from the shots above.
-    # plan.md Section 7 allows one prompt iteration before the middle-band
-    # verdict is treated as final. Deliberately a DIFFERENT object pair
-    # (Mars/Saturn) from the Venus/Mars test case -- this demonstrates the
-    # planet-planet relation form without supplying the answer.
     (
         "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n"
         "  Date: year 179 of the Seleucid Era, month VI, night of the 28th\n"

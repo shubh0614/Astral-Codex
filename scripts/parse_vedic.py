@@ -1,16 +1,9 @@
 """
-Parse the Brihat Samhita (Sastri 1946) OCR text into individual sloka records.
+Parse the Brihat Samhita (Sastri 1946) OCR into sloka records.
+Writes data/processed/vedic_slokas.json.
 
-The scan interleaves Devanagari and English. The Devanagari OCR layer is
-unusable garbage, but the English translations are clean and consistently
-marked: "Sloka 13.—The King who is in the height of glory..." or
-"Slokas 15-16.—A horse with good features...".
-
-Chapter (adhyaya) number comes from the running page headers, which look like
-  Adh. XLIV. Sl. 15-16.]   or   [Adh. XVI. Sl. 35-37.
-so we track the most recently seen one and attach it to following slokas.
-
-Output: data/processed/vedic_slokas.json
+The Devanagari OCR layer is unusable; the English translations are marked
+"Sloka N." and the adhyaya number comes from the running page headers.
 """
 
 import json
@@ -22,7 +15,8 @@ SRC = ROOT / "data" / "raw" / "vedic" / "brihat_samhita_sastri_1946_djvu.txt"
 OUT = ROOT / "data" / "processed" / "vedic_slokas.json"
 
 ADH_RE = re.compile(r"Adh\.?\s+([IVXLC]+)\.?\s*Sl", re.I)
-# OCR renders the dash after "Sloka N" as any of - — .- ,- etc.
+# The dashes below are the ones printed in the 1946 book and must stay. They are
+# matched, not written. OCR renders the dash after "Sloka N" as any of - — .- ,-
 SLOKA_RE = re.compile(
     r"(?:Slokas?|Bloke|Sloke)\s*,?\s*(\d+)\s*(?:-|–|to)?\s*(\d+)?\s*[.,]?\s*[-—–]+\s*(.+?)(?=\n\s*\n|\Z)",
     re.S,
@@ -56,7 +50,6 @@ def clean(s):
 def main():
     text = SRC.read_text(encoding="utf-8", errors="replace")
 
-    # index adhyaya markers by character offset
     marks = [(m.start(), roman_to_int(m.group(1))) for m in ADH_RE.finditer(text)]
 
     def adhyaya_at(pos):
