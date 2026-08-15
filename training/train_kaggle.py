@@ -189,6 +189,21 @@ except TypeError:
 model.config.use_cache = False
 log(f"loaded, {sum(p.numel() for p in model.parameters())/1e9:.2f} B params")
 
+# Standard QLoRA preparation: casts layernorms and other small non-quantized
+# modules to fp32 and wires up gradient checkpointing. Without it some trainable
+# params stay bf16, and fp16's GradScaler cannot unscale bf16 gradients:
+#   NotImplementedError: _amp_foreach_non_finite_check_and_unscale_cuda
+#   not implemented for 'BFloat16'
+# The T4 has no bf16 support at all, so fp32 trainable params is the right shape
+# here regardless.
+from peft import prepare_model_for_kbit_training
+
+model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=True)
+dtypes = {}
+for _, p in model.named_parameters():
+    dtypes[str(p.dtype)] = dtypes.get(str(p.dtype), 0) + p.numel()
+log("param dtypes: " + ", ".join(f"{k}={v/1e6:.1f}M" for k, v in dtypes.items()))
+
 import functools
 
 
@@ -303,6 +318,20 @@ except AttributeError as e:
     if not disable_chunked_ce(f"constructor raised {e}"):
         raise
     trainer = SFTTrainer(**tk)
+
+# Belt and braces: whatever PEFT built inside the trainer, no trainable param may
+# be bf16 or the fp16 GradScaler dies on the first clip_grad_norm_.
+recast = 0
+for _, p in trainer.model.named_parameters():
+    if p.requires_grad and p.dtype == torch.bfloat16:
+        p.data = p.data.float()
+        recast += 1
+tr = [p for p in trainer.model.parameters() if p.requires_grad]
+log(f"trainable tensors {len(tr)}, "
+    f"{sum(p.numel() for p in tr)/1e6:.2f}M params, "
+    f"dtypes {sorted({str(p.dtype) for p in tr})}")
+if recast:
+    log(f"recast {recast} bf16 trainable tensors to fp32")
 
 t_train = time.time()
 trainer.train()

@@ -79,6 +79,14 @@ anything to do with the project:
    imported. Using one GPU is the right call regardless: DataParallel is
    deprecated and behaves badly with quantized models, and one T4 has ample
    room. **Selecting T4 x2 on Kaggle is fine, the script just uses one of them.**
+4. `NotImplementedError: _amp_foreach_non_finite_check_and_unscale_cuda not
+   implemented for 'BFloat16'` at the first gradient clip. Some trainable params
+   were bf16 and fp16's GradScaler cannot unscale bf16 gradients. Fixed by
+   calling `prepare_model_for_kbit_training`, the standard QLoRA preparation I
+   had skipped, which casts the small non-quantized modules to fp32, plus an
+   explicit recast of any bf16 trainable tensor that survives. The T4 has no
+   bf16 support at all, so fp32 trainable params is correct here regardless. The
+   log now prints the parameter dtype census and the trainable count.
 
 ## Getting results back
 
