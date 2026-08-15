@@ -71,6 +71,14 @@ anything to do with the project:
    entirely and is the better setup anyway since a 7B in 4-bit is about 5 GB and
    fits one T4; and the chunked-CE patch is switched off if the wrapper is
    detected. It is a memory optimisation, not required for correctness.
+3. `Expected all tensors to be on the same device, but got index is on cuda:1,
+   different from other tensors on cuda:0`. On a T4 x2 instance the HF Trainer
+   sees two devices and silently wraps the model in `nn.DataParallel`,
+   replicating it to cuda:1 while the 4-bit weights sit on cuda:0. Fixed with
+   `CUDA_VISIBLE_DEVICES=0` at the very top of the script, before torch is
+   imported. Using one GPU is the right call regardless: DataParallel is
+   deprecated and behaves badly with quantized models, and one T4 has ample
+   room. **Selecting T4 x2 on Kaggle is fine, the script just uses one of them.**
 
 ## Getting results back
 

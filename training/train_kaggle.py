@@ -19,7 +19,15 @@ import sys
 import time
 import warnings
 
-# Must happen before transformers imports or the settings are ignored.
+# Must happen before torch or transformers are imported or these are ignored.
+#
+# Only expose one GPU. On a T4 x2 instance the HF Trainer sees two devices and
+# silently wraps the model in nn.DataParallel, which replicates it onto cuda:1
+# while the 4-bit weights are pinned to cuda:0, and every step dies with
+# "Expected all tensors to be on the same device". DataParallel is deprecated
+# and poor with quantized models anyway, and a 7B in 4-bit is about 5 GB, so one
+# 15.6 GB T4 is plenty.
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 os.environ["TRANSFORMERS_VERBOSITY"] = "error"
 os.environ["DATASETS_VERBOSITY"] = "error"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
@@ -117,6 +125,8 @@ log(f"torch        {torch.__version__}")
 log(f"transformers {transformers.__version__}")
 log(f"trl          {trl.__version__}")
 if torch.cuda.is_available():
+    log(f"visible gpus {torch.cuda.device_count()} "
+        f"(pinned to one on purpose, see CUDA_VISIBLE_DEVICES at the top)")
     for i in range(torch.cuda.device_count()):
         p = torch.cuda.get_device_properties(i)
         log(f"gpu {i}        {p.name}, {p.total_memory/1e9:.1f} GB, "
