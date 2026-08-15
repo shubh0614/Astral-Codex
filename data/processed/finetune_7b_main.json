@@ -1,0 +1,13 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "backend": "qlora",
+  "tier": "finetuned(3ep)",
+  "cases_file": "data/processed/baseline_cases.json",
+  "outputs": {
+    "bab-01-moon-star": "Night of the 11th, beginning of the night, the moon was 1 cubit 8 fingers in front of δ Capricorni, the moon being 1/2 cubit low to the south, the moon’s disc being 1/2 cubit back; clouds, I did not watch; all night the north wind blew",
+    "bab-02-moon-planet": "Night of the 2nd, the moon was 1 1/2 cubits behind Jupiter to the west, the moon being 1 cubit high to the north",
+    "bab-03-planet-planet": "Night of the 24th, first part of the night, Venus was 3 fingers below Mars, Venus being 2 fingers back to the west; first part of the night, Venus was 3 fingers below Mars, Venus being 2 fingers back to the west, clouds, I did not watch",
+    "bab-04-heliacal-rising": "The 13th, Venus’ first appearance in the east, it was bright (and) high, rising to sunrise: 10°; ideal first appearance the 11th, when it was a little late, clouds, I did not watch; in the 20th, Venus was bright, measured (despite) clouds: it was bright, it was x° high to the south, it stood 10° in front of Scorpius",
+    "bab-05-lunar-first-visibility": "The 1st, sunset to moonset: 17°; measured (despite) clouds; the 1st followed the 30th of the preceding month, the moon’s first visibility; it stood high to the sun, it was bright, earthshine was present, it was bright, it stood low to the sun, it was high, clouds, I did not watch; month X, the 1st, the moon’s first visibility; it stood x° in front of γ Virginis; it was bright, earthshine was present, it was bright, it stood low to the sun, the moonrise to sunrise interval: 16°, it was high, clouds, I did not watch; month X, the 1st, the moonrise"
+  }
+}

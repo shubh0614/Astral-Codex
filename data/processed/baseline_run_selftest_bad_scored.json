@@ -7,6 +7,11 @@
     {
       "case": "bab-01-moon-star",
       "phenomenon": "moon-fixed star conjunction",
+      "g_no_degeneration": false,
+      "degeneration": [],
+      "invented_stars": [
+        "alpha tauri"
+      ],
       "a_all_objects_present": false,
       "b_no_extra_objects": false,
       "c_reads_as_entry": true,
@@ -35,6 +40,9 @@
     {
       "case": "bab-02-moon-planet",
       "phenomenon": "moon-planet conjunction with latitude note",
+      "g_no_degeneration": true,
+      "degeneration": [],
+      "invented_stars": [],
       "a_all_objects_present": true,
       "b_no_extra_objects": false,
       "c_reads_as_entry": true,
@@ -64,6 +72,9 @@
     {
       "case": "bab-03-planet-planet",
       "phenomenon": "planet-planet conjunction, very close separation",
+      "g_no_degeneration": true,
+      "degeneration": [],
+      "invented_stars": [],
       "a_all_objects_present": true,
       "b_no_extra_objects": true,
       "c_reads_as_entry": false,
@@ -94,6 +105,9 @@
     {
       "case": "bab-04-heliacal-rising",
       "phenomenon": "first appearance (heliacal rising) in a zodiacal sign, with ideal-date correction",
+      "g_no_degeneration": true,
+      "degeneration": [],
+      "invented_stars": [],
       "a_all_objects_present": true,
       "b_no_extra_objects": true,
       "c_reads_as_entry": true,
@@ -122,6 +136,9 @@
     {
       "case": "bab-05-lunar-first-visibility",
       "phenomenon": "first lunar visibility of the month with a lunar-six interval",
+      "g_no_degeneration": true,
+      "degeneration": [],
+      "invented_stars": [],
       "a_all_objects_present": false,
       "b_no_extra_objects": true,
       "c_reads_as_entry": true,

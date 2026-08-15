@@ -29,6 +29,34 @@ INTERPRETIVE = re.compile(
     r"\b(portend\w*|omen|foretell\w*|signif\w*|prophec\w*|shall come to pass|"
     r"means that|indicates that|the king will|there will be war)\b", re.I
 )
+# Degeneration: state syntax bleeding into prose, unfilled placeholders, or the
+# model looping. All three were produced by the 7B run and all three passed the
+# checks above, which is why criterion (g) exists.
+DEGENERATE = {
+    "state syntax in prose": re.compile(
+        r"\b(high|medium|low)\s+confidence\b|\bconfidence:\s*(high|medium|low)\b"
+        r"|\bobserved:\s|\bEvents:\s*\[", re.I),
+    "unfilled placeholder": re.compile(r"\bthe\s+xth\b|\bnn\b|\[x\]|\bx°", re.I),
+}
+# A star is not interchangeable with another star of the same constellation.
+# The 7B invented "alpha Virginis" for a state naming "beta Virginis" and passed,
+# because the object whitelist only sees "Virginis".
+GREEK_TOKEN = re.compile(
+    r"\b(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|"
+    r"xi|omicron|rho|sigma|tau|upsilon|phi|chi|psi|omega)\s+([A-Z][a-z]+)", re.I)
+GREEK_LETTER = {"α": "alpha", "β": "beta", "γ": "gamma",
+                "δ": "delta", "ε": "epsilon", "ζ": "zeta",
+                "η": "eta", "θ": "theta", "ϑ": "theta",
+                "μ": "mu", "ρ": "rho"}
+
+
+def star_tokens(text):
+    """Normalise 'beta Virginis' and 'beta Virginis' written with the letter."""
+    t = text
+    for g, name in GREEK_LETTER.items():
+        t = t.replace(g, name + " ")
+    return {f"{m.group(1).lower()} {m.group(2).lower()}"
+            for m in GREEK_TOKEN.finditer(t)}
 
 
 def mentions(text, token):
@@ -79,9 +107,20 @@ def score_case(case, output):
                           f"{rel_spec['relation'][0]} ... {rel_spec['second'][0]}' "
                           f"in that order")
 
+    # (g) no degeneration, and no star swapped for another of the same
+    # constellation
+    deg = [k for k, rx in DEGENERATE.items() if rx.search(t)]
+    state_stars = star_tokens(case["observation_state"])
+    out_stars = star_tokens(t)
+    invented_stars = sorted(out_stars - state_stars) if state_stars else []
+    g = not deg and not invented_stars
+
     return {
         "case": case["id"],
         "phenomenon": case["phenomenon"],
+        "g_no_degeneration": g,
+        "degeneration": deg,
+        "invented_stars": invented_stars,
         "a_all_objects_present": a,
         "b_no_extra_objects": b,
         "c_reads_as_entry": c,
@@ -90,7 +129,7 @@ def score_case(case, output):
         "dropped_facts": dropped,
         "f_relation_order_correct": rel_ok,
         "relation_detail": rel_detail,
-        "pass": a and b and c and d and e and rel_ok,
+        "pass": a and b and c and d and e and rel_ok and g,
         "missing_objects": missing,
         "hallucinated_objects": hallucinated,
         "c_detail": {
@@ -134,9 +173,14 @@ def main():
               f"b={int(r['b_no_extra_objects'])} c={int(r['c_reads_as_entry'])} "
               f"d={int(r['d_stays_in_observation_genre'])} "
               f"e={int(r['e_hard_facts_preserved'])} "
-              f"f={int(r['f_relation_order_correct'])}")
+              f"f={int(r['f_relation_order_correct'])} "
+              f"g={int(r['g_no_degeneration'])}")
         if r["relation_detail"]:
             print(f"         RELATION BROKEN: {r['relation_detail']}")
+        if r["degeneration"]:
+            print(f"         DEGENERATION: {', '.join(r['degeneration'])}")
+        if r["invented_stars"]:
+            print(f"         INVENTED STARS: {r['invented_stars']}")
         if r["missing_objects"]:
             print(f"         missing: {r['missing_objects']}")
         if r["dropped_facts"]:

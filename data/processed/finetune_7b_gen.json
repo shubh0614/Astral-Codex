@@ -1,0 +1,12 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "backend": "qlora",
+  "tier": "finetuned(3ep)",
+  "cases_file": "data/processed/baseline_cases_generalization.json",
+  "outputs": {
+    "gen-01-stationary": "Month X, until the 4th, when Saturn became stationary to the east, it became stationary 1/2 cubit above β Virginis; Saturn 4 fingers back to the west, it stood 3 fingers to the east of α Virginis",
+    "gen-02-last-appearance": "Month XI, the 18th, Mercury’s last appearance in the west, in Pisces; clouds, I did not watch; (ideal) last appearance on the 16th, sunset to setting of Mercury: 13°, (ideal) last appearance on the 17th, (despite) clouds, when I watched, it was low, the xth, Mercury’s last appearance in the west, medium confidence",
+    "gen-03-lunar-eclipse": "Night of the 14th, moonrise to sunrise: 15°; (ideal) first appearance on the 12th. The 14th, moonrise to sunset: 8°; clouds, I did not watch. Night of the 15th, moonrise to sunrise: 10°; clouds, I did not watch. The 15th, all day it was very overcast; in the afternoon, Jupiter stood in front of α Librae; clouds, I did not watch. Night of the 15th, the moon was eclipsed at moonrise, 3 fingers in diameter, it stood 2 cubits behind α Librae to the east; it was eclipsed; all this was calculated;",
+    "gen-04-acronychal-rising": "The 14th, Sirius’ acronychal rising, which was omitted; all day very overcast, I did not watch"
+  }
+}
