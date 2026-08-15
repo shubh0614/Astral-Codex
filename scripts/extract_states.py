@@ -76,6 +76,32 @@ PLANET_WORDS = {"venus", "mars", "mercury", "jupiter", "saturn", "sirius",
                 "moon", "sun"}
 
 
+GREEK_NAME = {
+    "α": "alpha", "β": "beta", "γ": "gamma", "δ": "delta", "ε": "epsilon",
+    "ζ": "zeta", "η": "eta", "θ": "theta", "ϑ": "theta", "ι": "iota",
+    "κ": "kappa", "λ": "lambda", "μ": "mu", "ν": "nu", "ξ": "xi",
+    "ο": "omicron", "π": "pi", "ρ": "rho", "σ": "sigma", "τ": "tau",
+    "υ": "upsilon", "φ": "phi", "χ": "chi", "ψ": "psi", "ω": "omega",
+}
+
+
+def spell_greek(s):
+    """Star names in the STATE are spelled out, 'delta Capricorni'.
+
+    The entry keeps the Greek letter because that is what the diaries print, but
+    the state has to match what the engine emits at inference time
+    (engine/sky.py NORMAL_STARS uses 'eta Piscium') and what the evaluation
+    cases use. Training on one format and querying in another is the exact
+    drift the training-set card warned about, and the first smoke run showed it:
+    1382 of 2724 states carried a Greek letter while every eval case spelled it
+    out. The model now learns spelled-out state to Greek entry, which is the
+    mapping actually wanted.
+    """
+    for g, name in GREEK_NAME.items():
+        s = s.replace(g, name + " ")
+    return re.sub(r"\s+", " ", s).strip()
+
+
 def norm(s):
     return re.sub(r"\s+", " ", (s or "").strip(" ,.;"))
 
@@ -187,10 +213,14 @@ def render_state(unit, events, conditions, entry):
     if w:
         lines.append(f"  Watch: {w.group(1).lower()}")
     for b in bodies_in(events):
-        lines.append(f"  {b}: observed")
+        lines.append(f"  {spell_greek(b)}: observed")
     if conditions:
         lines.append("  Conditions: " + "; ".join(conditions))
-    lines.append("  Events: " + json.dumps(events, ensure_ascii=False))
+    spelled = json.loads(json.dumps(events, ensure_ascii=False))
+    for e in spelled:
+        if "objects" in e:
+            e["objects"] = [spell_greek(o) for o in e["objects"]]
+    lines.append("  Events: " + json.dumps(spelled, ensure_ascii=False))
     lines.append("</OBSERVATION_STATE>")
     lines.append("<ENTRY>")
     return "\n".join(lines)

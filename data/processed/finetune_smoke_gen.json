@@ -1,0 +1,12 @@
+{
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "backend": "qlora",
+  "tier": "finetuned(1ep) SMOKE",
+  "cases_file": "data/processed/baseline_cases_generalization.json",
+  "outputs": {
+    "gen-01-stationary": "Month X, the 4th, Saturn was stationary to the east 4 fingers back to the west, Saturn being 1/2 cubit above beta Virginis; sunset to moonset: 35° (or) sunset to sunrise: 17°; clouds were in the sky",
+    "gen-02-last-appearance": "Month XI, the 18th, Mercury’s last appearance in the west in Pisces; it was high, I measured it with my unaided eye; it disappeared to the west (despite) clouds; confidence: medium",
+    "gen-03-lunar-eclipse": "Night of the 14th, Jupiter was 2 cubits behind α Librae; lunar eclipse: I did not watch",
+    "gen-04-acronychal-rising": "Month X, the 14th, sunrise to sunset: 17°; measured (despite) clouds"
+  }
+}
