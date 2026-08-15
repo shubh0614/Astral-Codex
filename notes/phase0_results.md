@@ -7,13 +7,18 @@ Run 2026-08-15. Format follows plan.md Section 7.
 | Tradition | Genre | Candidates | Usable | Ambiguous | Reject | Usable rate |
 |---|---|---:|---:|---:|---:|---:|
 | Babylonian | observation | 100 | 31 | 39 | 30 | **31%** |
-| Korean | observation | - | - | - | - | not sampled (extraction gate only) |
+| Korean | observation | 34 | 5 | 26 | 3 | **15%** |
 | Roman | omen_interpretation | 27 | 3 | 4 | 20 | **11%** |
-| Vedic | omen_interpretation | 28 | 6 | 13 | 9 | **21%** |
+| Vedic | omen_interpretation | 28 | 8 | 15 | 5 | **29%** |
 | Maya | prophecy | 26 | 14 | 3 | 9 | **54%** |
 
-All four sampled traditions were annotated by reading every sampled item, not
-by keyword scan. Per-item verdicts with reasons are in
+**All five rows are now filled.** Korean was annotated 2026-08-16
+(`annotation_korean.json`). Vedic was re-sampled the same day against a
+corrected chapter list (`annotation_vedic_v2.json`), raising it from 21% and
+roughly doubling its pool from 254 to 419 slokas.
+
+Every tradition was annotated by reading every sampled item, not by keyword
+scan. Per-item verdicts with reasons are in
 `data/processed/annotation_<tradition>.json`.
 
 **Read this table with the notes below before acting on it.** Three of the four
@@ -107,7 +112,41 @@ Ahau has the sun eclipsed for five days; Katun 3 Ahau has it moved from its
 place for three months. Neither is possible. plan.md Section 2 was right to
 route Maya around the astronomy layers entirely.
 
-### Korean: extraction gate passed, not yet annotated
+### Korean: 15% usable, and the constraint is not what the plan assumed
+
+**Annotated 2026-08-16. Full detail in `annotation_korean.json`.**
+
+34 candidates, which is not a sample but everything the two harvested papers
+publish at the individual-record level: 9 prose records from the Halley
+appendices, 25 rows from the meteor table. 5 usable, 26 ambiguous, 3 reject. On
+prose alone it is 5 of 9.
+
+**The number is not the finding.** Extraction was supposed to be the Korean
+problem and it is solved: the vision gate passed at 0% field error and the prose
+appendices parse with an ordinary regex. The obstacle is that these papers
+publish **dates and classifications, not the original entry text**. TABLE 1 of
+the meteor paper reports Korea holding 3,861 meteor records, 31 meteor shower
+records and 54 meteorites across the three dynasties. What the papers expose as
+individual records is 34, and only 9 carry any prose.
+
+A table row gives perfect conditioning facts and nothing to generate. For a
+state-to-text task it cannot be a training example however clean the data is.
+
+So harvesting more astronomy-history papers multiplies structured records
+without necessarily yielding more target text. The text lives in the chronicles
+themselves, and plan.md Key Decision 5 routed around those precisely because the
+Sillok is only about 11% English-translated.
+
+**Korean is not blocked on extraction difficulty. It is blocked on whether
+English-translated chronicle text can be obtained at volume.** That is a
+different question from the one the plan posed, and it should be answered before
+Korean is treated as the large-corpus tradition.
+
+Separately, none of the Korean material is engine-drivable today: all 9 prose
+records are comet apparitions and the table is meteor showers, neither of which
+the current Skyfield and DE406 engine supports. Both are tractable additions.
+
+### Korean: the earlier extraction-gate result
 
 Different problem class, handled per plan.md Section 4's separate gate. Full
 write-up in `notes/korean_vision_test.md`.
@@ -133,13 +172,22 @@ write-up in `notes/korean_vision_test.md`.
 > up well above it, cut that tradition to v2. If all five hold up reasonably
 > (even unevenly, e.g. 60-95%), keep all five.
 
-Mechanically applied: **Roman at 11% is the one tradition below the line.**
-Vedic at 21% sits just above it. Nobody is in the 60-95% band the rule
-describes as "holding up", so the rule's second branch does not fire.
+Mechanically applied, with all five rows now filled: **Roman at 11% and Korean
+at 15% are the two below the line.** Vedic sits at 29% after re-sampling,
+Babylonian at 31%, Maya at 54%. Nobody reaches the 60-95% band the rule
+describes as "holding up", so the rule's second branch never fires.
 
-That result inverts the prior. plan.md Section 9 records a reviewer arguing
-a priori for cutting **Vedic and Maya**. On real data, Maya has the *best*
-usable rate and Roman has the worst. The empirical gate was worth running.
+That result inverts the prior twice over. plan.md Section 9 records a reviewer
+arguing a priori for cutting **Vedic and Maya**. On real data Maya has the best
+usable rate, Vedic came up after correction, and the two below the line are
+Roman and Korean, neither of which anyone predicted. Korean in particular was
+expected to be the *largest* corpus in the project.
+
+**But the rate is the wrong number for Korean**, and this is the more important
+finding. Korean yields 5 usable prose records against Babylonian's 2,288, a
+factor of roughly 450. The rate understates how thin it is, because 25 of its 34
+candidates are table rows that carry perfect facts and no text at all. See the
+Korean section below.
 
 **But do not cut Roman on this number alone**, for two reasons stated above:
 the 11% is an artifact of requiring astronomical conditioning, and Roman scores

@@ -1,0 +1,74 @@
+{
+  "tradition": "vedic",
+  "genre": "omen_interpretation",
+  "supersedes": "annotation_vedic.json, which sampled only the chapters plan.md Section 4 names",
+  "reason": "The post-Phase-0 Vedic source sweep argued the chapter list was too narrow. Tested against the parsed corpus rather than argued: it was right about size and wrong about voice. This is the re-sample it called for.",
+  "chapter_list": {
+    "original": [3, 4, 5, 6, 7, 8, 9, 10, 11, 46],
+    "added": [17, 19, 20, 21, 24, 30, 34],
+    "added_why": {
+      "17": "graha-yuddha, planetary war. Occultations, grazing, retrogradation, planets classed Akranda/Paura/Yayee by solar elongation. All computable, all with collective omens attached. The clearest miss.",
+      "19": "effects of the year, month or day presided over by each planet",
+      "20": "planetary concourse, four or five planets congregating in one asterism, plus meteors",
+      "21": "Moon transiting named asterisms, with aspect conditions",
+      "24": "rainfall prediction keyed to the Moon's conjunction with an asterism",
+      "30": "twilight and sandhya omens, haloes and mock suns",
+      "34": "planets within the halo of the Sun or Moon, mock suns, Sun in a rasi flanked by malefics"
+    },
+    "deliberately_excluded": {
+      "102, 104": "Hora, not Samhita. Adh 104 is 43 slokas of house-transit personal fortune ('the Moon in the 5th brings about humiliation'). A celestial-keyword scan rates it 84% celestial and it is the wrong genre. The Hora filter has to run WITHIN Brihat Samhita, not only between texts.",
+      "86 to 97": "bird, beast, jackal and crow omens, and portent timing. Terrestrial triggers, 3 to 14% celestial.",
+      "2, 14, 15, 16, 41": "definitional or methodological. Nakshatra-to-region and planet-to-region mappings, rasi-to-substance tables. Reference material with no omen attached.",
+      "28": "prasna, interrogational astrology keyed to what the querist touches or says. A third genre again, neither Samhita nor Hora."
+    }
+  },
+  "pool": {"original_chapters": 254, "corrected_chapters": 419,
+           "contributed_by_added_chapters": 171},
+  "sample_size": 28,
+  "sample_method": "systematic across the corrected 419-sloka pool",
+  "annotated_by": "manual read, 2026-08-16",
+  "entries": [
+    {"ref": "Adh 3, Sl 17",    "verdict": "ambiguous", "why": "shapes of sunspots on the solar disc. Not computable."},
+    {"ref": "Adh 3, Sl 87",    "verdict": "ambiguous", "why": "mock-sun position relative to the Sun. Geometry is constrained but the apparition is not predictable."},
+    {"ref": "Adh 3, Sl 15",    "verdict": "reject",    "why": "84-character fragment, cuts off at 'it is termed Kunda and'."},
+    {"ref": "Adh 5, Sl 2",     "verdict": "ambiguous", "why": "describes Rahu's disc and its visibility on Parva days. Definitional, no consequence."},
+    {"ref": "Adh 5, Sl 24",    "verdict": "usable",    "why": "eclipse arriving before or after the calculated time predicts different disasters. Computable, complete, and unusually interesting: an omen about prediction error itself."},
+    {"ref": "Adh 5, Sl 47",    "verdict": "reject",    "why": "98-character fragment, cuts off at 'it is called'."},
+    {"ref": "Adh 5, Sl 75",    "verdict": "usable",    "why": "eclipse in the lunar month of Vaisakha destroys named crops and afflicts named peoples. Eclipse plus lunar month is fully computable."},
+    {"ref": "Adh 5, Sl 91",    "verdict": "ambiguous", "why": "the ten eclipse-liberation types transferred from lunar to solar with quarters substituted. Taxonomy, no consequence."},
+    {"ref": "Adh 6, Sl 12-13", "verdict": "ambiguous", "why": "Mercury's rising and setting periods as day counts (40, 30, 22, 18, 9, 15, 11). Genuine astronomical parameters, useful to the engine, but not an omen and polluted with OCR noise."},
+    {"ref": "Adh 8, Sl 29-30", "verdict": "usable",    "why": "Jupiter-cycle years Vibhava, Sukla, Pramoda, Prajapati with increasing benefic effects. Computable from Jupiter's position."},
+    {"ref": "Adh 9, Sl 2",     "verdict": "ambiguous", "why": "defines Venus's veethi roads over nakshatra triads. Computable mapping, no consequence stated."},
+    {"ref": "Adh 9, Sl 27",    "verdict": "usable",    "why": "Venus in Punarvasu afflicts the Asmakas and Vaidarbhas. Planet in nakshatra, clear trigger and target, though the last word is clipped."},
+    {"ref": "Adh 10, Sl 4a",   "verdict": "usable",    "why": "Saturn in Krittika afflicts smiths and commandants, in Rohini the people of Kosala, Madra, Kasi, Panchala. Clean, computable, two rules in one sloka."},
+    {"ref": "Adh 10, Sl 4b",   "verdict": "ambiguous", "why": "taxonomy of atmospheric, celestial and terrestrial Ketus. Definitional. Duplicate sloka number is a parser artifact."},
+    {"ref": "Adh 11, Sl 25",   "verdict": "ambiguous", "why": "catalogue of 8 Ganaka and 204 Chaturasra Ketus. Mythological enumeration, not observable."},
+    {"ref": "Adh 11, Sl 53",   "verdict": "ambiguous", "why": "comets eclipsing stars with their tails predict which princes die. Comets are not computable by the engine."},
+    {"ref": "Adh 19, Sl 7-9",  "verdict": "usable",    "why": "the year presided over by Mars brings wind-driven fires consuming villages and forests, robbers, ruined crowds crying out. Computable year-lord, and at 638 characters the most narrative passage found anywhere in the Vedic corpus."},
+    {"ref": "Adh 21, Sl 7",    "verdict": "ambiguous", "why": "foetus formed under an asterism born 195 solar days later. A calculation rule rather than an omen."},
+    {"ref": "Adh 21, Sl 33",   "verdict": "usable",    "why": "asterism afflicted by a malefic brings hail and thunderbolts; Moon or Sun there with a benefic brings copious rain. Planetary aspect conditions are computable."},
+    {"ref": "Adh 24, Sl 17",   "verdict": "reject",    "why": "poetic cloud imagery, elephants and bees and golden trappings. Genuinely narrative but no celestial trigger."},
+    {"ref": "Adh 24, Sl 1",    "verdict": "ambiguous", "why": "Moon's conjunction with Rohini, Swati and Ashadha in the bright half of Ashadha. Computable, but cross-referential and trailing OCR garbage."},
+    {"ref": "Adh 30, Sl 5",    "verdict": "reject",    "why": "cries of birds and beasts facing the Sun. The trigger is animal behaviour; the Sun only supplies orientation."},
+    {"ref": "Adh 30, Sl 24",   "verdict": "ambiguous", "why": "cloud colour and form screening the Sun predicts rain. Meteorological."},
+    {"ref": "Adh 19, Sl 29",   "verdict": "reject",    "why": "earthquakes by Varuna circle and Indra period. Seismic, not celestial."},
+    {"ref": "Adh 20, Sl 24",   "verdict": "ambiguous", "why": "a rod-shaped meteor leaving a long trail threatens the king. Meteors are not computable."},
+    {"ref": "Adh 34, Sl 19-21","verdict": "ambiguous", "why": "a halo on each tithi of the lunar month destroys a different class. The tithi is computable, the halo is not."},
+    {"ref": "Adh 34, Sl 2",    "verdict": "ambiguous", "why": "mock-sun colour drives the prediction. Colour is not computable."},
+    {"ref": "Adh 34, Sl 8",    "verdict": "usable",    "why": "the Sun in Vrischika flanked by malefics in the 2nd and 12th destroys crops. Entirely computable from planetary positions. Short but complete."}
+  ],
+  "counts": {"usable": 8, "ambiguous": 15, "reject": 5, "total": 28},
+  "rates": {"usable": 0.29, "ambiguous": 0.54, "reject": 0.18},
+  "vs_first_pass": {
+    "first_pass": {"usable_rate": 0.21, "pool": 254},
+    "this_pass": {"usable_rate": 0.29, "pool": 419},
+    "estimated_usable_slokas": "about 121 on the corrected list, against about 53 implied by the first pass",
+    "conclusion": "The sweep was right that the chapter list was too narrow. Vedic is roughly twice the size previously measured and its usable rate is 8 points higher."
+  },
+  "voice_thinness_revisited": {
+    "verdict": "Still confirmed, but softened in one specific place.",
+    "detail": "Most usable slokas remain bare conditionals: 'When Saturn moves in Krittika, people living by fire suffer.' But Adh 19 on planetary year-lords is genuinely different. 'In the year presided over by Mars, most violent fires roused by the wind spread out threatening to consume villages, forests and towns; crowds of men ruined by the inroads of hordes of robbers and bereft of their properties and cattle cry out alas, alas, throughout the land.' That is 638 characters of actual narrative with a computable trigger, and nothing like it appeared in the first sample.",
+    "implication": "The lookup-table recommendation still fits the planet-in-nakshatra bulk, which is most of the corpus. But Adh 19 and Adh 20 suggest a small genuinely generative subset exists. Worth carving out rather than treating all of Vedic as one register."
+  },
+  "trap_confirmed": "A celestial-vocabulary regex over-counts badly in the later chapters because Brihat Samhita's own Hora material names the same bodies. Adh 104 scores 84% celestial across 43 slokas and is house-transit personal fortune. The Samhita/Hora filter must run inside the text, not only between texts. This is the Vedic twin of the Roman temples-versus-planets trap."
+}
