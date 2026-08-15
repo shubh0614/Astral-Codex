@@ -1,0 +1,293 @@
+{
+  "purpose": "The 5 hand-crafted observation states for the prompt-only baseline gate in plan.md Section 7 (Phase 0 -> Phase 1 checklist, item 7). Pass condition per case: (a) mentions every object present in the state, (b) mentions no object absent from it, (c) reads as a single dated entry rather than a list of facts. 4/5 passing -> proceed. <=1/5 -> the prompt needs work before any fine-tuning discussion.",
+  "construction": "Each state was hand-written from a real ORACC diary entry drawn from the 807 zero-gap usable units. The reference_text is the actual historical entry and is NEVER shown to the model - it exists so a human can compare register afterwards. Cases deliberately span five different phenomenon types so the test is not five variations of one conjunction.",
+  "leakage_note": "The three few-shot examples in scripts/baseline_prompt.py are different diary entries from these five. They share phenomenon types (that is the point of few-shot) but no case text appears in the prompt.",
+  "cases": [
+    {
+      "id": "bab-01-moon-star",
+      "phenomenon": "moon-fixed star conjunction",
+      "source": {
+        "text_id": "X102612",
+        "designation": "AD -262",
+        "ancient_year": "SE 49",
+        "month": "V",
+        "day": "11"
+      },
+      "reference_text": "Night of the 11th, beginning of the night, the moon was 1 cubit 8 fingers in front of δ Capricorni.",
+      "observation_state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year 49 of the Seleucid Era, month V, night of the 11th\n  Watch: beginning of the night\n  Moon: visible, waxing, confidence: high\n  Events: [{\"event\":\"conjunction\",\"objects\":[\"Moon\",\"delta Capricorni\"],\"relation\":\"in front of\",\"separation\":\"1 cubit 8 fingers\",\"confidence\":\"high\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+      "required_objects": [
+        "moon",
+        "capricorni"
+      ],
+      "forbidden_objects": [
+        "sun",
+        "mercury",
+        "venus",
+        "mars",
+        "jupiter",
+        "saturn",
+        "sirius",
+        "tauri",
+        "leonis",
+        "virginis",
+        "librae",
+        "geminorum",
+        "arietis",
+        "piscium",
+        "cancri",
+        "scorpii",
+        "ophiuchi"
+      ],
+      "required_facts": [
+        [
+          "1 cubit 8 fingers"
+        ],
+        [
+          "in front of"
+        ],
+        [
+          "beginning of the night"
+        ],
+        [
+          "11th",
+          "11"
+        ]
+      ]
+    },
+    {
+      "id": "bab-02-moon-planet",
+      "phenomenon": "moon-planet conjunction with latitude note",
+      "source": {
+        "text_id": "X102701",
+        "designation": "AD -270B",
+        "ancient_year": "SE 41",
+        "month": "VIII",
+        "day": "2"
+      },
+      "reference_text": "Night of the 2nd, the moon was 1 1/2 cubits behind Jupiter, the moon being 1 cubit high to the north.",
+      "observation_state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year 41 of the Seleucid Era, month VIII, night of the 2nd\n  Moon: visible, waxing crescent, confidence: high\n  Jupiter: visible, confidence: high\n  Events: [{\"event\":\"conjunction\",\"objects\":[\"Moon\",\"Jupiter\"],\"relation\":\"behind\",\"separation\":\"1 1/2 cubits\",\"latitude\":\"Moon 1 cubit high to the north\",\"confidence\":\"high\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+      "required_objects": [
+        "moon",
+        "jupiter"
+      ],
+      "forbidden_objects": [
+        "sun",
+        "mercury",
+        "venus",
+        "mars",
+        "saturn",
+        "sirius",
+        "tauri",
+        "leonis",
+        "virginis",
+        "librae",
+        "geminorum",
+        "arietis",
+        "piscium",
+        "cancri",
+        "capricorni",
+        "scorpii",
+        "ophiuchi"
+      ],
+      "required_facts": [
+        [
+          "1 1/2 cubits",
+          "1 1/2 cubit",
+          "1.5 cubits",
+          "1 1⁄2 cubits"
+        ],
+        [
+          "behind"
+        ],
+        [
+          "north"
+        ],
+        [
+          "1 cubit high",
+          "high to the north"
+        ],
+        [
+          "2nd",
+          "2"
+        ]
+      ]
+    },
+    {
+      "id": "bab-03-planet-planet",
+      "phenomenon": "planet-planet conjunction, very close separation",
+      "source": {
+        "text_id": "X102612",
+        "designation": "AD -262",
+        "ancient_year": "SE 49",
+        "month": "V",
+        "day": "24"
+      },
+      "reference_text": "Night of the 24th, first part of the night, Venus was 3 fingers below Mars, Venus being back 2 fingers to the west.",
+      "observation_state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year 49 of the Seleucid Era, month V, night of the 24th\n  Watch: first part of the night\n  Venus: visible, confidence: high\n  Mars: visible, confidence: high\n  Events: [{\"event\":\"close_conjunction\",\"objects\":[\"Venus\",\"Mars\"],\"relation\":\"below\",\"separation\":\"3 fingers\",\"note\":\"Venus 2 fingers back to the west\",\"confidence\":\"high\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+      "required_objects": [
+        "venus",
+        "mars"
+      ],
+      "forbidden_objects": [
+        "moon",
+        "sun",
+        "mercury",
+        "jupiter",
+        "saturn",
+        "sirius",
+        "tauri",
+        "leonis",
+        "virginis",
+        "librae",
+        "geminorum",
+        "arietis",
+        "piscium",
+        "cancri",
+        "capricorni",
+        "scorpii",
+        "ophiuchi"
+      ],
+      "required_facts": [
+        [
+          "3 fingers"
+        ],
+        [
+          "below"
+        ],
+        [
+          "first part of the night"
+        ],
+        [
+          "2 fingers"
+        ],
+        [
+          "west"
+        ],
+        [
+          "24th",
+          "24"
+        ]
+      ]
+    },
+    {
+      "id": "bab-04-heliacal-rising",
+      "phenomenon": "first appearance (heliacal rising) in a zodiacal sign, with ideal-date correction",
+      "source": {
+        "text_id": "X102731",
+        "designation": "AD -273B",
+        "ancient_year": "SE 38",
+        "month": "VIII",
+        "day": "13"
+      },
+      "reference_text": "The 13th, Venus' first appearance in the east in Scorpius; it was bright, rising of Venus to sunrise: 10°; (ideal) first appearance on the 11th.",
+      "observation_state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year 38 of the Seleucid Era, month VIII, the 13th\n  Venus: first visibility in the east, in Scorpius, brightness: bright, confidence: high\n  Events: [{\"event\":\"first_appearance\",\"objects\":[\"Venus\"],\"direction\":\"east\",\"sign\":\"Scorpius\",\"rising_to_sunrise_deg\":10,\"ideal_first_appearance\":\"the 11th\",\"confidence\":\"medium\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+      "required_objects": [
+        "venus",
+        "scorpi"
+      ],
+      "forbidden_objects": [
+        "moon",
+        "mercury",
+        "mars",
+        "jupiter",
+        "saturn",
+        "sirius",
+        "tauri",
+        "leonis",
+        "virginis",
+        "librae",
+        "geminorum",
+        "arietis",
+        "piscium",
+        "cancri",
+        "capricorni",
+        "ophiuchi"
+      ],
+      "required_facts": [
+        [
+          "first appearance"
+        ],
+        [
+          "east"
+        ],
+        [
+          "Scorpi"
+        ],
+        [
+          "bright"
+        ],
+        [
+          "10"
+        ],
+        [
+          "ideal"
+        ],
+        [
+          "13th",
+          "13"
+        ]
+      ]
+    },
+    {
+      "id": "bab-05-lunar-first-visibility",
+      "phenomenon": "first lunar visibility of the month with a lunar-six interval",
+      "source": {
+        "text_id": "X102661",
+        "designation": "AD -266B",
+        "ancient_year": "SE 45",
+        "month": "IX",
+        "day": "1"
+      },
+      "reference_text": "Month IX, the 1st (of which followed the 30th of the preceding month), sunset to moonset: 17°; it was bright; earthshine; it was low to the sun.",
+      "observation_state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year 45 of the Seleucid Era, month IX, the 1st\n  Month start: the 1st followed the 30th of the preceding month\n  Moon: first visibility, brightness: bright, earthshine: present, low to the sun, confidence: high\n  Events: [{\"event\":\"lunar_first_visibility\",\"objects\":[\"Moon\"],\"sunset_to_moonset_deg\":17,\"confidence\":\"high\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+      "required_objects": [
+        "moon"
+      ],
+      "forbidden_objects": [
+        "mercury",
+        "venus",
+        "mars",
+        "jupiter",
+        "saturn",
+        "sirius",
+        "tauri",
+        "leonis",
+        "virginis",
+        "librae",
+        "geminorum",
+        "arietis",
+        "piscium",
+        "cancri",
+        "capricorni",
+        "scorpii",
+        "ophiuchi"
+      ],
+      "allowed_extra": [
+        "sun"
+      ],
+      "allowed_extra_note": "the Sun is implicit in 'sunset to moonset' and 'low to the sun', so mentioning it is not a hallucinated object here",
+      "required_facts": [
+        [
+          "month IX",
+          "IX"
+        ],
+        [
+          "1st"
+        ],
+        [
+          "17"
+        ],
+        [
+          "earthshine"
+        ],
+        [
+          "bright"
+        ],
+        [
+          "low to the sun"
+        ]
+      ]
+    }
+  ],
+  "criterion_e_note": "required_facts added after the template control exposed that criterion (a) checks only object NAMES. The template scored 5/5 while silently dropping the watch, the latitude clause, the month number, earthshine and the direction - all of them hard facts present in the OBSERVATION_STATE. Criterion (e) checks that the quantitative and qualitative facts survive, which is what the guardrail in plan.md Section 2 actually promises. Each fact is a list of acceptable surface variants; it counts as present if any variant appears."
+}

@@ -1,0 +1,12 @@
+{
+  "model": "template",
+  "backend": "template",
+  "tier": "few-shot(3)",
+  "outputs": {
+    "bab-01-moon-star": "Night of the 11th, Moon was 1 cubit 8 fingers in front of δ Capricorni.",
+    "bab-02-moon-planet": "Night of the 2nd, Moon was 1 1/2 cubits behind Jupiter.",
+    "bab-03-planet-planet": "Night of the 24th, Venus was 3 fingers below Mars.",
+    "bab-04-heliacal-rising": "The 13th, Venus's first appearance in Scorpius; rising to sunrise: 10°.",
+    "bab-05-lunar-first-visibility": "Month, the 1st, sunset to moonset: 17°; it was bright."
+  }
+}
