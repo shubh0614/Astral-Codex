@@ -52,7 +52,18 @@
           "11th",
           "11"
         ]
-      ]
+      ],
+      "required_relation": {
+        "first": [
+          "moon"
+        ],
+        "relation": [
+          "in front of"
+        ],
+        "second": [
+          "capricorni"
+        ]
+      }
     },
     {
       "id": "bab-02-moon-planet",
@@ -110,7 +121,18 @@
           "2nd",
           "2"
         ]
-      ]
+      ],
+      "required_relation": {
+        "first": [
+          "moon"
+        ],
+        "relation": [
+          "behind"
+        ],
+        "second": [
+          "jupiter"
+        ]
+      }
     },
     {
       "id": "bab-03-planet-planet",
@@ -167,7 +189,18 @@
           "24th",
           "24"
         ]
-      ]
+      ],
+      "required_relation": {
+        "first": [
+          "venus"
+        ],
+        "relation": [
+          "below"
+        ],
+        "second": [
+          "mars"
+        ]
+      }
     },
     {
       "id": "bab-04-heliacal-rising",
@@ -289,5 +322,6 @@
       ]
     }
   ],
-  "criterion_e_note": "required_facts added after the template control exposed that criterion (a) checks only object NAMES. The template scored 5/5 while silently dropping the watch, the latitude clause, the month number, earthshine and the direction - all of them hard facts present in the OBSERVATION_STATE. Criterion (e) checks that the quantitative and qualitative facts survive, which is what the guardrail in plan.md Section 2 actually promises. Each fact is a list of acceptable surface variants; it counts as present if any variant appears."
+  "criterion_e_note": "required_facts added after the template control exposed that criterion (a) checks only object NAMES. The template scored 5/5 while silently dropping the watch, the latitude clause, the month number, earthshine and the direction - all of them hard facts present in the OBSERVATION_STATE. Criterion (e) checks that the quantitative and qualitative facts survive, which is what the guardrail in plan.md Section 2 actually promises. Each fact is a list of acceptable surface variants; it counts as present if any variant appears.",
+  "criterion_f_note": "required_relation added after qwen2.5:7b produced 'Venus and Mars were 3 fingers below, with Venus 2 fingers back to the west' for a state whose fact is 'Venus below Mars'. Every token criterion (e) looks for was present, so it passed, while the conjunction relationship itself had been destroyed - the reader cannot tell which body was below which. plan.md Section 2 names exactly this ('a reversed relationship') as the thing a regex/NER validator cannot catch. Criterion (f) checks that OBJ1, the relation word, and OBJ2 appear in that ORDER, which catches reversal and destruction of the pairing. It does not make the whitelist sufficient - the hand-built 30-50 case adversarial set in plan.md Section 2 is still the primary evidence."
 }

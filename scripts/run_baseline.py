@@ -90,8 +90,9 @@ def call_anthropic(model, system, user):
 # plan.md Section 2: "if the fine-tuned model only marginally beats a dumb
 # template on style, that tells you something important about where the value
 # actually is." This is that dumb template.
-GREEK = {"alpha": "α", "beta": "β", "gamma": "γ", "delta": "δ", "epsilon": "ε",
-         "zeta": "ζ", "eta": "η", "theta": "ϑ", "mu": "μ", "rho": "ρ"}
+GREEK = {"alpha": "α", "beta": "β", "gamma": "γ",
+         "delta": "δ", "epsilon": "ε", "zeta": "ζ",
+         "eta": "η", "theta": "ϑ", "mu": "μ", "rho": "ρ"}
 
 
 def greekify(name):
@@ -112,10 +113,9 @@ def ordinal(n):
 
 def call_template(_model, _system, user):
     """Fill a fixed sentence frame straight from the state JSON. No model."""
-    m = re.search(r"Events: (\[.*\])", user.split("<ENTRY>")[-2 if "<ENTRY>" in user else 0]
-                  if False else user[user.rfind("<OBSERVATION_STATE>"):])
-    day = re.search(r"(?:night of the|the)\s+(\d{1,2})(?:st|nd|rd|th)",
-                    user[user.rfind("<OBSERVATION_STATE>"):], re.I)
+    tail = user[user.rfind("<OBSERVATION_STATE>"):]
+    m = re.search(r"Events: (\[.*\])", tail)
+    day = re.search(r"(?:night of the|the)\s+(\d{1,2})(?:st|nd|rd|th)", tail, re.I)
     if not m:
         return "(template: no events parsed)"
     ev = json.loads(m.group(1))[0]
@@ -125,10 +125,10 @@ def call_template(_model, _system, user):
     if kind == "first_appearance":
         return (f"The {ordinal(day.group(1)) if day else 'day'}, {objs[0]}'s first "
                 f"appearance{' in ' + ev['sign'] if ev.get('sign') else ''}; "
-                f"rising to sunrise: {ev.get('rising_to_sunrise_deg','nn')}°.")
+                f"rising to sunrise: {ev.get('rising_to_sunrise_deg', 'nn')}°.")
     if kind == "lunar_first_visibility":
         return (f"Month, {d}, sunset to moonset: "
-                f"{ev.get('sunset_to_moonset_deg','nn')}°; it was bright.")
+                f"{ev.get('sunset_to_moonset_deg', 'nn')}°; it was bright.")
     rel = ev.get("relation", "near")
     sep = ev.get("separation", "")
     lead = objs[0] if objs[0][0].isupper() and " " not in objs[0] else f"the {objs[0].lower()}"
@@ -144,7 +144,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--backend", required=True, choices=list(BACKENDS))
     ap.add_argument("--model", default="template")
-    ap.add_argument("--shots", type=int, default=3)
+    ap.add_argument("--shots", type=int, default=5)
     ap.add_argument("--tag", default=None)
     a = ap.parse_args()
 
@@ -162,7 +162,7 @@ def main():
             outputs[c["id"]] = f"(ERROR: {e})"
             print(f" ERROR {e}")
 
-    tag = a.tag or f"{a.backend}_{a.model.replace(':','-').replace('/','-')}_{a.shots}shot"
+    tag = a.tag or f"{a.backend}_{a.model.replace(':', '-').replace('/', '-')}_{a.shots}shot"
     out = OUTDIR / f"baseline_run_{tag}.json"
     out.write_text(json.dumps(
         {"model": a.model, "backend": a.backend, "tier": tier, "outputs": outputs},

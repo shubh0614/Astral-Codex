@@ -1,40 +1,42 @@
 {
-  "model": "template",
-  "tier": "few-shot(5)",
+  "model": "selftest-selftest_bad",
+  "tier": "fixture",
   "passed": 0,
   "total": 5,
   "results": [
     {
       "case": "bab-01-moon-star",
       "phenomenon": "moon-fixed star conjunction",
-      "a_all_objects_present": true,
-      "b_no_extra_objects": true,
+      "a_all_objects_present": false,
+      "b_no_extra_objects": false,
       "c_reads_as_entry": true,
       "d_stays_in_observation_genre": true,
-      "e_hard_facts_preserved": false,
-      "dropped_facts": [
-        "beginning of the night"
-      ],
-      "f_relation_order_correct": true,
-      "relation_detail": null,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": false,
+      "relation_detail": "expected 'moon ... in front of ... capricorni' in that order",
       "pass": false,
-      "missing_objects": [],
-      "hallucinated_objects": [],
+      "missing_objects": [
+        "capricorni"
+      ],
+      "hallucinated_objects": [
+        "tauri"
+      ],
       "c_detail": {
         "has_date_marker": true,
         "is_bulleted": false,
-        "word_count": 15,
+        "word_count": 20,
         "length_ok": true
       },
       "genre_leak_interpretive_language": false,
       "human_override": null,
-      "output": "Night of the 11th, Moon was 1 cubit 8 fingers in front of δ Capricorni."
+      "output": "Night of the 11th, beginning of the night, the moon was 1 cubit 8 fingers in front of α Tauri."
     },
     {
       "case": "bab-02-moon-planet",
       "phenomenon": "moon-planet conjunction with latitude note",
       "a_all_objects_present": true,
-      "b_no_extra_objects": true,
+      "b_no_extra_objects": false,
       "c_reads_as_entry": true,
       "d_stays_in_observation_genre": true,
       "e_hard_facts_preserved": false,
@@ -46,44 +48,48 @@
       "relation_detail": null,
       "pass": false,
       "missing_objects": [],
-      "hallucinated_objects": [],
+      "hallucinated_objects": [
+        "saturn"
+      ],
       "c_detail": {
         "has_date_marker": true,
         "is_bulleted": false,
-        "word_count": 11,
+        "word_count": 18,
         "length_ok": true
       },
       "genre_leak_interpretive_language": false,
       "human_override": null,
-      "output": "Night of the 2nd, Moon was 1 1/2 cubits behind Jupiter."
+      "output": "Night of the 2nd, the moon was 1 1/2 cubits behind Jupiter, with Saturn nearby to the west."
     },
     {
       "case": "bab-03-planet-planet",
       "phenomenon": "planet-planet conjunction, very close separation",
       "a_all_objects_present": true,
       "b_no_extra_objects": true,
-      "c_reads_as_entry": true,
+      "c_reads_as_entry": false,
       "d_stays_in_observation_genre": true,
       "e_hard_facts_preserved": false,
       "dropped_facts": [
+        "below",
         "first part of the night",
         "2 fingers",
-        "west"
+        "west",
+        "24th"
       ],
-      "f_relation_order_correct": true,
-      "relation_detail": null,
+      "f_relation_order_correct": false,
+      "relation_detail": "expected 'venus ... below ... mars' in that order",
       "pass": false,
       "missing_objects": [],
       "hallucinated_objects": [],
       "c_detail": {
-        "has_date_marker": true,
-        "is_bulleted": false,
+        "has_date_marker": false,
+        "is_bulleted": true,
         "word_count": 10,
         "length_ok": true
       },
       "genre_leak_interpretive_language": false,
       "human_override": null,
-      "output": "Night of the 24th, Venus was 3 fingers below Mars."
+      "output": "- Venus: visible\n- Mars: visible\n- separation: 3 fingers"
     },
     {
       "case": "bab-04-heliacal-rising",
@@ -91,11 +97,11 @@
       "a_all_objects_present": true,
       "b_no_extra_objects": true,
       "c_reads_as_entry": true,
-      "d_stays_in_observation_genre": true,
+      "d_stays_in_observation_genre": false,
       "e_hard_facts_preserved": false,
       "dropped_facts": [
-        "east",
         "bright",
+        "10",
         "ideal"
       ],
       "f_relation_order_correct": true,
@@ -106,40 +112,43 @@
       "c_detail": {
         "has_date_marker": true,
         "is_bulleted": false,
-        "word_count": 11,
+        "word_count": 22,
         "length_ok": true
       },
-      "genre_leak_interpretive_language": false,
+      "genre_leak_interpretive_language": true,
       "human_override": null,
-      "output": "The 13th, Venus's first appearance in Scorpius; rising to sunrise: 10°."
+      "output": "The 13th, Venus' first appearance in the east in Scorpius; this portends that the king will fall and there will be war."
     },
     {
       "case": "bab-05-lunar-first-visibility",
       "phenomenon": "first lunar visibility of the month with a lunar-six interval",
-      "a_all_objects_present": true,
+      "a_all_objects_present": false,
       "b_no_extra_objects": true,
       "c_reads_as_entry": true,
       "d_stays_in_observation_genre": true,
       "e_hard_facts_preserved": false,
       "dropped_facts": [
         "month IX",
+        "17",
         "earthshine",
         "low to the sun"
       ],
       "f_relation_order_correct": true,
       "relation_detail": null,
       "pass": false,
-      "missing_objects": [],
+      "missing_objects": [
+        "moon"
+      ],
       "hallucinated_objects": [],
       "c_detail": {
         "has_date_marker": true,
         "is_bulleted": false,
-        "word_count": 10,
+        "word_count": 13,
         "length_ok": true
       },
       "genre_leak_interpretive_language": false,
       "human_override": null,
-      "output": "Month, the 1st, sunset to moonset: 17°; it was bright."
+      "output": "The 1st, it was bright and low, and the night passed without cloud."
     }
   ]
 }

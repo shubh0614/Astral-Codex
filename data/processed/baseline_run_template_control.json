@@ -1,7 +1,7 @@
 {
   "model": "template",
   "backend": "template",
-  "tier": "few-shot(3)",
+  "tier": "few-shot(5)",
   "outputs": {
     "bab-01-moon-star": "Night of the 11th, Moon was 1 cubit 8 fingers in front of δ Capricorni.",
     "bab-02-moon-planet": "Night of the 2nd, Moon was 1 1/2 cubits behind Jupiter.",

@@ -1,0 +1,11 @@
+{
+  "model": "selftest-selftest_good",
+  "tier": "fixture",
+  "outputs": {
+    "bab-01-moon-star": "Night of the 11th, beginning of the night, the moon was 1 cubit 8 fingers in front of δ Capricorni.",
+    "bab-02-moon-planet": "Night of the 2nd, the moon was 1 1/2 cubits behind Jupiter, the moon being 1 cubit high to the north.",
+    "bab-03-planet-planet": "Night of the 24th, first part of the night, Venus was 3 fingers below Mars, Venus being back 2 fingers to the west.",
+    "bab-04-heliacal-rising": "The 13th, Venus' first appearance in the east in Scorpius; it was bright, rising of Venus to sunrise: 10°; (ideal) first appearance on the 11th.",
+    "bab-05-lunar-first-visibility": "Month IX, the 1st (of which followed the 30th of the preceding month), sunset to moonset: 17°; it was bright; earthshine; it was low to the sun."
+  }
+}

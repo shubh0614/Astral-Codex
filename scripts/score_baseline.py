@@ -104,6 +104,23 @@ def score_case(case, output):
     ]
     e = not dropped
 
+    # (f) the pairwise relation survives in the right ORDER: OBJ1 <rel> OBJ2.
+    # Catches reversal and, more commonly, destruction of the pairing.
+    rel_spec = case.get("required_relation")
+    rel_ok, rel_detail = True, None
+    if rel_spec:
+        pat = (
+            r"(?:%s)\b.{0,80}?\b(?:%s)\b.{0,60}?(?:%s)"
+            % ("|".join(map(re.escape, rel_spec["first"])),
+               "|".join(map(re.escape, rel_spec["relation"])),
+               "|".join(map(re.escape, rel_spec["second"])))
+        )
+        rel_ok = bool(re.search(pat, norm, re.S))
+        if not rel_ok:
+            rel_detail = (f"expected '{rel_spec['first'][0]} ... "
+                          f"{rel_spec['relation'][0]} ... {rel_spec['second'][0]}' "
+                          f"in that order")
+
     return {
         "case": case["id"],
         "phenomenon": case["phenomenon"],
@@ -113,7 +130,9 @@ def score_case(case, output):
         "d_stays_in_observation_genre": d,
         "e_hard_facts_preserved": e,
         "dropped_facts": dropped,
-        "pass": a and b and c and d and e,
+        "f_relation_order_correct": rel_ok,
+        "relation_detail": rel_detail,
+        "pass": a and b and c and d and e and rel_ok,
         "missing_objects": missing,
         "hallucinated_objects": hallucinated,
         "c_detail": {
@@ -154,7 +173,10 @@ def main():
         print(f"[{flag}] {r['case']:28s} a={int(r['a_all_objects_present'])} "
               f"b={int(r['b_no_extra_objects'])} c={int(r['c_reads_as_entry'])} "
               f"d={int(r['d_stays_in_observation_genre'])} "
-              f"e={int(r['e_hard_facts_preserved'])}")
+              f"e={int(r['e_hard_facts_preserved'])} "
+              f"f={int(r['f_relation_order_correct'])}")
+        if r["relation_detail"]:
+            print(f"         RELATION BROKEN: {r['relation_detail']}")
         if r["missing_objects"]:
             print(f"         missing: {r['missing_objects']}")
         if r["dropped_facts"]:

@@ -1,7 +1,7 @@
 {
-  "model": "template",
-  "tier": "few-shot(5)",
-  "passed": 0,
+  "model": "qwen2.5:7b",
+  "tier": "few-shot(3)",
+  "passed": 3,
   "total": 5,
   "results": [
     {
@@ -11,24 +11,22 @@
       "b_no_extra_objects": true,
       "c_reads_as_entry": true,
       "d_stays_in_observation_genre": true,
-      "e_hard_facts_preserved": false,
-      "dropped_facts": [
-        "beginning of the night"
-      ],
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
       "f_relation_order_correct": true,
       "relation_detail": null,
-      "pass": false,
+      "pass": true,
       "missing_objects": [],
       "hallucinated_objects": [],
       "c_detail": {
         "has_date_marker": true,
         "is_bulleted": false,
-        "word_count": 15,
+        "word_count": 21,
         "length_ok": true
       },
       "genre_leak_interpretive_language": false,
       "human_override": null,
-      "output": "Night of the 11th, Moon was 1 cubit 8 fingers in front of δ Capricorni."
+      "output": "Night of the 11th, beginning of the night, the waxing moon stood 1 cubit 8 fingers in front of δ Capricorni."
     },
     {
       "case": "bab-02-moon-planet",
@@ -37,25 +35,22 @@
       "b_no_extra_objects": true,
       "c_reads_as_entry": true,
       "d_stays_in_observation_genre": true,
-      "e_hard_facts_preserved": false,
-      "dropped_facts": [
-        "north",
-        "1 cubit high"
-      ],
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
       "f_relation_order_correct": true,
       "relation_detail": null,
-      "pass": false,
+      "pass": true,
       "missing_objects": [],
       "hallucinated_objects": [],
       "c_detail": {
         "has_date_marker": true,
         "is_bulleted": false,
-        "word_count": 11,
+        "word_count": 24,
         "length_ok": true
       },
       "genre_leak_interpretive_language": false,
       "human_override": null,
-      "output": "Night of the 2nd, Moon was 1 1/2 cubits behind Jupiter."
+      "output": "Night of the 2nd, the moon, a waxing crescent, was 1 1/2 cubits behind Jupiter, the moon being 1 cubit high to the north."
     },
     {
       "case": "bab-03-planet-planet",
@@ -64,26 +59,22 @@
       "b_no_extra_objects": true,
       "c_reads_as_entry": true,
       "d_stays_in_observation_genre": true,
-      "e_hard_facts_preserved": false,
-      "dropped_facts": [
-        "first part of the night",
-        "2 fingers",
-        "west"
-      ],
-      "f_relation_order_correct": true,
-      "relation_detail": null,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": false,
+      "relation_detail": "expected 'venus ... below ... mars' in that order",
       "pass": false,
       "missing_objects": [],
       "hallucinated_objects": [],
       "c_detail": {
         "has_date_marker": true,
         "is_bulleted": false,
-        "word_count": 10,
+        "word_count": 24,
         "length_ok": true
       },
       "genre_leak_interpretive_language": false,
       "human_override": null,
-      "output": "Night of the 24th, Venus was 3 fingers below Mars."
+      "output": "Night of the 24th, first part of the night, Venus and Mars were 3 fingers below, with Venus 2 fingers back to the west."
     },
     {
       "case": "bab-04-heliacal-rising",
@@ -92,26 +83,22 @@
       "b_no_extra_objects": true,
       "c_reads_as_entry": true,
       "d_stays_in_observation_genre": true,
-      "e_hard_facts_preserved": false,
-      "dropped_facts": [
-        "east",
-        "bright",
-        "ideal"
-      ],
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
       "f_relation_order_correct": true,
       "relation_detail": null,
-      "pass": false,
+      "pass": true,
       "missing_objects": [],
       "hallucinated_objects": [],
       "c_detail": {
         "has_date_marker": true,
         "is_bulleted": false,
-        "word_count": 11,
+        "word_count": 25,
         "length_ok": true
       },
       "genre_leak_interpretive_language": false,
       "human_override": null,
-      "output": "The 13th, Venus's first appearance in Scorpius; rising to sunrise: 10°."
+      "output": "The 13th, Venus appeared first in the east, in Scorpius; it was bright, rising to sunrise at 10°; (ideal) first appearance was on the 11th."
     },
     {
       "case": "bab-05-lunar-first-visibility",
@@ -123,7 +110,6 @@
       "e_hard_facts_preserved": false,
       "dropped_facts": [
         "month IX",
-        "earthshine",
         "low to the sun"
       ],
       "f_relation_order_correct": true,
@@ -134,12 +120,12 @@
       "c_detail": {
         "has_date_marker": true,
         "is_bulleted": false,
-        "word_count": 10,
+        "word_count": 16,
         "length_ok": true
       },
       "genre_leak_interpretive_language": false,
       "human_override": null,
-      "output": "Month, the 1st, sunset to moonset: 17°; it was bright."
+      "output": "The 1st, the moon first appeared at sunset, 17 degrees before moonset, bright with low earthshine."
     }
   ]
 }

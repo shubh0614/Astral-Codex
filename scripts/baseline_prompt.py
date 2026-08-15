@@ -70,6 +70,35 @@ FEWSHOT = [
         "The 20th, Jupiter's first appearance in Leo; it was small, rising of "
         "Jupiter to sunrise: 11° 40'; (ideal) first appearance on the 19th.",
     ),
+    # --- added after the first qwen2.5:7b run scored 3/5 -------------------
+    # Both failures landed on phenomenon types absent from the shots above.
+    # plan.md Section 7 allows one prompt iteration before the middle-band
+    # verdict is treated as final. Deliberately a DIFFERENT object pair
+    # (Mars/Saturn) from the Venus/Mars test case -- this demonstrates the
+    # planet-planet relation form without supplying the answer.
+    (
+        "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n"
+        "  Date: year 179 of the Seleucid Era, month VI, night of the 28th\n"
+        "  Watch: first part of the night\n"
+        "  Mars: visible, confidence: high\n  Saturn: visible, confidence: high\n"
+        "  Events: [{\"event\":\"conjunction\",\"objects\":[\"Mars\",\"Saturn\"],"
+        "\"relation\":\"below\",\"separation\":\"1 cubit 4 fingers\","
+        "\"confidence\":\"high\"}]\n"
+        "</OBSERVATION_STATE>\n<ENTRY>",
+        "Night of the 28th, first part of the night, Mars was 1 cubit 4 fingers "
+        "below Saturn.",
+    ),
+    (
+        "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n"
+        "  Date: year 8 of Alexander, month VII, the 1st\n"
+        "  Month start: the 1st followed the 30th of the preceding month\n"
+        "  Moon: first visibility, earthshine: present, confidence: high\n"
+        "  Events: [{\"event\":\"lunar_first_visibility\",\"objects\":[\"Moon\"],"
+        "\"sunset_to_moonset_deg\":16,\"confidence\":\"high\"}]\n"
+        "</OBSERVATION_STATE>\n<ENTRY>",
+        "Month VII, the 1st (of which followed the 30th of the preceding month); "
+        "sunset to moonset: 16°; earthshine.",
+    ),
 ]
 
 
