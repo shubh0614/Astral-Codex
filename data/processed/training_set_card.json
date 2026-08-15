@@ -1,0 +1,68 @@
+{
+  "built": "2026-08-16",
+  "seed": 20260816,
+  "source": "ORACC ADsD ADART 1,2,3,5 via data/processed/babylonian_states.json",
+  "excluded": {
+    "has tablet-damage gaps": 1140,
+    "quarantined evaluation source": 67
+  },
+  "adjusted_not_excluded": {
+    "goal-year, kept with the year stripped": 605
+  },
+  "class_mix_before_balancing": {
+    "conjunction": 616,
+    "lunar_six": 367,
+    "latitude": 167,
+    "last_appearance": 144,
+    "first_appearance": 127,
+    "eclipse": 53,
+    "motion": 18,
+    "stationary_point": 15,
+    "acronychal_rising": 10
+  },
+  "class_mix_after_balancing": {
+    "conjunction": 400,
+    "lunar_six": 220,
+    "latitude": 167,
+    "last_appearance": 144,
+    "first_appearance": 127,
+    "eclipse": 53,
+    "motion": 18,
+    "stationary_point": 15,
+    "acronychal_rising": 10
+  },
+  "caps_applied": {
+    "conjunction": 400,
+    "lunar_six": 220
+  },
+  "split_unit": "tablet (text_id), not observation, to prevent leakage",
+  "counts": {
+    "train": 933,
+    "val": 97,
+    "test": 124
+  },
+  "tablets": {
+    "total": 239,
+    "val": 23,
+    "test": 23
+  },
+  "approx_target_tokens_train": 25644,
+  "quarantined_sources": [
+    "-99C",
+    "AD -201B",
+    "AD -262",
+    "AD -266B",
+    "AD -270B",
+    "AD -273B",
+    "AD -284",
+    "X102612",
+    "X102661",
+    "X102701",
+    "X102731"
+  ],
+  "known_limits": [
+    "Target text is a modern English translation, so the register learned is Sachs and Hunger's, not Akkadian. plan.md Section 1 already frames the project this way.",
+    "States are derived from the entry text, not computed by the engine. At inference the state will come from the engine, so any format drift between the two will show up as a distribution shift.",
+    "Only 25644 approximate target tokens. Small enough that overfitting is the main risk; keep LoRA rank modest and watch validation loss."
+  ]
+}
