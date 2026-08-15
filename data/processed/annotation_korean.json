@@ -1,0 +1,46 @@
+{
+  "tradition": "korean",
+  "genre": "observation",
+  "sources": [
+    "Lee KW et al. 2014, Korean Historical Records on Halley's Comet Revisited, JASS 31(3), appendices A.1 and A.2",
+    "Analysis of historical meteor and meteor shower records (arXiv astro-ph/0501216), TABLE 2"
+  ],
+  "candidates": 34,
+  "sample_method": "every record both harvested papers publish at the individual-record level. Not a sample, it is the whole of what these two papers expose.",
+  "annotated_by": "manual read of all 34, 2026-08-16",
+  "criteria": {
+    "note": "Same criteria as Babylonian, since Korean shares the observation genre: recoverable date (year + month minimum), at least one specific astronomical observation, and continuous text. Engine-computability is tracked separately rather than folded into the verdict, because it is a different axis.",
+    "usable": "date + specific astronomical observation + continuous prose that could serve as a generation target",
+    "ambiguous": "has the facts but no prose to generate, or collates variant readings from several chronicles rather than giving one entry, or the date is partial",
+    "reject": "no astronomical observation, or neither a usable date nor any text"
+  },
+  "prose_records": [
+    {"date": "September 3, 1222",  "verdict": "usable",    "why": "comet in the Samtae constellation, tail directed west and 3 Cheok long. Full date, specific positional observation, continuous prose. The best single example in the set."},
+    {"date": "September 5, 1222",  "verdict": "usable",    "why": "comet in the northwest, tail 3 Cheok. Short but complete and dated."},
+    {"date": "September 8, 1222",  "verdict": "usable",    "why": "comet in the northwest, tail 20 Cheok. The tail length changing across 5 days is exactly the kind of sequence the observation genre wants."},
+    {"date": "September 9, 1222",  "verdict": "ambiguous", "why": "printed as two variant readings, 'a) a comet appeared during the day (GS, BG). b) a comet and Venus appeared during the day (GJ)'. That is a collation of disagreeing chronicles, not one diary entry. Which reading is the training target is undecidable without going to the sources."},
+    {"date": "September 15, 1222", "verdict": "reject",    "why": "'a ceremony averting misfortune was held in relation with the appearance of the comet'. A ritual response, not an astronomical observation."},
+    {"date": "September 14, 1301", "verdict": "ambiguous", "why": "two variant readings again, Bukdu-and-Jami versus Jami alone."},
+    {"date": "September 18, 1301", "verdict": "usable",    "why": "comet in the Bukdu constellation, single reading agreed by all four chronicles."},
+    {"date": "October 1, 1301",    "verdict": "ambiguous", "why": "three variant readings, one of which adds a stay until October 9."},
+    {"date": "October 9, 1301",    "verdict": "usable",    "why": "comet in the Cheonsi Enclosure, single agreed reading."}
+  ],
+  "table_records": {
+    "count": 25,
+    "verdict": "23 ambiguous, 2 reject",
+    "why": "Every row carries a date, a Julian Day and often an identified shower, and the vision extraction of them was exact (0% field error over 96 fields). But a table row has NO PROSE. For a state-to-text generative task there is nothing to generate, so they cannot be training examples however good the facts are. Counted ambiguous rather than reject because they are perfectly good conditioning data and would feed the engine and the evaluation side. The 2 rejects are the rows dated to a year only ('454 - -', '848 - -'), which fail the date criterion as well as the text one.",
+    "distinct_showers_identified": ["Perseids", "Leonids", "eta Aquarids"]
+  },
+  "counts": {"usable": 5, "ambiguous": 26, "reject": 3, "total": 34},
+  "rates": {"usable": 0.15, "ambiguous": 0.76, "reject": 0.09},
+  "counts_prose_only": {"usable": 5, "ambiguous": 3, "reject": 1, "total": 9},
+  "rates_prose_only": {"usable": 0.56, "ambiguous": 0.33, "reject": 0.11},
+  "the_finding_that_matters": {
+    "headline": "Korean extraction is solved and Korean TEXT is not.",
+    "detail": "The vision gate passed at 0% field error and the prose appendices parse with an ordinary regex, so extraction is not the obstacle plan.md expected. The obstacle is that these papers publish DATES AND CLASSIFICATIONS, not the original entry text. TABLE 1 of the meteor paper reports that Korea holds 3,861 meteor records, 31 meteor shower records and 54 meteorite records across the Three Kingdoms, Goryeo and Joseon periods. What the two papers actually expose at the individual-record level is 34 items, and only 9 of those carry any prose at all.",
+    "consequence": "Harvesting more astronomy-history papers will multiply the structured records and will not necessarily yield more target text. Text lives in the chronicles themselves (Samguksagi, Goryeosa, Joseonwangjosillok), and plan.md Key Decision 5 explicitly routed around those because the Sillok site is only about 11% English-translated.",
+    "so_the_real_question": "Korean is not blocked on extraction difficulty. It is blocked on whether English-translated chronicle TEXT can be obtained at volume. That is a different question from the one plan.md posed, and it should be answered before Korean is treated as the large-corpus tradition."
+  },
+  "computability_note": "Separate axis, tracked but not folded into the verdict. All 9 prose records are comet apparitions, and the current engine (Skyfield + DE406) has no comet support, so it cannot generate their conditioning state. Halley specifically is computable in principle from orbital elements, which is what the source paper does. The meteor-shower table rows are radiant-and-date records, also outside the current engine. So none of the Korean material is engine-drivable today, though comet and shower support are both tractable additions.",
+  "comparison_to_babylonian": "Babylonian yields 2,288 zero-gap usable observation units with prose from one source family. Korean yields 5 usable prose records from two papers. That is a factor of about 450. Korean was expected to be the largest corpus in the project; on what is actually in hand it is the smallest."
+}

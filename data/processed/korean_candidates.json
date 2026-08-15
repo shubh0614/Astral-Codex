@@ -1,0 +1,408 @@
+[
+  {
+    "kind": "prose",
+    "apparition_year": 1222,
+    "date": "September 3, 1222",
+    "text": "A comet appeared in the Samtae constellation. Its tail was directed to the west and 3 Cheok long (GS, GJ, BG).",
+    "sources": [
+      "Goryeosa",
+      "Goryeosa Jeoryo",
+      "Jeungbomunheonbigo"
+    ],
+    "paper": "Lee et al. 2014, Korean Historical Records on Halley's Comet"
+  },
+  {
+    "kind": "prose",
+    "apparition_year": 1222,
+    "date": "September 5, 1222",
+    "text": "A comet appeared in the northwest, and its tail was 3 Cheok long (GS, BG)",
+    "sources": [
+      "Goryeosa",
+      "Jeungbomunheonbigo"
+    ],
+    "paper": "Lee et al. 2014, Korean Historical Records on Halley's Comet"
+  },
+  {
+    "kind": "prose",
+    "apparition_year": 1222,
+    "date": "September 8, 1222",
+    "text": "A comet appeared in the northwest, and its tail was 20 Cheok long (GS, BG)",
+    "sources": [
+      "Goryeosa",
+      "Jeungbomunheonbigo"
+    ],
+    "paper": "Lee et al. 2014, Korean Historical Records on Halley's Comet"
+  },
+  {
+    "kind": "prose",
+    "apparition_year": 1222,
+    "date": "September 9, 1222",
+    "text": "a) A comet appeared during the day (GS, BG). b) A comet and Venus appeared during the day (GJ)",
+    "sources": [
+      "Goryeosa",
+      "Goryeosa Jeoryo",
+      "Jeungbomunheonbigo"
+    ],
+    "paper": "Lee et al. 2014, Korean Historical Records on Halley's Comet"
+  },
+  {
+    "kind": "prose",
+    "apparition_year": 1222,
+    "date": "September 15, 1222",
+    "text": "A ceremony averting misfortune was held in relation with the appearance of the comet (GS)",
+    "sources": [
+      "Goryeosa"
+    ],
+    "paper": "Lee et al. 2014, Korean Historical Records on Halley's Comet"
+  },
+  {
+    "kind": "prose",
+    "apparition_year": 1301,
+    "date": "September 14, 1301",
+    "text": "a) A comet appeared between the Bukdu constellation and the Jami Enclosure (GS). b) A comet appeared in the Jami Enclosure (GJ, BG, DT).",
+    "sources": [
+      "Dongguk Tonggam",
+      "Goryeosa",
+      "Goryeosa Jeoryo",
+      "Jeungbomunheonbigo"
+    ],
+    "paper": "Lee et al. 2014, Korean Historical Records on Halley's Comet"
+  },
+  {
+    "kind": "prose",
+    "apparition_year": 1301,
+    "date": "September 18, 1301",
+    "text": "A comet appeared in the Bukdu constellation (GS, GJ, BG, DT)",
+    "sources": [
+      "Dongguk Tonggam",
+      "Goryeosa",
+      "Goryeosa Jeoryo",
+      "Jeungbomunheonbigo"
+    ],
+    "paper": "Lee et al. 2014, Korean Historical Records on Halley's Comet"
+  },
+  {
+    "kind": "prose",
+    "apparition_year": 1301,
+    "date": "October 1, 1301",
+    "text": "a) A comet appeared in the Sangtae constellation and moved into the Cheonsi Enclosure (GS). b) A comet appeared in the Sangtae constellation (GJ, DT). c) A comet appeared in the Sangtae constellation, and entered into the Cheon Enclosure and stayed until October 9 (BG).",
+    "sources": [
+      "Dongguk Tonggam",
+      "Goryeosa",
+      "Goryeosa Jeoryo",
+      "Jeungbomunheonbigo"
+    ],
+    "paper": "Lee et al. 2014, Korean Historical Records on Halley's Comet"
+  },
+  {
+    "kind": "prose",
+    "apparition_year": 1301,
+    "date": "October 9, 1301",
+    "text": "The comet appeared in the Cheonsi Enclosure (GS, GJ)",
+    "sources": [
+      "Goryeosa",
+      "Goryeosa Jeoryo"
+    ],
+    "paper": "Lee et al. 2014, Korean Historical Records on Halley's Comet"
+  },
+  {
+    "kind": "table",
+    "date": "104 2/3 -",
+    "jd": 1759102,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "S, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "454 - -",
+    "jd": null,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "S, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "532 8 28",
+    "jd": 1915611,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "S, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "566 6/7 -",
+    "jd": 1927955,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "581 3 20",
+    "jd": 1933347,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "S, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "586 5/6 -",
+    "jd": 1935252,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "S, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "643 11 1",
+    "jd": 1956218,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "S, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "647 9/10 -",
+    "jd": 1957636,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "S, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "684 11/12 -",
+    "jd": 1971220,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "S, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "706 4/5 -",
+    "jd": 1979045,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "S, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "718 10/11 -",
+    "jd": 1983622,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "S, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "765 1 7",
+    "jd": 2000481,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "S",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "801 10/11 -",
+    "jd": 2013921,
+    "shower": "Leonids ?",
+    "estimated_date": "801 10 11 (B)",
+    "period": "Three Kingdoms",
+    "sources": "S, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "848 - -",
+    "jd": null,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "905 3/4 -",
+    "jd": 2051691,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Three Kingdoms",
+    "sources": "S, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "1042 7 25",
+    "jd": 2101854,
+    "shower": "Perseids",
+    "estimated_date": "1042 7 25 (C)",
+    "period": "Goryeo",
+    "sources": "G, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "1095 7 25",
+    "jd": 2121212,
+    "shower": "Perseids",
+    "estimated_date": "1095 7 25 (C)",
+    "period": "Goryeo",
+    "sources": "G, M",
+    "note_code": 3,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "1103 9 7",
+    "jd": 2124178,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Goryeo",
+    "sources": "G, M",
+    "note_code": 3,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "1106 7 27",
+    "jd": 2125232,
+    "shower": "Perseids",
+    "estimated_date": "1106 7 25 (C)",
+    "period": "Goryeo",
+    "sources": "G, M",
+    "note_code": 3,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "1111 10 2",
+    "jd": 2127125,
+    "shower": "Leonids",
+    "estimated_date": "1111 10 11 (B)",
+    "period": "Goryeo",
+    "sources": "G, M",
+    "note_code": 3,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "1136 4 3",
+    "jd": 2136075,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Goryeo",
+    "sources": "G, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "1178 9 17",
+    "jd": 2151582,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Goryeo",
+    "sources": "G",
+    "note_code": 2,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "1179 4 17",
+    "jd": 2151794,
+    "shower": "eta Aquarids",
+    "estimated_date": "1179 4 20 (C)",
+    "period": "Goryeo",
+    "sources": "G, M",
+    "note_code": 3,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "1363 6 9",
+    "jd": 2219053,
+    "shower": null,
+    "estimated_date": null,
+    "period": "Goryeo",
+    "sources": "G, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  },
+  {
+    "kind": "table",
+    "date": "1532 10 24",
+    "jd": 2280918,
+    "shower": "Leonids",
+    "estimated_date": "1532 10 24.9 (A)",
+    "period": "Joseon",
+    "sources": "J, M",
+    "note_code": 1,
+    "text": null,
+    "paper": "Analysis of historical meteor and meteor shower records, TABLE 2"
+  }
+]
