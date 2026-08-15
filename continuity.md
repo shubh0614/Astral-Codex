@@ -24,8 +24,19 @@ This file exists because the project spans many sessions and Claude Code has no 
 
 ## Current Phase / Status
 
-**Phase:** 0, Corpus Viability Sprint
-**Status:** **Mostly complete.** Four of five traditions fetched, sampled and annotated; Korean's extraction gate passed but its annotation pass is still outstanding. Plan remains LOCKED at v3.2, nothing found in Phase 0 warrants an architecture revision, though two items need a user decision (see Open Blockers).
+**Phase:** 1, Babylonian Vertical Slice. Data layer and celestial engine are built. Model layer not started.
+**Status:** Phase 0 is complete except the Korean annotation pass. Phase 1 has begun: the corpus was expanded and rebalanced, and the calendar and sky engines exist and are calibrated against the diaries' own eclipse records. Plan remains LOCKED at v3.2, nothing found so far warrants an architecture revision.
+
+**Current Babylonian corpus (2026-08-16, all five ADART volumes):**
+
+| | |
+|---|---:|
+| tablets scraped | 614 |
+| observation units | 14,879 |
+| usable | 4,869 |
+| usable with a trustworthy date | 3,591 |
+| usable, zero `[...]` gaps | 2,288 |
+| usable but date unreliable (goal-year texts) | 1,278 |
 
 **Phase 0 counts (revised in v3):** 20-30 raw examples for Roman, Vedic, Maya, Korean; 50-100 for Babylonian. Track usable/ambiguous/reject rate per tradition, this is the actual decision basis for the still-open 3-vs-5 traditions fork (plan.md Section 7).
 
@@ -42,7 +53,7 @@ This file exists because the project spans many sessions and Claude Code has no 
 Do not act on these numbers without reading the notes, three of the four rows mean something other than what the bare figure suggests.
 
 **V1 traditions (genre-tagged, build order):**
-- [x] Babylonian: observation. **Phase 0 gate PASSES by ~40x.** 331 tablets, 7,836 observation units, ~2,000 usable, 807 of them with zero `[...]` gaps. Confirmed as the vertical slice.
+- [x] Babylonian: observation. **Gate passed, corpus since expanded and rebalanced.** See the table above. Confirmed as the vertical slice.
 - [ ] Korean: observation. Vision-extraction gate passed at 0% field error. Annotation pass still owed.
 - [ ] Roman: omen_interpretation. Lowest usable rate (11%), but for a reason that may be an architecture question rather than a corpus problem.
 - [ ] Vedic: omen_interpretation. Voice-thinness risk CONFIRMED.
@@ -53,6 +64,19 @@ Do not act on these numbers without reading the notes, three of the four rows me
 ## Last Session Summary
 
 *(most recent entry on top)*
+
+**2026-08-16, data layer expansion and celestial engine (Phase 1 begins)**
+- Decision taken by the user: strengthen the data layer before any model work, but **without** adding new civilizations. Backlog sources stay parked per decision #15.
+- **Scraped ADART 5 and 6**, which had been downloaded in the last session and never used. 614 tablets now against 331. Observation units 14,879 against 7,836. Usable 4,869 against 2,010. Zero-gap usable 2,288 against 807.
+- **The phenomenon skew is fixed, which was the real reason for doing this.** Moon-star conjunctions were 63% of the clean set, now 31%. Stationary points 6 to 108. Eclipses 7 to 63. First and last appearances 66 to 456. Acronychal risings 0 to 23. A fine-tune on the old distribution would have learned one phenomenon and ignored the rest.
+- **Month resolution fixed.** Now seeds from the catalogue's months_recorded and steps forward when a day number drops, rather than only tracking in-text markers. Units ambiguous purely from a missing month went 1,097 to 210.
+- **ADART 5 and 6 carry no catalogue year or months at all.** The year is read from the text ("Year 64, king Antiochus") and assumed to be Seleucid. Tagged `year_source: text_assumed_seleucid`, not presented as fact.
+- **Built `engine/bab_calendar.py` and `engine/sky.py`.** Calendar converts regnal year + month + day to a Julian Day with an uncertainty and a confidence. Sky gives positions, visibility and semantic events, with separations in both degrees and cubits.
+- **Calibrated the calendar against the diaries themselves.** A lunar eclipse can only occur at full moon, so the eclipse records are ground truth. The first rule tried ("equinox falls inside month I") put 22 of 30 records exactly +30 days out, one whole lunation. Correct rule is "Nisannu 1 is the first crescent on or after the equinox". Median offset went +30.25 d to +0.86 d.
+- **Validation now: 31/48 (65%) of catalogue-dated eclipse records land within 2 days.** The residual is expected, not error: `to_jd` returns the start of the Babylonian day at sunset and "night of the 14th" happens in the hours after.
+- **Goal-year texts do not date correctly and the reason is structural.** A goal-year tablet states the year it was compiled *for*, then quotes observations from earlier cycles, so the stated year does not apply to the observations under it. Text-dated records score 23% against the catalogue-dated 65%, median error a whole month. ADART 6 units are tagged `date_confidence: unreliable`. Content good, dates not.
+- **Used DE406 rather than the DE441 named in plan.md.** DE441 part 1 is 1.65 GB and the smaller ancient NAIF kernels have moved. DE406 is 300 MB, covers 3000 BC to 3000 AD, and is far more precise than cubit measurements need. Deliberate, documented in `notes/engine.md`.
+- Renamed `engine/calendar.py` to `engine/bab_calendar.py` because it shadowed the stdlib `calendar` module and broke Skyfield's imports.
 
 **2026-08-15, Phase 0 Corpus Viability Sprint (data reconnaissance only, no fine-tuning code, no engine)**
 - Repo skeleton built out per CLAUDE.md: `data/raw/<tradition>/`, `data/processed/`, `scripts/`, `engine/`, plus `notes/`.
@@ -86,16 +110,26 @@ Do not act on these numbers without reading the notes, three of the four rows me
 
 ## Next Immediate Steps
 
-**Immediate next action: run the baseline against a real model.** The harness is
-built and self-tested (`notes/baseline_gate.md`). It needs a model, install
-ollama, `ollama pull qwen2.5:7b`, then:
-```
-python scripts/run_baseline.py --backend ollama --model qwen2.5:7b
-python scripts/score_baseline.py data/processed/baseline_run_ollama_qwen2.5-7b_3shot.json
-```
-Also run `--shots 0` for the zero-shot tier. Compare both against the template
-control's 0/5. This decides whether QLoRA is needed at all, i.e. how big Phase 1
-actually is.
+**The baseline has been run. Results, all against the same cases:**
+
+| tier | main set | held-out generalization set |
+|---|---|---|
+| non-LLM template control | 0/5 | 0/4 |
+| qwen2.5:7b zero-shot | 0/5 | - |
+| qwen2.5:7b few-shot (5) | **5/5** | **4/4** |
+
+Facts are solved by prompting, including on phenomena never shown in the prompt.
+What is NOT solved is register: the diaries write "I did not watch" in the first
+person and qwen returns "not observed", drops the doubled "became stationary"
+construction, and drifts to modern phrasing ("3 fingers in magnitude").
+
+**Immediate next actions, in order:**
+
+1. **Build the stratified training set** from the 2,288 zero-gap usable units, excluding the 1,278 date-unreliable goal-year units and quarantining the 9 evaluation cases. Cap moon-star so it does not dominate; keep every stationary, eclipse and acronychal unit.
+2. **Register comparison** against the few-shot control, which is the number a fine-tune has to beat.
+3. **QLoRA run on 1.5B**, 2 hour Kaggle cap, modest LoRA rank, per plan.md's ladder. The user has decided to proceed with fine-tuning; the conditions that keep it from being wasted are in the 2026-08-16 session entry.
+4. **Korean annotation pass**, still the only tradition without a row in the decision table.
+5. Consider Parker and Dubberstein's chronology tables to replace the computed year start and settle intercalation. Highest-value single addition to the calendar layer.
 
 **Two user decisions are needed, these are blocking, don't guess at them:**
 
@@ -142,6 +176,8 @@ actually is.
     - **Maya katun-repetition problem CONFIRMED and larger than described**: 13 total states, 9 attested. Its 54% usable rate must not be read as corpus health.
     - **The a priori prediction that Vedic and Maya would be the cuts is contradicted by data.** Maya scores best of four; Roman scores worst. The empirical gate earned its keep.
     - **Deferred, not decided:** the 3-vs-5 fork. Korean has no row yet, and Roman's number depends on an unanswered architecture question. Settling it now would be settling it on incomplete data.
+
+16. **DATA LAYER EXPANDED, ENGINE BUILT (2026-08-16).** User decision: strengthen the data layer before the model layer, but do not add new civilizations. Consequences recorded: ADART 5 and 6 brought in (they fix the phenomenon skew, which was the actual risk to a fine-tune, not raw volume); month resolution now uses the catalogue plus day-rollover; ADART 5/6 years are read from text as Seleucid and flagged as an assumption; the calendar layer is calibrated against the diaries' own eclipse records rather than against a rule taken on faith, which caught a whole-lunation error; goal-year texts are marked date-unreliable for a structural reason rather than being quietly included; DE406 substituted for DE441 with the reasoning written down. **User has also decided to proceed to fine-tuning** after the data layer work, against my earlier advice to wait; the conditions that keep that run from being wasted (stratified sampling, quarantined eval cases, 1.5B, 2 hour cap, must beat the few-shot control) are recorded in the session entry and should be honoured.
 
 ---
 
@@ -194,4 +230,11 @@ actually is.
 - `scripts/parse_roman.py`, `parse_vedic.py`, `parse_maya.py`: source-specific structure extraction.
 - `scripts/render_pdf_pages.py`: PDF page -> PNG for vision extraction (needs `pymupdf`, installed this session).
 - `scripts/verify_vision_extract.py`: scores a vision extraction against the PDF text layer.
-- `engine/`: created, still empty. Correct: Phase 0 is reconnaissance only.
+- `scripts/fetch_ephemeris.py` downloads DE406 into `engine/ephem/` (gitignored, 300 MB).
+- `scripts/baseline_prompt.py`, `run_baseline.py`, `score_baseline.py`, `selftest_scorer.py`: the prompt-only baseline harness. See `notes/baseline_gate.md`.
+
+**Engine (built 2026-08-16):**
+- `engine/bab_calendar.py`: regnal year + month + day to Julian Day, with uncertainty and confidence. Named bab_calendar so it does not shadow the stdlib `calendar` module, which breaks Skyfield.
+- `engine/sky.py`: positions, visibility, semantic events, eclipse conditions, Normal Star table.
+- `engine/validate.py`: validates both layers against the diaries' eclipse records. **Run this after any change to either module.**
+- `notes/engine.md`: conventions, the calibration story, current validation numbers, and what would improve them.
