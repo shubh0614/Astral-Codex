@@ -25,6 +25,7 @@ os.environ["DATASETS_VERBOSITY"] = "error"
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
 os.environ["HF_HUB_DISABLE_TELEMETRY"] = "1"
+os.environ["HF_HUB_VERBOSITY"] = "error"
 os.environ["BITSANDBYTES_NOWELCOME"] = "1"
 warnings.filterwarnings("ignore")
 
@@ -55,12 +56,29 @@ def section(title):
 
 
 def pip_install():
+    """Install only what is missing, and do NOT pass -U.
+
+    Forcing an upgrade pulled transformers 5.15 and trl 1.10 onto the image,
+    which is how the first two runs broke: the config signature had moved and
+    TRL's chunked-CE patch was incompatible with accelerate's forward wrapper.
+    Kaggle's preinstalled versions are a tested combination; leave them alone.
+    """
+    import importlib
     import subprocess
-    pkgs = ["transformers", "peft", "trl", "bitsandbytes", "accelerate", "datasets"]
-    log(f"installing {', '.join(pkgs)}")
-    r = subprocess.run(
-        [sys.executable, "-m", "pip", "install", "-q", "-U", *pkgs],
-        capture_output=True, text=True)
+    def missing(mod):
+        try:
+            return importlib.util.find_spec(mod) is None
+        except (ImportError, ValueError):
+            return True
+
+    need = [p for p in ("transformers", "peft", "trl", "bitsandbytes",
+                        "accelerate", "datasets") if missing(p)]
+    if not need:
+        log("all packages already present, installing nothing")
+        return
+    log(f"installing missing: {', '.join(need)}")
+    r = subprocess.run([sys.executable, "-m", "pip", "install", "-q", *need],
+                       capture_output=True, text=True)
     if r.returncode != 0:
         log("pip FAILED")
         print(r.stdout[-3000:], r.stderr[-3000:], flush=True)
@@ -145,15 +163,41 @@ log("loading model in 4-bit nf4")
 bnb = BitsAndBytesConfig(
     load_in_4bit=True, bnb_4bit_quant_type="nf4",
     bnb_4bit_use_double_quant=True, bnb_4bit_compute_dtype=torch.float16)
+
+# Pin to one GPU rather than device_map="auto". A 7B in 4-bit is about 5 GB and
+# fits a single 15.6 GB T4 comfortably, splitting it across two only adds
+# cross-device traffic. It also avoids accelerate wrapping model.forward in a
+# functools.partial, which TRL's chunked cross-entropy patch cannot handle.
+DEVICE_MAP = {"": 0}
 try:
     model = AutoModelForCausalLM.from_pretrained(
-        MODEL, quantization_config=bnb, device_map="auto", dtype=torch.float16)
+        MODEL, quantization_config=bnb, device_map=DEVICE_MAP, dtype=torch.float16)
 except TypeError:
     model = AutoModelForCausalLM.from_pretrained(
-        MODEL, quantization_config=bnb, device_map="auto",
+        MODEL, quantization_config=bnb, device_map=DEVICE_MAP,
         torch_dtype=torch.float16)
 model.config.use_cache = False
 log(f"loaded, {sum(p.numel() for p in model.parameters())/1e9:.2f} B params")
+
+import functools
+
+
+def disable_chunked_ce(reason):
+    """TRL 1.10's chunked cross-entropy patch does
+    inspect.signature(model.forward.__func__), which assumes forward is a bound
+    method. Accelerate's device hooks replace it with a functools.partial and the
+    patch dies. It is a memory optimisation, not required for correctness, so it
+    gets switched off."""
+    import trl.trainer.sft_trainer as sft
+    if hasattr(sft, "_patch_chunked_ce_lm_head"):
+        sft._patch_chunked_ce_lm_head = lambda *a, **k: None
+        log(f"disabled TRL chunked-CE patch ({reason})")
+        return True
+    return False
+
+
+if isinstance(getattr(model, "forward", None), functools.partial):
+    disable_chunked_ce("model.forward is a functools.partial")
 
 
 def to_text(row):
@@ -241,7 +285,14 @@ tk = supported(SFTTrainer, {
     "processing_class": tok, "tokenizer": tok, "callbacks": [Progress()]})
 if "processing_class" in tk:
     tk.pop("tokenizer", None)
-trainer = SFTTrainer(**tk)
+try:
+    trainer = SFTTrainer(**tk)
+except AttributeError as e:
+    if "__func__" not in str(e):
+        raise
+    if not disable_chunked_ce(f"constructor raised {e}"):
+        raise
+    trainer = SFTTrainer(**tk)
 
 t_train = time.time()
 trainer.train()

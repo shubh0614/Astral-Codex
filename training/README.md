@@ -49,12 +49,28 @@ than undercapacity. The script prints every eval point, names the best step, and
 says outright whether eval loss turned upward. If it did, cut to 2 epochs or
 drop `LORA_R` to 8. Do not raise the rank.
 
-## If a library signature moves
+## Library version handling, and what went wrong twice
 
-The trainer config section asks the installed `SFTConfig` and `SFTTrainer` what
-they accept and drops anything unsupported, printing both the TRL version and
-the dropped keys. Nothing is version-pinned, because pins go stale on the Kaggle
-image. If it fails again, that printout names the argument, which beats guessing.
+**The script no longer upgrades anything.** It installs only packages that are
+genuinely absent and never passes `-U`. That matters: forcing an upgrade pulled
+transformers 5.15 and trl 1.10 onto the image and broke two runs in a row.
+Kaggle's preinstalled set is a tested combination, so leave it alone.
+
+Two failures worth recording, because both were library churn rather than
+anything to do with the project:
+
+1. `SFTConfig.__init__() got an unexpected keyword argument 'warmup_ratio'`.
+   TRL's config signature had moved. Fixed by asking the installed classes what
+   they accept and dropping the rest. The log prints the TRL version, the
+   rejected keys and the accepted ones, so a third failure names itself.
+2. `'functools.partial' object has no attribute '__func__'` inside
+   `_patch_chunked_ce_lm_head`. TRL's chunked cross-entropy optimisation assumes
+   `model.forward` is a bound method, but accelerate's `device_map="auto"` hooks
+   replace it with a `functools.partial`. Fixed two ways: the model is now
+   pinned to one GPU with `device_map={"": 0}`, which avoids the wrapper
+   entirely and is the better setup anyway since a 7B in 4-bit is about 5 GB and
+   fits one T4; and the chunked-CE patch is switched off if the wrapper is
+   detected. It is a memory optimisation, not required for correctness.
 
 ## Getting results back
 
