@@ -236,7 +236,7 @@ construction, and drifts to modern phrasing ("3 fingers in magnitude").
 
 - `scripts/extract_states.py` derives an OBSERVATION_STATE from each unit's diary text, with the consistency filter that drops any pair whose entry names an object or sign the state does not.
 - `scripts/build_training_set.py` produces `data/processed/train.jsonl`, `val.jsonl`, `test.jsonl` and `training_set_card.json`. Stratified, split by tablet, evaluation cases quarantined.
-- `training/kaggle_finetune.py` the QLoRA notebook, `# %%` markers are cell breaks.
+- `training/train_kaggle.py` the QLoRA training script. Kaggle Script, Save and Run All, linear logs.
 - `training/README.md` how to run it, what to watch, and what counts as a win.
 
 **Engine (built 2026-08-16):**
