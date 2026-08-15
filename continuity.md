@@ -64,6 +64,16 @@ Do not act on these numbers without reading the notes — three of the four rows
 - Discovered the clean-triple ">2 sentences" rule breaks on Babylonian (semicolon-joined clauses); applying it literally gave 1.7% usable instead of 31%. Substituted a continuous-run measure and flagged it rather than silently settling it.
 - 7 commits, all local. **No GitHub remote is configured, so nothing has been pushed.**
 
+**2026-08-15 (later, same session) — prompt-only baseline harness built**
+- Decision taken: run the prompt-only baseline (plan.md gate item 7) BEFORE building the celestial engine, since plan.md Section 2 makes fine-tuning conditional on this test failing. Pure resequencing, no architecture change.
+- Built 5 hand-crafted OBSERVATION_STATEs from real zero-gap diary entries spanning 5 phenomenon types, a few-shot prompt (3 non-overlapping examples), a multi-backend runner, and a deterministic scorer. See `notes/baseline_gate.md`.
+- **Not yet run against a real model** — no runner, no API key, 4 GB GPU on this box. `ollama pull qwen2.5:7b` is the cheapest path.
+- Scorer is self-tested: real diary entries score 5/5, deliberately broken outputs 0/5, each caught for the intended reason.
+- **Found two holes in the gate criteria as written**, both flagged not silently patched:
+  - No genre check. An observation-genre output that invents an omen ("...this portends that the king will fall") passes (a), (b) and (c) as written. Added criterion (d).
+  - Only object *names* are checked, not the facts. The non-LLM template control scored **5/5 while dropping the watch, the latitude clause, the month number, earthshine and the direction** — all present in the state. Added criterion (e) for measurements and qualifiers; template correctly drops to 0/5.
+- Corrected the Vedic annotation after the new source sweep: celestial pool is ~2.7x larger than sampled (Adh 17 on planetary war is a real miss), but the voice-thinness finding is unchanged. Added Gargiya-jyotisha + Parashara/Adbhuta-Sagara to `discovered_sources_backlog.md` Tier S, and the Hora/Jataka texts + Mahabharata to its false-leads table.
+
 **[DATE PLACEHOLDER] — Project kickoff / planning session**
 - Full project brainstorm and research completed in prior conversation (not in Claude Code — in Claude chat).
 - Extensive corpus research done across ~15+ civilizations to find viable data sources for the fine-tuning corpus.
@@ -76,7 +86,18 @@ Do not act on these numbers without reading the notes — three of the four rows
 
 ## Next Immediate Steps
 
-**Two user decisions are needed first — these are blocking, don't guess at them:**
+**Immediate next action: run the baseline against a real model.** The harness is
+built and self-tested (`notes/baseline_gate.md`). It needs a model — install
+ollama, `ollama pull qwen2.5:7b`, then:
+```
+python scripts/run_baseline.py --backend ollama --model qwen2.5:7b
+python scripts/score_baseline.py data/processed/baseline_run_ollama_qwen2.5-7b_3shot.json
+```
+Also run `--shots 0` for the zero-shot tier. Compare both against the template
+control's 0/5. This decides whether QLoRA is needed at all, i.e. how big Phase 1
+actually is.
+
+**Two user decisions are needed — these are blocking, don't guess at them:**
 
 1. **Does the Roman path have to go through the celestial engine?** Roman scores 11% usable measured as "astronomically conditionable" and roughly 100% measured as "dated + prodigy + interpretation". That single answer moves Roman from the worst tradition to the best, and it decides whether Roman gets cut. plan.md Section 2's diagram implies yes, but it was never stated as a decision.
 2. **Is the clean-triple ">2 sentences" rule meant at tablet level or observation-unit level?** They give incompatible answers (1.7% vs 31% usable on Babylonian). All current numbers use the unit-level reading, since plan.md Section 2 defines a training example that way. Confirm or correct.
