@@ -146,9 +146,13 @@ def main():
     ap.add_argument("--model", default="template")
     ap.add_argument("--shots", type=int, default=5)
     ap.add_argument("--tag", default=None)
+    ap.add_argument("--cases", default=None,
+                    help="path to an alternate cases file, e.g. the "
+                         "generalization set baseline_cases_generalization.json")
     a = ap.parse_args()
 
-    cases = json.loads(CASES.read_text(encoding="utf-8"))["cases"]
+    cases_path = Path(a.cases) if a.cases else CASES
+    cases = json.loads(cases_path.read_text(encoding="utf-8"))["cases"]
     fn = BACKENDS[a.backend]
     tier = "zero-shot" if a.shots == 0 else f"few-shot({a.shots})"
     outputs = {}
@@ -162,10 +166,13 @@ def main():
             outputs[c["id"]] = f"(ERROR: {e})"
             print(f" ERROR {e}")
 
-    tag = a.tag or f"{a.backend}_{a.model.replace(':', '-').replace('/', '-')}_{a.shots}shot"
+    suffix = "_gen" if a.cases else ""
+    tag = (a.tag or
+           f"{a.backend}_{a.model.replace(':', '-').replace('/', '-')}_{a.shots}shot{suffix}")
     out = OUTDIR / f"baseline_run_{tag}.json"
     out.write_text(json.dumps(
-        {"model": a.model, "backend": a.backend, "tier": tier, "outputs": outputs},
+        {"model": a.model, "backend": a.backend, "tier": tier,
+         "cases_file": str(cases_path), "outputs": outputs},
         indent=2, ensure_ascii=False), encoding="utf-8")
     print(f"\nwrote {out}\nnow: python scripts/score_baseline.py {out}")
 

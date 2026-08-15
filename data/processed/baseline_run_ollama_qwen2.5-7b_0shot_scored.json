@@ -1,0 +1,139 @@
+{
+  "model": "qwen2.5:7b",
+  "tier": "zero-shot",
+  "passed": 0,
+  "total": 5,
+  "results": [
+    {
+      "case": "bab-01-moon-star",
+      "phenomenon": "moon-fixed star conjunction",
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": false,
+      "dropped_facts": [
+        "1 cubit 8 fingers"
+      ],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": false,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 50,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "In the beginning of the night, on the 11th day of the month V in the 49th year of the Seleucid Era, the Moon, waxing and of high confidence, was observed to be in front of δ Capricorni, separated from it by a distance of 1 cubit and 8 fingers."
+    },
+    {
+      "case": "bab-02-moon-planet",
+      "phenomenon": "moon-planet conjunction with latitude note",
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": false,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": false,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": false,
+        "is_bulleted": false,
+        "word_count": 63,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "On the night of the second day of the eighth month, in the forty-first year of the Seleucid Era, the moon, a visible waxing crescent with high confidence, was observed in the sky. Behind it, at a separation of 1 1/2 cubits, Jupiter, also a visible object with high confidence, could be seen. The moon was positioned 1 cubit high to the north."
+    },
+    {
+      "case": "bab-03-planet-planet",
+      "phenomenon": "planet-planet conjunction, very close separation",
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": false,
+      "dropped_facts": [
+        "below"
+      ],
+      "f_relation_order_correct": false,
+      "relation_detail": "expected 'venus ... below ... mars' in that order",
+      "pass": false,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 55,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "In the first part of the night on the 24th of the month V in the 49th year of the Seleucid Era, Venus and Mars were clearly visible in the sky. Venus was positioned 2 fingers to the west of Mars, with the two planets appearing in a close conjunction, separated by only 3 fingers."
+    },
+    {
+      "case": "bab-04-heliacal-rising",
+      "phenomenon": "first appearance (heliacal rising) in a zodiacal sign, with ideal-date correction",
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": false,
+      "dropped_facts": [
+        "10"
+      ],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": false,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 52,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "On the 13th day of the month VIII in the 38th year of the Seleucid Era, the sky heralded the first appearance of Venus in the east, shining brightly in the sign of Scorpius. Despite the deviation of two days from the ideal first appearance, the observation was made with high confidence."
+    },
+    {
+      "case": "bab-05-lunar-first-visibility",
+      "phenomenon": "first lunar visibility of the month with a lunar-six interval",
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": false,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": false,
+      "dropped_facts": [
+        "month IX",
+        "1st",
+        "17",
+        "low to the sun"
+      ],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": false,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": false,
+        "is_bulleted": false,
+        "word_count": 71,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "On the first day of the ninth month of the forty-fifth year of the Seleucid Era, following the thirty days of the preceding month, the heavens welcomed the first visibility of the Moon. The Moon shone brightly in the sky, its light so clear that its earthshine could be distinctly seen. It appeared low in the sky, near the sunset, and the observation was made with a high degree of confidence."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "purpose": "Generalization set - plan.md Section 8 test E. Every phenomenon type here is ABSENT from the five few-shot examples in scripts/baseline_prompt.py, which cover only moon-star conjunction, moon-planet conjunction, planet-planet conjunction, heliacal rising and lunar first visibility.",
+  "why_this_exists": "qwen2.5:7b scored 3/5 on the main set, then 5/5 after two few-shot examples were added covering exactly the two failing phenomenon types. That demonstrates the model can reproduce a demonstrated pattern. It does NOT demonstrate that the model generalizes to a phenomenon it has never been shown, and the difference decides whether fine-tuning is needed. A high score here means prompting genuinely generalizes; a low score means the approach is coverage-dependent, which is a concrete argument for QLoRA (or at minimum for a much larger few-shot library).",
+  "sources": "All drawn from the zero-gap usable units. Retrograde stations, last appearances, eclipses and acronychal risings are all real, recurring diary content - this is not an artificial stress test.",
+  "cases": [
+    {
+      "id": "gen-01-stationary",
+      "phenomenon": "planetary retrograde station (ABSENT from few-shot)",
+      "source": {"designation": "AD -201B", "ancient_year": "SE 110", "month": "X", "day": "4"},
+      "reference_text": "Around the 4th, when Saturn became stationary to the east, it became stationary 1/2 cubit above β Virginis, being 4 fingers back to the west.",
+      "observation_state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year 110 of the Seleucid Era, month X, around the 4th\n  Saturn: visible, confidence: medium\n  Events: [{\"event\":\"stationary_point\",\"objects\":[\"Saturn\",\"beta Virginis\"],\"station_direction\":\"to the east\",\"relation\":\"above\",\"separation\":\"1/2 cubit\",\"note\":\"Saturn 4 fingers back to the west\",\"confidence\":\"medium\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+      "required_objects": ["saturn", "virginis"],
+      "forbidden_objects": ["moon", "mercury", "venus", "mars", "jupiter", "sirius", "tauri", "leonis", "librae", "geminorum", "arietis", "piscium", "cancri", "capricorni", "scorpii", "ophiuchi"],
+      "required_facts": [["stationary"], ["1/2 cubit", "1/2"], ["above"], ["4 fingers"], ["west"], ["east"], ["4th", "4"]],
+      "required_relation": {"first": ["saturn", "it"], "relation": ["above"], "second": ["virginis"]}
+    },
+    {
+      "id": "gen-02-last-appearance",
+      "phenomenon": "last appearance (heliacal setting) plus an explicit non-observation (ABSENT from few-shot)",
+      "source": {"designation": "AD -284", "ancient_year": "SE 27", "month": "XI", "day": "18"},
+      "reference_text": "The 18th, Mercury's last appearance in the west in Pisces; I did not watch.",
+      "observation_state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year 27 of the Seleucid Era, month XI, the 18th\n  Mercury: last visibility in the west, in Pisces, confidence: medium\n  Observation: the observer did not watch\n  Events: [{\"event\":\"last_appearance\",\"objects\":[\"Mercury\"],\"direction\":\"west\",\"sign\":\"Pisces\",\"observed\":false,\"confidence\":\"medium\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+      "required_objects": ["mercury", "pisces"],
+      "forbidden_objects": ["moon", "venus", "mars", "jupiter", "saturn", "sirius", "tauri", "leonis", "virginis", "librae", "geminorum", "arietis", "cancri", "capricorni", "scorpii", "ophiuchi"],
+      "required_facts": [["last appearance", "last visibility"], ["west"], ["pisces"], ["18th", "18"], ["did not watch", "not watch", "was not observed", "not observed"]]
+    },
+    {
+      "id": "gen-03-lunar-eclipse",
+      "phenomenon": "partial lunar eclipse with magnitude, side, sign, position and bystanding bodies (ABSENT from few-shot)",
+      "source": {"designation": "-99C", "ancient_year": "SE 213", "month": "X", "day": "14"},
+      "reference_text": "Night of the 14th, when the moon came out, it was eclipsed 3 fingers on the east side in the end of Libra, 2 cubits behind α Librae; in its eclipse, Jupiter in Gemini and Sirius stood there.",
+      "observation_state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year 213 of the Seleucid Era, month X, night of the 14th\n  Moon: eclipsed at moonrise, confidence: high\n  Events: [{\"event\":\"lunar_eclipse\",\"objects\":[\"Moon\"],\"magnitude\":\"3 fingers\",\"side\":\"east\",\"sign\":\"end of Libra\",\"position\":\"2 cubits behind alpha Librae\",\"visible_during_eclipse\":[\"Jupiter in Gemini\",\"Sirius\"],\"confidence\":\"high\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+      "required_objects": ["moon", "librae", "jupiter", "sirius", "gemini"],
+      "forbidden_objects": ["venus", "mars", "mercury", "saturn", "tauri", "leonis", "virginis", "arietis", "piscium", "cancri", "capricorni", "scorpii", "ophiuchi"],
+      "required_facts": [["eclipse"], ["3 fingers"], ["east"], ["libra"], ["2 cubits"], ["behind"], ["gemini"], ["14th", "14"]]
+    },
+    {
+      "id": "gen-04-acronychal-rising",
+      "phenomenon": "acronychal rising of a fixed star, unobserved, with weather (ABSENT from few-shot)",
+      "source": {"designation": "AD -201B", "ancient_year": "SE 110", "month": "X", "day": "14"},
+      "reference_text": "The 14th, Sirius' acronychal rising; I did not watch; all day very overcast.",
+      "observation_state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year 110 of the Seleucid Era, month X, the 14th\n  Sirius: acronychal rising, confidence: medium\n  Observation: the observer did not watch\n  Weather: all day very overcast\n  Events: [{\"event\":\"acronychal_rising\",\"objects\":[\"Sirius\"],\"observed\":false,\"confidence\":\"medium\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+      "required_objects": ["sirius"],
+      "forbidden_objects": ["moon", "mercury", "venus", "mars", "jupiter", "saturn", "tauri", "leonis", "virginis", "librae", "geminorum", "arietis", "piscium", "cancri", "capricorni", "scorpii", "ophiuchi"],
+      "required_facts": [["acronychal rising"], ["14th", "14"], ["did not watch", "not watch", "was not observed", "not observed"], ["overcast"]]
+    }
+  ]
+}

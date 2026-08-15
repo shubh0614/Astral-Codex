@@ -153,7 +153,9 @@ def main():
         sys.exit(1)
     runf = Path(sys.argv[1])
     run = json.loads(runf.read_text(encoding="utf-8"))
-    cases = {c["id"]: c for c in json.loads(CASES.read_text(encoding="utf-8"))["cases"]}
+    # a run records which case file it used; fall back to the main set
+    cpath = Path(run["cases_file"]) if run.get("cases_file") else CASES
+    cases = {c["id"]: c for c in json.loads(cpath.read_text(encoding="utf-8"))["cases"]}
 
     results = []
     for cid, out in run["outputs"].items():
