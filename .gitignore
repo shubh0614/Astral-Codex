@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+
+# Skyfield/JPL ephemeris files are huge, fetched on demand
+*.bsp
+*.bpc
+engine/ephem/
+
+# Local scratch
+scratch/
+*.tmp
