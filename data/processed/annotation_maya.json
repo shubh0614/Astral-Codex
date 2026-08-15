@@ -1,0 +1,52 @@
+{
+  "tradition": "maya",
+  "genre": "prophecy",
+  "source": "Book of Chilam Balam of Chumayel, Ralph L. Roys 1933 (sacred-texts scan via archive.org)",
+  "katun_keyed_units_extracted": 66,
+  "substantial_units": 39,
+  "sample_method": "first 26 of the 39 substantial (>200 char) katun-keyed units, in book order",
+  "sample_size": 26,
+  "annotated_by": "manual read of full unit text, 2026-08-15",
+  "criteria": {
+    "usable": "names a katun AND carries prophetic or ritual content (the katun's face, its charge, its tidings, what shall come to pass) in continuous text",
+    "ambiguous": "katun-keyed but the content sits between prophecy and history, or is framing/transitional rather than a prophecy in its own right",
+    "reject": "chronicle entries recording what happened in a past katun, colonial-era records, or Roys's own editorial commentary. All are katun-keyed but none are prophecy."
+  },
+  "entries": [
+    {"n": 1,  "section": "A PROPHECY FOR KATUN 11 AHAU", "katun": 11, "verdict": "usable",    "why": "Yaxal Chac is its face, the heavenly fan and bouquet shall descend, the drum and rattle shall resound. Textbook katun prophecy."},
+    {"n": 2,  "section": "A PROPHECY FOR KATUN 11 AHAU", "katun": 11, "verdict": "ambiguous", "why": "explains that 11 Ahau begins the count because the foreigners arrived then. Katun-keyed but retrospective and explanatory, not prophetic."},
+    {"n": 3,  "section": "MEMORANDA", "katun": 11, "verdict": "reject", "why": "colonial history: the seizure of Ecab, Nacom Balam, Montejo. Record of events, not prophecy."},
+    {"n": 4,  "section": "MEMORANDA", "katun": 11, "verdict": "reject", "why": "1541 arrival at Ecab and a list of depopulated towns. History."},
+    {"n": 5,  "section": "THE INTERROGATION OF THE CHIEFS", "katun": 3, "verdict": "ambiguous", "why": "single transitional sentence marking the end of Katun 3 Ahau and the setting of Katun 1 Ahau. Framing, no prophetic content of its own."},
+    {"n": 6,  "section": "THE INTERROGATION OF THE CHIEFS", "katun": 3, "verdict": "usable",    "why": "the competitive test hanging over the chiefs, ending when the law of Katun 3 Ahau terminates. Ritual-prophetic, continuous, katun-keyed."},
+    {"n": 7,  "section": "THE CREATION OF THE WORLD", "katun": 3, "verdict": "usable",    "why": "the face of the sun snatched away, the sun moved from its place for three months in Katun 3 Ahau. Mythic-prophetic narrative."},
+    {"n": 8,  "section": "THE CREATION OF THE WORLD", "katun": 3, "verdict": "usable",    "why": "Bolon-ti-ku and the law of the lord of Katun 3 Ahau running its course, with what shall follow."},
+    {"n": 9,  "section": "THE RITUAL OF THE ANGELS", "katun": 13, "verdict": "usable",    "why": "burden of Katun 13 Ahau, five days the sun is eclipsed, the torch as a sign that death shall come to the rulers. Carries garbled liturgical Latin but the prophetic core is intact."},
+    {"n": 10, "section": "THE PROPHECY OF CHILAM BALAM", "katun": 9, "verdict": "usable",    "why": "justice descending, towns re-established, no fox to bite them, in Katun 9 Ahau."},
+    {"n": 11, "section": "A SERIES OF KATUN-PROPHECIES", "katun": 11, "verdict": "usable",    "why": "the canonical Katun 11 Ahau prophecy established at Ichcaanzihoo."},
+    {"n": 12, "section": "A SERIES OF KATUN-PROPHECIES", "katun": 13, "verdict": "usable",    "why": "Itzamna its face, locust years, the sun eclipsed, men without offspring and chiefs without successors."},
+    {"n": 13, "section": "THE FIRST CHRONICLE", "katun": 8, "verdict": "reject", "why": "chronicle: Chakanputun abandoned by the Itza."},
+    {"n": 14, "section": "THE FIRST CHRONICLE", "katun": 8, "verdict": "reject", "why": "chronicle: Hunac Ceel's treachery."},
+    {"n": 15, "section": "THE SECOND CHRONICLE", "katun": 4, "verdict": "reject", "why": "chronicle: the discovery of Chichen Itza and the four divisions."},
+    {"n": 16, "section": "THE THIRD CHRONICLE", "katun": 8, "verdict": "reject", "why": "chronicle: founding at Tan-Xuluc-Mul, Chakanputun's fall."},
+    {"n": 17, "section": "THE THIRD CHRONICLE", "katun": 1, "verdict": "reject", "why": "chronicle: Tancah Mayapan depopulated, Tutul Xiu departed."},
+    {"n": 18, "section": "A BOOK OF KATUN-PROPHECIES", "katun": 13, "verdict": "reject", "why": "despite the section title this is the historical introduction: 1541, Campeche, Montejo, the arrival of the Padres. Dated history, not prophecy."},
+    {"n": 19, "section": "A BOOK OF KATUN-PROPHECIES", "katun": 11, "verdict": "ambiguous", "why": "'Red were the beards of the children of the sun' is genuinely prophetic in register, but the passage is functioning as the historical opening of the katun-count."},
+    {"n": 20, "section": "A BOOK OF KATUN-PROPHECIES", "katun": 8, "verdict": "reject", "why": "Roys's own editorial note about the crowned-head illustrations and the Tizimin and Mani manuscripts. Modern scholarly commentary."},
+    {"n": 21, "section": "A BOOK OF KATUN-PROPHECIES", "katun": 7, "verdict": "usable",    "why": "long Katun 7 Ahau prophecy, the white wooden standard descending from heaven, niggard katun and scanty rains."},
+    {"n": 22, "section": "A BOOK OF KATUN-PROPHECIES", "katun": 5, "verdict": "usable",    "why": "Katun 5 Ahau, the fourth katun, harsh its face and harsh its tidings. Truncates at 'four changing' but the prophecy is substantially complete."},
+    {"n": 23, "section": "A BOOK OF KATUN-PROPHECIES", "katun": 3, "verdict": "usable",    "why": "Katun 3 Ahau, Ek-Cocah-mut its face, rains from a rabbit sky, a vulture sky, a woodpecker sky. The strongest single example of the register in the sample."},
+    {"n": 24, "section": "Chumayel MS.", "katun": 10, "verdict": "usable",    "why": "Katun 10 Ahau established at Chable, the hoof shall burn, drought is the charge of the katun."},
+    {"n": 25, "section": "Chumayel MS.", "katun": 6, "verdict": "usable",    "why": "Katun 6 Ahau, the tenth katun, established at Uxmal."},
+    {"n": 26, "section": "Chumayel MS.", "katun": 4, "verdict": "usable",    "why": "Katun 4 Ahau, the eleventh katun, established at Chichen Itza, Kukulcan shall come a second time."}
+  ],
+  "counts": {"usable": 14, "ambiguous": 3, "reject": 9, "total": 26},
+  "rates": {"usable": 0.54, "ambiguous": 0.12, "reject": 0.35},
+  "katun_repetition_check": {
+    "plan_reference": "plan.md Section 4 flagged that a katun is about 19.7 years, so a day-granularity date slider returns the same prophecy for two decades, and asked for this to be checked before any ML work.",
+    "result": "CONFIRMED, and it is worse than a UX annoyance. The Maya cycle has exactly 13 katuns. That is the entire state space the calendar path can ever produce. In this sample only 9 distinct katuns carry a usable prophecy (11, 3, 13, 9, 7, 5, 10, 6, 4), and across the whole book all 13 are named but several only in chronicle entries.",
+    "implication": "The high 54% usable rate is misleading if read as corpus health. Maya has the best usable rate of the four traditions sampled and simultaneously the smallest possible output space of any of them: at most 13 distinct conditioning states, versus thousands of dated sky states for Babylonian. A usable/ambiguous/reject table alone cannot see this, which is exactly why it is being written down here."
+  },
+  "celestial_content_note": "Maya celestial references are symbolic rather than observational. Katun 13 Ahau says the sun shall be eclipsed for five days, and Katun 3 Ahau says the sun was moved from its place for three months. Neither is astronomically possible. This is consistent with plan.md Section 2 already routing Maya around the astronomy layers entirely via the calendar-only path, and it confirms that decision was right: there is nothing here for the celestial engine to verify.",
+  "voice_note": "Register is the strongest of the four sampled traditions by a wide margin. 'Rains from a rabbit sky, rains from a parched sky, rains from a woodpecker sky' is distinctive, non-generic, and would be immediately recognisable in a blind evaluation. If the project wants a tradition that demonstrates real stylistic transfer, this is it. The problem is quantity and state space, not quality."
+}
