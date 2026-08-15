@@ -45,18 +45,22 @@ This file exists because the project spans many sessions and Claude Code has no 
 | Tradition | Genre | Candidates | Usable | Ambiguous | Reject | Rate |
 |---|---|---:|---:|---:|---:|---:|
 | Babylonian | observation | 100 | 31 | 39 | 30 | 31% |
-| Korean | observation | - | - | - | - | not yet annotated |
+| Korean | observation | 34 | 5 | 26 | 3 | 15% |
 | Roman | omen_interpretation | 27 | 3 | 4 | 20 | 11% |
-| Vedic | omen_interpretation | 28 | 6 | 13 | 9 | 21% |
+| Vedic | omen_interpretation | 28 | 8 | 15 | 5 | 29% |
 | Maya | prophecy | 26 | 14 | 3 | 9 | 54% |
+
+**All five rows filled as of 2026-08-16.** The two below the 20% line are Roman
+and Korean, which nobody predicted; the reviewer prior was that Vedic and Maya
+would be the cuts.
 
 Do not act on these numbers without reading the notes, three of the four rows mean something other than what the bare figure suggests.
 
 **V1 traditions (genre-tagged, build order):**
 - [x] Babylonian: observation. **Gate passed, corpus since expanded and rebalanced.** See the table above. Confirmed as the vertical slice.
-- [ ] Korean: observation. Vision-extraction gate passed at 0% field error. Annotation pass still owed.
+- [x] Korean: observation. **15% usable, 5 usable prose records total.** Extraction is solved; the constraint is that the papers publish dates and classifications, not entry text. See below.
 - [ ] Roman: omen_interpretation. Lowest usable rate (11%), but for a reason that may be an architecture question rather than a corpus problem.
-- [ ] Vedic: omen_interpretation. Voice-thinness risk CONFIRMED.
+- [x] Vedic: omen_interpretation. **29% after re-sampling on a corrected chapter list**, pool 254 to 419. Voice-thinness mostly stands, with one real exception (Adh 19).
 - [ ] Maya: prophecy. Best usable rate, smallest state space (13 katuns total, 9 attested).
 
 ---
@@ -64,6 +68,16 @@ Do not act on these numbers without reading the notes, three of the four rows me
 ## Last Session Summary
 
 *(most recent entry on top)*
+
+**2026-08-16 (later), Korean annotated and Vedic re-sampled. The Phase 0 table is now complete.**
+- **Korean: 5 usable / 26 ambiguous / 3 reject out of 34 (15%).** Not a sample, that is everything the two harvested papers publish at record level: 9 prose records from the Halley appendices, 25 rows from the meteor table.
+- **The Korean finding is not the rate.** Extraction was supposed to be the hard part and it is solved (vision gate 0% error, prose appendices parse with a plain regex). The real obstacle is that the papers publish **dates and classifications, not entry text**. The meteor paper's TABLE 1 says Korea holds 3,861 meteor records; what is exposed at record level is 34, and only 9 have prose. A table row is perfect conditioning data with nothing to generate.
+- **Consequence:** harvesting more astronomy papers multiplies structured records without yielding target text. Text lives in the chronicles, which Key Decision 5 routed around because the Sillok is ~11% translated. **Korean is blocked on translated chronicle text at volume, not on extraction difficulty.** That question should be answered before Korean is treated as the large-corpus tradition.
+- Scale check worth stating plainly: Babylonian 2,288 usable units with prose, Korean 5. Korean was expected to be the largest tradition in the project.
+- **Vedic re-sampled on a corrected chapter list: 29% usable, up from 21%; pool 254 to 419 slokas.** Added Adh 17 (planetary war), 19 (planetary year-lords), 20 (concourse), 21, 24, 30, 34. The source sweep was right that plan.md Section 4 named too few chapters.
+- **Deliberately excluded from Vedic:** Adh 102 and 104 are Hora, not Samhita (104 is 43 slokas of house-transit personal fortune that a keyword scan calls 84% celestial); 86 to 97 are terrestrial; 2, 14, 15, 16, 41 are definitional; 28 turns out to be *prasna*, interrogational astrology, a third genre again.
+- **Vedic voice-thinness softens in one place.** Adh 19 on planetary year-lords is 638 characters of genuine narrative with a computable trigger. Nothing like it was in the first sample. There is a small generative subset inside Vedic rather than one uniform rulebook.
+- None of the Korean material is engine-drivable today (comets and meteor showers, neither supported). Both are tractable additions.
 
 **2026-08-16, data layer expansion and celestial engine (Phase 1 begins)**
 - Decision taken by the user: strengthen the data layer before any model work, but **without** adding new civilizations. Backlog sources stay parked per decision #15.
@@ -129,7 +143,8 @@ construction, and drifts to modern phrasing ("3 fingers in magnitude").
 2. **Watch validation loss, not training loss.** ~25k target tokens is small enough that memorisation is the realistic failure. If eval loss turns up, cut to 2 epochs or drop LORA_R to 8.
 3. **Score the output locally** with `scripts/score_baseline.py`. The bar is qwen2.5:7b few-shot at 5/5 and 4/4.
 4. **Read `finetune_test_sample.json` by hand.** The scorer cannot see register, and register is the only open question. Check whether it writes "I did not watch" in the first person like the diaries, or falls back to "not observed" like few-shot did.
-5. **Korean annotation pass**, still the only tradition without a row in the decision table.
+5. **Resolve the 3-vs-5 fork.** The table is complete now, so it can finally be decided. My read: the split is not which traditions survive but which need *training* versus which are *genre demonstrators*. Babylonian carries volume. Korean cannot, on current data. Roman, Vedic and Maya were always going to be few-shot.
+6. **Answer the Korean text question** before any further Korean work: can English-translated chronicle text be had at volume, or not? If not, Korean is a demonstrator tradition, not the large corpus the plan assumed.
 6. Consider Parker and Dubberstein's chronology tables to replace the computed year start and settle intercalation. Highest-value single addition to the calendar layer.
 
 **Two user decisions are needed, these are blocking, don't guess at them:**
