@@ -167,6 +167,8 @@ def generate(state, cfg):
     return text
 
 
+written = []
+
 for cname, cfg in CONFIGS.items():
     section(f"decode: {cname}")
     torch.manual_seed(SEED)
@@ -186,6 +188,7 @@ for cname, cfg in CONFIGS.items():
         path = f"{WORK}/redecode_{tag}_{cname}.json"
         with open(path, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2, ensure_ascii=False)
+        written.append(os.path.basename(path))
         log(f"wrote {os.path.basename(path)}")
 
     sample = []
@@ -200,11 +203,23 @@ for cname, cfg in CONFIGS.items():
     path = f"{WORK}/redecode_sample_{cname}.json"
     with open(path, "w", encoding="utf-8") as f:
         json.dump(sample, f, indent=2, ensure_ascii=False)
+    written.append(os.path.basename(path))
     log(f"wrote {os.path.basename(path)}  ({len(sample)} pairs)")
 
 section("done")
 log(f"total {(time.time()-_T0)/60:.1f} min")
-log("download the redecode_*.json files, then locally:")
-log("  python scripts/score_baseline.py data/processed/redecode_main_greedy.json")
-log("  python scripts/score_register.py data/processed/redecode_sample_greedy.json")
+log(f"{len(written)} files written, {len(CONFIGS)} configs x 3 files each. "
+    f"Anything missing below means that config errored, scroll up for it.")
+for name in written:
+    log(f"  {name}")
+
+log()
+log("download all of them, put them in data/processed/, then score every config,")
+log("not just the promising one. orig should reproduce 3/5; if it does not, the")
+log("comparison is unstable and nothing else in this run means anything.")
+for cname in CONFIGS:
+    log(f"  python scripts/score_baseline.py data/processed/redecode_main_{cname}.json")
+    log(f"  python scripts/score_baseline.py data/processed/redecode_gen_{cname}.json")
+    log(f"  python scripts/score_register.py data/processed/redecode_sample_{cname}.json")
+log()
 log("bar: few-shot at 5/5 main and 4/4 gen, with the zero modern drift the 3ep run had")

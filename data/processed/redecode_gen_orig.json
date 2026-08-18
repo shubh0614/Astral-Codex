@@ -1,0 +1,17 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "backend": "qlora",
+  "tier": "finetuned(3ep) decode=orig",
+  "decode": {
+    "do_sample": true,
+    "temperature": 0.7,
+    "max_new_tokens": 160
+  },
+  "cases_file": "data/processed/baseline_cases_generalization.json",
+  "outputs": {
+    "gen-01-stationary": "Month X, until the 4th, when Saturn became stationary to the east, it became stationary 1/2 cubit above β Virginis; Saturn 4 fingers back to the west, visibility: from the 2nd, measured (despite) clouds",
+    "gen-02-last-appearance": "The 18th, Mercury’s last appearance in the west, in Pisces; I did not watch; clouds, I did not watch; medium? season",
+    "gen-03-lunar-eclipse": "Night of the 14th, moonrise to sunrise: 17°, measured; the north and east wind blew, very overcast; month XI was inserted. Night of the 15th, moonrise to sunrise: 19°; the south wind blew. Year 214, month III, written on the 14th of the preceding month",
+    "gen-04-acronychal-rising": "The 14th, Sirius’ acronychal rising; all day very overcast; I did not watch, when I rose the clouds were in the sky, the north wind blew; at 30° after sunrise"
+  }
+}

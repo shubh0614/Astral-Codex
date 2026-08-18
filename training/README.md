@@ -112,10 +112,17 @@ it room to write four more entries after finishing the one it was asked for. Tha
 is a decoder problem, and testing it costs generation time rather than another 56
 minutes of training.
 
-Score every config, not just the promising one:
+**A complete run writes 12 files**, three per config: `redecode_main_<config>.json`,
+`redecode_gen_<config>.json`, `redecode_sample_<config>.json`. The done section
+lists every one it actually wrote, so a config that errored shows up as a gap in
+that list rather than being lost in the scrollback.
+
+Score every config, not just the promising one. The done section prints the exact
+commands; they look like this:
 
 ```
 python scripts/score_baseline.py data/processed/redecode_main_greedy.json
+python scripts/score_baseline.py data/processed/redecode_gen_greedy.json
 python scripts/score_register.py data/processed/redecode_sample_greedy.json
 ```
 
