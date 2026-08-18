@@ -88,6 +88,40 @@ anything to do with the project:
    bf16 support at all, so fp32 trainable params is correct here regardless. The
    log now prints the parameter dtype census and the trainable count.
 
+## Run 3: re-decode
+
+`redecode_kaggle.py`, a separate Script. **No training.** It loads the adapter
+run 2 saved and regenerates the same three files under four decoder settings.
+
+Before running: **Add Data, Notebook Output, pick the training run's version.**
+The script walks `/kaggle/input` looking for `adapter_config.json` and prints
+every candidate it finds, so if the mount is wrong you see it in the first ten
+seconds rather than after the model loads.
+
+| setting | what it tests |
+|---|---|
+| `orig` | temperature 0.7, no penalty, 160 tokens. The failing run, reproduced as a control |
+| `greedy` | no sampling, `repetition_penalty=1.15`, `no_repeat_ngram_size=6`, 80 tokens |
+| `sampled` | the same guards with sampling kept, to separate the penalty's effect from greedy's |
+| `greedy_firstline` | greedy, then keep only the first line. A diary entry is one dated unit |
+
+Why this before another training run: the 3-epoch model's fact failures were
+loops, repeated clauses, invented extra observations and unfilled placeholders,
+not misunderstandings. `max_new_tokens=160` against a 22-word reference mean gave
+it room to write four more entries after finishing the one it was asked for. That
+is a decoder problem, and testing it costs generation time rather than another 56
+minutes of training.
+
+Score every config, not just the promising one:
+
+```
+python scripts/score_baseline.py data/processed/redecode_main_greedy.json
+python scripts/score_register.py data/processed/redecode_sample_greedy.json
+```
+
+`orig` should reproduce 3/5. If it does not, the comparison is unstable and the
+seed or the decode settings are not doing what the log says.
+
 ## Getting results back
 
 Download from the output pane:

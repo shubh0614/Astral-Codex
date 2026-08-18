@@ -24,8 +24,8 @@ This file exists because the project spans many sessions and Claude Code has no 
 
 ## Current Phase / Status
 
-**Phase:** 1, Babylonian Vertical Slice. Data layer and celestial engine are built. Model layer not started.
-**Status:** Phase 0 is complete except the Korean annotation pass. Phase 1 has begun: the corpus was expanded and rebalanced, and the calendar and sky engines exist and are calibrated against the diaries' own eclipse records. Plan remains LOCKED at v3.2, nothing found so far warrants an architecture revision.
+**Phase:** 1, Babylonian Vertical Slice. Data layer, celestial engine and a first fine-tune all exist.
+**Status:** Phase 0 is complete, the table has all five rows. Phase 1 has the corpus expanded and rebalanced, the calendar and sky engines calibrated against the diaries' own eclipse records, and one QLoRA fine-tune run and scored. The fine-tune beat few-shot on register and lost to it on facts, and the fact failures look like decoding rather than training, so the next move is a decode-only rerun of the saved adapter. Plan remains LOCKED at v3.2, nothing found so far warrants an architecture revision.
 
 **Current Babylonian corpus (2026-08-16, all five ADART volumes):**
 
@@ -68,6 +68,15 @@ Do not act on these numbers without reading the notes, three of the four rows me
 ## Last Session Summary
 
 *(most recent entry on top)*
+
+**2026-08-18, the 7B fine-tune, scored. It wins on register and loses on facts.**
+- **Qwen2.5-7B-Instruct, QLoRA r=16, 3 epochs, 177 steps, 56 min on one T4.** Training clean: eval loss 0.2384 to 0.1487, monotone, no upturn. Flat from step 125, so it converged and then polished.
+- **Scores 3/5 main and 1/4 held-out**, against few-shot's 5/5 and 4/4. The fine-tune loses on facts, and not narrowly.
+- **Register scorer over 25 held-out pairs: zero modern drift on all seven checks.** Few-shot failed every one of those, replacing first-person "I did not watch" with "not observed" and writing "3 fingers in magnitude". Watch phrases 24 to 23, cubit units 35 to 32, mean words 19.7 against the reference 22.4. On common conjunctions the output is often character-exact.
+- **Every fact failure is degeneration, not ignorance.** bab-05 loops "it was bright, earthshine was present, it was bright" then invents a star; gen-02 says "last appearance" four times and ends with "medium confidence", the state's own field leaking into prose; bab-04 emits an unfilled x-degrees placeholder. On the 319-example conjunction class it is near-perfect; on rare structures it opens correctly and cannot stop.
+- **Added scorer criterion (g), degeneration and invented stars.** Stated plainly in the notes that it was written after seeing these outputs, and that both defects were predicted in `notes/finetune_smoke.md` after the smoke run rather than invented afterwards. The whitelist could not see "alpha Virginis" substituted for "beta Virginis" because it only matched "Virginis".
+- **Diagnosis: decoder, not training.** Generation ran at temperature 0.7 with no repetition penalty and max_new_tokens=160, seven times the reference mean. Wrote `training/redecode_kaggle.py`, which reloads the saved adapter and regenerates under four settings including a reproduction of the failing one as a control. No retraining, no new GPU quota beyond generation.
+- Five Kaggle library failures preceded this run and all five are written up in `training/README.md`. Root cause of two of them was my own `pip install -U`; the script now installs only what is missing.
 
 **2026-08-16 (later), Korean annotated and Vedic re-sampled. The Phase 0 table is now complete.**
 - **Korean: 5 usable / 26 ambiguous / 3 reject out of 34 (15%).** Not a sample, that is everything the two harvested papers publish at record level: 9 prose records from the Halley appendices, 25 rows from the meteor table.
@@ -124,42 +133,66 @@ Do not act on these numbers without reading the notes, three of the four rows me
 
 ## Next Immediate Steps
 
-**The baseline has been run. Results, all against the same cases:**
+**Where the model layer stands. All tiers on the same cases, same scorer:**
 
 | tier | main set | held-out generalization set |
 |---|---|---|
 | non-LLM template control | 0/5 | 0/4 |
 | qwen2.5:7b zero-shot | 0/5 | - |
 | qwen2.5:7b few-shot (5) | **5/5** | **4/4** |
+| qwen2.5:7b fine-tuned, QLoRA 3 epochs | 3/5 | 1/4 |
 
-Facts are solved by prompting, including on phenomena never shown in the prompt.
-What is NOT solved is register: the diaries write "I did not watch" in the first
-person and qwen returns "not observed", drops the doubled "became stationary"
-construction, and drifts to modern phrasing ("3 fingers in magnitude").
+**The fine-tune lost on facts and won on register**, which is the split the run
+was designed to detect. Register scorer over 25 held-out pairs: zero modern drift
+on all seven checks, where few-shot drifted on every one. Every fact failure is
+the model looping or running long, not misunderstanding. Full analysis in
+`notes/finetune_7b_result.md`.
 
-**Training set is built and the Kaggle notebook is written.** See `training/README.md`.
+1. **Run `training/redecode_kaggle.py`.** Loads the saved adapter and regenerates
+   under four decoder settings, no retraining. Add the training run's output as a
+   data source (Add Data, Notebook Output); the script finds the adapter itself.
+   T4, internet ON. Score each locally with `score_baseline.py` and
+   `score_register.py`. If a decoder setting recovers the facts while keeping the
+   register, fine-tuning has earned its cost outright.
+2. **If looping survives the decoder change, retrain at 2 epochs**, not 3. Eval
+   loss was flat from step 125, so the third epoch bought 0.0007 and plausibly
+   cost generation discipline. Only after that, consider `LORA_R=8`.
+3. **If neither works**, the honest architecture is per-phenomenon: few-shot for
+   the rare classes, the fine-tune for the common ones. The training counts that
+   decide it are already in `training_set_card.json`.
+4. **Resolve the 3-vs-5 fork.** The table is complete now, so it can finally be
+   decided. My read: the split is not which traditions survive but which need
+   *training* versus which are *genre demonstrators*. Babylonian carries volume.
+   Korean cannot, on current data. Roman, Vedic and Maya were always going to be
+   few-shot.
+5. **Answer the Korean text question** before any further Korean work: can
+   English-translated chronicle text be had at volume, or not? If not, Korean is a
+   demonstrator tradition, not the large corpus the plan assumed.
+6. Consider Parker and Dubberstein's chronology tables to replace the computed
+   year start and settle intercalation. Highest-value single addition to the
+   calendar layer.
 
-1. **Run the fine-tune.** Smoke run first (`SMOKE = True`, 1.5B, a few minutes) to catch data-loader bugs, then the real run (`SMOKE = False`, Qwen2.5-7B-Instruct, 3 epochs). Use a **T4, not P100**: bitsandbytes 4-bit is unreliable on Pascal. Internet toggle ON, the notebook pulls data from the public repo.
-2. **Watch validation loss, not training loss.** ~25k target tokens is small enough that memorisation is the realistic failure. If eval loss turns up, cut to 2 epochs or drop LORA_R to 8.
-3. **Score the output locally** with `scripts/score_baseline.py`. The bar is qwen2.5:7b few-shot at 5/5 and 4/4.
-4. **Read `finetune_test_sample.json` by hand.** The scorer cannot see register, and register is the only open question. Check whether it writes "I did not watch" in the first person like the diaries, or falls back to "not observed" like few-shot did.
-5. **Resolve the 3-vs-5 fork.** The table is complete now, so it can finally be decided. My read: the split is not which traditions survive but which need *training* versus which are *genre demonstrators*. Babylonian carries volume. Korean cannot, on current data. Roman, Vedic and Maya were always going to be few-shot.
-6. **Answer the Korean text question** before any further Korean work: can English-translated chronicle text be had at volume, or not? If not, Korean is a demonstrator tradition, not the large corpus the plan assumed.
-6. Consider Parker and Dubberstein's chronology tables to replace the computed year start and settle intercalation. Highest-value single addition to the calendar layer.
+**Two user decisions are still needed, these are blocking, don't guess at them:**
 
-**Two user decisions are needed, these are blocking, don't guess at them:**
+1. **Does the Roman path have to go through the celestial engine?** Roman scores
+   11% usable measured as "astronomically conditionable" and roughly 100%
+   measured as "dated + prodigy + interpretation". That single answer moves Roman
+   from the worst tradition to the best, and it decides whether Roman gets cut.
+   plan.md Section 2's diagram implies yes, but it was never stated as a decision.
+2. **Is the clean-triple ">2 sentences" rule meant at tablet level or
+   observation-unit level?** They give incompatible answers (1.7% vs 31% usable on
+   Babylonian). All current numbers use the unit-level reading, since plan.md
+   Section 2 defines a training example that way. Confirm or correct.
 
-1. **Does the Roman path have to go through the celestial engine?** Roman scores 11% usable measured as "astronomically conditionable" and roughly 100% measured as "dated + prodigy + interpretation". That single answer moves Roman from the worst tradition to the best, and it decides whether Roman gets cut. plan.md Section 2's diagram implies yes, but it was never stated as a decision.
-2. **Is the clean-triple ">2 sentences" rule meant at tablet level or observation-unit level?** They give incompatible answers (1.7% vs 31% usable on Babylonian). All current numbers use the unit-level reading, since plan.md Section 2 defines a training example that way. Confirm or correct.
+**Still open from earlier phases, not superseded:**
 
-**Then, in order:**
-
-3. **Run the Korean annotation pass.** It's the only tradition without a row in the decision table, it shares the observation genre with Babylonian, and its extraction risk is now retired. The 3-vs-5 fork should not be settled until Korean has a number.
-4. **Re-check the Phase 0 -> Phase 1 gate checklist** in plan.md Section 7 line by line. Item 1 (≥50 clean Babylonian observation units) is comfortably met; the rest concern the engine and schema and are untouched: this session was reconnaissance only, as instructed.
-5. Once the gate passes: start the **Babylonian vertical slice** (plan.md Section 7, Phase 1): clean (handling the `[...]` gaps; start from the 807 zero-gap units and hold the 509 fragmentary usable ones out of the first run) -> celestial engine (two-layer + calendar normalization; regnal years and intercalary XII2 months are already visible in the data, so the `alignment` confidence field is needed from the start) -> guardrail wiring -> three-tier baseline -> evaluation suite.
-6. **Write the Maya katun sanity-check script** (plan.md Section 4) before any Maya ML work. Phase 0 made this more urgent: 13 total states, 9 attested prophecies.
-7. **Set up a GitHub remote** if you want the 7 local commits pushed: none exists yet.
-8. Do NOT start fine-tuning before the Babylonian slice validates the pipeline. Do NOT initiate another planning/stress-test round: nothing in Phase 0 justifies one.
+- **Write the Maya katun sanity-check script** (plan.md Section 4) before any Maya
+  ML work. Phase 0 made this more urgent: 13 total states, 9 attested prophecies.
+- **Re-check the Phase 0 to Phase 1 gate checklist** in plan.md Section 7 line by
+  line. The engine and schema items are now built; the checklist was last read
+  when they were not.
+- Do NOT initiate another planning or stress-test round. Nothing found so far
+  justifies one.
 
 ---
 
@@ -195,6 +228,12 @@ construction, and drifts to modern phrasing ("3 fingers in magnitude").
 
 16. **DATA LAYER EXPANDED, ENGINE BUILT (2026-08-16).** User decision: strengthen the data layer before the model layer, but do not add new civilizations. Consequences recorded: ADART 5 and 6 brought in (they fix the phenomenon skew, which was the actual risk to a fine-tune, not raw volume); month resolution now uses the catalogue plus day-rollover; ADART 5/6 years are read from text as Seleucid and flagged as an assumption; the calendar layer is calibrated against the diaries' own eclipse records rather than against a rule taken on faith, which caught a whole-lunation error; goal-year texts are marked date-unreliable for a structural reason rather than being quietly included; DE406 substituted for DE441 with the reasoning written down. **User has also decided to proceed to fine-tuning** after the data layer work, against my earlier advice to wait; the conditions that keep that run from being wasted (stratified sampling, quarantined eval cases, 1.5B, 2 hour cap, must beat the few-shot control) are recorded in the session entry and should be honoured.
 
+17. **FIRST FINE-TUNE RUN AND SCORED (2026-08-18).** Qwen2.5-7B-Instruct, QLoRA, 3 epochs. Result recorded as a split rather than a pass or fail: **register won, facts lost.** Decisions that follow from it:
+    - **7B was used because the baseline was 7B.** A fine-tuned 1.5B against a few-shot 7B would have measured model size, not fine-tuning. The 1.5B run is kept as a smoke test only and is not reported as a result.
+    - **Scorer criterion (g) added** for degeneration and invented stars, after the 7B produced failures that (a) to (f) could not see. Recorded openly as post-hoc, with the note that `notes/finetune_smoke.md` had predicted both defects at 3 epochs.
+    - **The saved adapter is re-decoded before anything is retrained.** Every fact failure was a sampling loop or an over-long continuation, and decoding is minutes of GPU against 56 minutes for a retrain. If that fails, 2 epochs next, then `LORA_R=8`. Do not raise the rank.
+    - **Fine-tuning has not yet earned its cost, and that is a real finding, not a failure.** plan.md Section 1.5 defines success independent of whether fine-tuning is needed. If prompting keeps winning on facts, the answer is a per-phenomenon split, not more training.
+
 ---
 
 ## Open Blockers / Questions
@@ -203,8 +242,10 @@ construction, and drifts to modern phrasing ("3 fingers in magnitude").
 
 - **[NEW, blocking] Is the Roman path required to go through the celestial engine?** Decides whether Roman reads as 11% or ~100% usable, and therefore whether it gets cut.
 - **[NEW, blocking] Does the clean-triple ">2 sentences" rule apply at tablet level or observation-unit level?** The two give incompatible answers. Current numbers use unit-level.
-- **[NEW] Korean has no usable/ambiguous/reject row yet.** The 3-vs-5 fork can't be honestly resolved until it does.
-- **[NEW] No GitHub remote configured.** 7 commits sitting local-only.
+- **[NEW, blocking] Can English-translated Korean chronicle text be had at volume?** Extraction is solved; text is the obstacle. Korean is 5 usable prose records against Babylonian's 2,288. Answer this before treating Korean as a corpus tradition.
+- **[NEW] Does the fine-tune's fact loss survive a decoder change?** Decides whether fine-tuning earned its cost or whether the architecture goes per-phenomenon. `training/redecode_kaggle.py` answers it.
+- **[RESOLVED] Korean row in the decision table**: 5 usable / 26 ambiguous / 3 reject of 34. See `data/processed/annotation_korean.json`.
+- **[RESOLVED] GitHub remote**: `https://github.com/shubh0614/Astral-Codex.git`, pushing to `master`.
 - **[RESOLVED] Korean extraction method**: vision approach tested and passed at 0% field error. See `notes/korean_vision_test.md`.
 - **[PARTLY RESOLVED] Korean paper harvesting priority list**: two papers pulled and characterised; a full priority list still isn't built.
 - Base model choice not yet tested/decided.
@@ -225,6 +266,10 @@ construction, and drifts to modern phrasing ("3 fingers in magnitude").
 - `notes/SOURCES.md`: what plan.md Section 4 says vs. what is actually reachable. Read before re-fetching anything.
 - `notes/phase0_results.md`: **the Phase 0 deliverable.** Usable/ambiguous/reject table, per-tradition detail, decision-rule analysis, recommendations.
 - `notes/korean_vision_test.md`: the vision-extraction gate test and its result.
+- `notes/baseline_gate.md`: the three-tier baseline, the scorer criteria and why (d) to (g) were added beyond plan.md's three.
+- `notes/engine.md`: calendar and sky design, the DE406 substitution, the eclipse calibration.
+- `notes/finetune_smoke.md`: the 1.5B pipeline check. Not a result; it is where the 7B's failure modes were predicted.
+- `notes/finetune_7b_result.md`: **the fine-tune deliverable.** Loss curve, scores, the register table, the degeneration analysis and the recommended next step in order of cost.
 
 **Data (raw):**
 - `data/raw/babylonian/translations.jsonl`: 331 scraped ORACC tablets, the tracked raw snapshot.
@@ -251,8 +296,12 @@ construction, and drifts to modern phrasing ("3 fingers in magnitude").
 
 - `scripts/extract_states.py` derives an OBSERVATION_STATE from each unit's diary text, with the consistency filter that drops any pair whose entry names an object or sign the state does not.
 - `scripts/build_training_set.py` produces `data/processed/train.jsonl`, `val.jsonl`, `test.jsonl` and `training_set_card.json`. Stratified, split by tablet, evaluation cases quarantined.
+- `scripts/score_register.py` counts diary-register markers and modern-drift markers in a generation against its reference. Measures the thing `score_baseline.py` structurally cannot see.
+- `scripts/extract_korean.py` parses both the prose appendices and the vision-extracted tables.
 - `training/train_kaggle.py` the QLoRA training script. Kaggle Script, Save and Run All, linear logs.
+- `training/redecode_kaggle.py` reloads the saved adapter and regenerates under four decoder settings. No training. Written because every fact failure in the 3-epoch run was a sampling loop.
 - `training/README.md` how to run it, what to watch, and what counts as a win.
+- `data/processed/finetune_7b_{main,gen,test_sample}.json`: the 3-epoch run's outputs, kept as the record the re-decode is compared against.
 
 **Engine (built 2026-08-16):**
 - `engine/bab_calendar.py`: regnal year + month + day to Julian Day, with uncertainty and confidence. Named bab_calendar so it does not shadow the stdlib `calendar` module, which breaks Skyfield.
