@@ -1,0 +1,18 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "backend": "qlora",
+  "tier": "finetuned(3ep) decode=greedy",
+  "decode": {
+    "do_sample": false,
+    "max_new_tokens": 80,
+    "repetition_penalty": 1.15,
+    "no_repeat_ngram_size": 6
+  },
+  "cases_file": "data/processed/baseline_cases_generalization.json",
+  "outputs": {
+    "gen-01-stationary": "Month X, until the xth, when Saturn became stationary to the east it stood 1/2 cubit above β Virginis; Saturn was 4 fingers back to thw west, it was medium (in brightness); from the xth on, Saturn’s becoming stationary to the east was lost due to clouds",
+    "gen-02-last-appearance": "The 18th?, Mercury’s last appearance in the west, in the beginning of Pisces; clouds, I did not watch; (ideal) first appearance on the xth, when it was so many fingers below β Arietis",
+    "gen-03-lunar-eclipse": "Night of the 14tth, moonrise to sunrise: 15°; (ideal) first appearance on the xth; measured; it was bright. The eclipse began a little before moonrise, it set in on the east side, after 6 fingers it became total, it stood 2 cubits behind α Librae, it was 3 fingers thin, it",
+    "gen-04-acronychal-rising": "The 14th, Sirius’ acronychal rising; I did not watch all day very overcast"
+  }
+}

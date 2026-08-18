@@ -17,6 +17,11 @@ import re
 import sys
 from pathlib import Path
 
+# The diaries are full of Greek letters and the Windows console is cp1252,
+# which kills the report halfway through with a UnicodeEncodeError.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 # Things the diaries do. Present in the reference, wanted in the generation.
 DIARY = {
     "first person non-observation": r"\bI did not watch\b|\bI watched\b|\bI did not see\b",

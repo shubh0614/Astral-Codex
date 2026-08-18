@@ -1,0 +1,19 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "backend": "qlora",
+  "tier": "finetuned(3ep) decode=sampled",
+  "decode": {
+    "do_sample": true,
+    "temperature": 0.7,
+    "max_new_tokens": 80,
+    "repetition_penalty": 1.15,
+    "no_repeat_ngram_size": 6
+  },
+  "cases_file": "data/processed/baseline_cases_generalization.json",
+  "outputs": {
+    "gen-01-stationary": "Month X, until the xth?, Saturn was stationary to the east above β Virginis by 1/2 cubit; it stood 4 fingers back to (the west), which was good for the king’s life. Year 136, kings Antiochus VII and Antiochus VIII",
+    "gen-02-last-appearance": "The 18th?, Mercury’s last appearance in the west, in (the beginning) of Pisces; clouds, I did not watch; (ideal) first appearance on the xth, when it was so many cubits above the south point of Pisces",
+    "gen-03-lunar-eclipse": "Night of the 14?, moonrise to sunrise: 8°?; clouds, I did not watch; all night Jupiter was in Gemini; Sirius became visible; on the x+2nd, the moonset to sunrise being 6°; (ideal) first appearance of the moon on the x+5th, sunset to moonrise: 7°; the xth,",
+    "gen-04-acronychal-rising": "Month X, the 13+xth, Sirius’ acronychal rising; I did not watch it; clouds, all day, very overcast"
+  }
+}

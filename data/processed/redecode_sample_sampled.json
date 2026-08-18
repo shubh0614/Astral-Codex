@@ -1,0 +1,302 @@
+[
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month IX, day 4\n  Watch: last part of the night\n  Venus: observed\n  beta Librae: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Venus\", \"beta Librae\"], \"relation\": \"below\", \"separation\": \"2 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Month IX, night of the 4th, last part of the night, Venus was 2 cubits below β Librae",
+    "generated": "Month IX, night of the 4th, last part of the night, Venus was 2 cubits below β Librae",
+    "meta": {
+      "text_id": "X600020",
+      "volume": "adart6",
+      "designation": "ADART 6 20",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month XII2, day 1\n  Watch: first part of the night\n  Venus: observed\n  alpha Tauri: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Venus\", \"alpha Tauri\"], \"relation\": \"above\", \"separation\": \"4 1/2 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Month XII₂, night of the 1st, first part of the night, Venus was 4 1/2 cubits above α Tauri. Year 161, king Demetrius",
+    "generated": "Month XII₂, night of the 1st, first part of the night, Venus was 4 1/2 Cubits above α Tauri",
+    "meta": {
+      "text_id": "X600078",
+      "volume": "adart6",
+      "designation": "ADART 6 77",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year SE 229, month X, day 19\n  Watch: last part of the night\n  moon: observed\n  alpha Virginis: observed\n  Conditions: the north wind blew\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"moon\", \"alpha Virginis\"], \"relation\": \"above\", \"separation\": \"2 1/2 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 19th, last part of the night, the moon was 2 1/2 cubits above α Virginis, the moon having passed 1/2 cubit to the east. The 19th, the north wind blew",
+    "generated": "Night of the 19th, the north wind blew; last part of the night, the moon was 2 1/2? cubits above α Virginis",
+    "meta": {
+      "text_id": "X300822",
+      "volume": "adart3",
+      "designation": "-82B",
+      "class": "conjunction",
+      "date_confidence": "low"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year SE 229, month XII2, day 13\n  Watch: first part of the night\n  Venus: observed\n  alpha Tauri: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Venus\", \"alpha Tauri\"], \"relation\": \"above\", \"separation\": \"2 1/2 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 13th, first part of the night, Venus was 2 1/2 cubits above α Tauri",
+    "generated": "Night of the 13th, first part of the night, Venus was 2 1/2 Cubits above α Tauri",
+    "meta": {
+      "text_id": "X300822",
+      "volume": "adart3",
+      "designation": "-82B",
+      "class": "conjunction",
+      "date_confidence": "high"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month III, day 20\n  Watch: last part of the night\n  Saturn: observed\n  beta Tauri: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Saturn\", \"beta Tauri\"], \"relation\": \"below\", \"separation\": \"2 2/3 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Month III, night of the 20th, last part of the night, Saturn was 2 2/3 cubits below β Tauri",
+    "generated": "Night of the 20th, last part of the night, Saturn was 2 2/3 cubes below β Tauri",
+    "meta": {
+      "text_id": "X600069",
+      "volume": "adart6",
+      "designation": "ADART 6 68",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month VII, day 8\n  Watch: last part of the night\n  Venus: observed\n  alpha Virginis: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Venus\", \"alpha Virginis\"], \"relation\": \"above\", \"separation\": \"1 2/3 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Month VII, night of the 8th, last part of the night, Venus was 1 2/3 cubits above α Virginis",
+    "generated": "Month VII, night of the 8th?, last part of the night, Venus was 1 2/3? cubits above α Virginis",
+    "meta": {
+      "text_id": "X600069",
+      "volume": "adart6",
+      "designation": "ADART 6 68",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month III, day 20\n  Watch: first part of the night\n  Mars: observed\n  alpha Virginis: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Mars\", \"alpha Virginis\"], \"relation\": \"above\", \"separation\": \"1 cubit\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 20th, first part of the night, Mars was 1 cubit above α Virginis",
+    "generated": "Month III, night of the 20th?, first part of the night, Mars was 1 cubit above α Virginis",
+    "meta": {
+      "text_id": "X600078",
+      "volume": "adart6",
+      "designation": "ADART 6 77",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year SE 1, month V, day 13\n  moon: observed\n  Saturn: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"moon\", \"Saturn\"], \"relation\": \"in front of\", \"separation\": \"8 fingers\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Month V, the 13th, the moon stood 8 fingers in front of Saturn to the west. Year 7",
+    "generated": "Night of the 13th, the moon stood 8 fingers in front of Saturn to the east; I did not watch",
+    "meta": {
+      "text_id": "X500059",
+      "volume": "adart5",
+      "designation": "ADART 5 58",
+      "class": "conjunction",
+      "date_confidence": "high"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month XII, day 9\n  Watch: last part of the night\n  Venus: observed\n  gamma Capricorni: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Venus\", \"gamma Capricorni\"], \"relation\": \"above\", \"separation\": \"1 cubit 8 fingers\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Month XII, night of the 9th, last part of the night, Venus was 1 cubit 8 fingers above γ Capricorni",
+    "generated": "Month XII, night of the 9th?, last part of the night, Venus was 1 cubit 8 finger above γ Capricorni",
+    "meta": {
+      "text_id": "X600020",
+      "volume": "adart6",
+      "designation": "ADART 6 20",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year SE 218, month VI, day 17\n  Watch: last part of the night\n  moon: observed\n  alpha Tauri: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"moon\", \"alpha Tauri\"], \"relation\": \"above\", \"separation\": \"3 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 17th, last part of the night, the moon was 3 cubits above α Tauri, the moon having passed 1/2 cubit to the east",
+    "generated": "Night of the 17th, last part of the night, the moon was 3 cubits above α Tauri, the moon being x/2 cubit back to the west",
+    "meta": {
+      "text_id": "X300931",
+      "volume": "adart3",
+      "designation": "-93A",
+      "class": "conjunction",
+      "date_confidence": "high"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year SE 150, month V, day 18\n  Watch: last part of the night\n  moon: observed\n  alpha Arietis: observed\n  Conditions: the north wind blew\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"moon\", \"alpha Arietis\"], \"relation\": \"below\", \"separation\": \"5 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 18th, last part of the night, the moon was 5 cubits below α Arietis, the moon being 1/2 cubit back to the west; the north wind blew",
+    "generated": "Night of the 18th, the north wind blew; last part of the night, the moon was 5 cubits below α Arietis, the moon being 2/3 cubit back to the west",
+    "meta": {
+      "text_id": "X301612",
+      "volume": "adart3",
+      "designation": "-161B",
+      "class": "conjunction",
+      "date_confidence": "high"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month II, day 3\n  Watch: first part of the night\n  Venus: observed\n  eta Geminorum: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Venus\", \"eta Geminorum\"], \"relation\": \"above\", \"separation\": \"1 cubit 4 fingers\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Month II, night of the 3rd, first part of the night, Venus was 1 cubit 4 fingers above η Geminorum",
+    "generated": "Night of the 3rd?, first part of the night, Venus was 1 cubit 4 finger above η Geminorum",
+    "meta": {
+      "text_id": "X600020",
+      "volume": "adart6",
+      "designation": "ADART 6 20",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month IX, day 2\n  Watch: first part of the night\n  Venus: observed\n  beta Capricorni: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Venus\", \"beta Capricorni\"], \"relation\": \"below\", \"separation\": \"3 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Month IX, night of the 2nd, first part of the night, Venus was 3 cubits below β Capricorni",
+    "generated": "Night of the 2nd, first part of the night, Venus was 3 cubits below β Capricorni",
+    "meta": {
+      "text_id": "X600078",
+      "volume": "adart6",
+      "designation": "ADART 6 77",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month VII, day 29\n  Watch: last part of the night\n  Venus: observed\n  beta Librae: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Venus\", \"beta Librae\"], \"relation\": \"below\", \"separation\": \"2 1/2 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 29th, last part of the night, Venus was 2 1/2 cubits below β Librae",
+    "generated": "Night of the 29th, last part of the night, Venus was 2 1/2 cubes below β Librae",
+    "meta": {
+      "text_id": "X600069",
+      "volume": "adart6",
+      "designation": "ADART 6 68",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year SE 167, month VII, day 14\n  Watch: last part of the night\n  moon: observed\n  eta Tauri: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"moon\", \"eta Tauri\"], \"relation\": \"below\", \"separation\": \"3 1/2 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 14th, last part of the night, the moon was 3 1/2 cubits below η Tauri, the moon having passed 1/2 cubit to the east",
+    "generated": "Night of the 14th, last part of the night, the moon was 3 1/2 cubes below η Tauri",
+    "meta": {
+      "text_id": "X301440",
+      "volume": "adart3",
+      "designation": "-144",
+      "class": "conjunction",
+      "date_confidence": "high"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year SE 1, month II, day 20\n  Watch: in the morning\n  moon: observed\n  Saturn: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"moon\", \"Saturn\"], \"relation\": \"below\", \"separation\": \"8 fingers\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Month II, the 20th, in the morning watch, the moon was 8 fingers below Saturn, the moon having passed 1⁄2 cubit to the east",
+    "generated": "Night of the 20th, in the morning, the moon was 8 fingers below Saturn, the moon having passed a little to the east",
+    "meta": {
+      "text_id": "X500059",
+      "volume": "adart5",
+      "designation": "ADART 5 58",
+      "class": "conjunction",
+      "date_confidence": "high"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month X, day 14\n  Watch: last part of the night\n  Venus: observed\n  theta Ophiuchi: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Venus\", \"theta Ophiuchi\"], \"relation\": \"above\", \"separation\": \"2 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 14th, last part of the night, Venus was 2 cubits above θ Ophiuchi",
+    "generated": "Night of the 14th, last part of the night, Venus was 2 cubits above θ Ophiuchi",
+    "meta": {
+      "text_id": "X600020",
+      "volume": "adart6",
+      "designation": "ADART 6 20",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year SE 218, month IV, day 10\n  Watch: beginning of the night\n  moon: observed\n  alpha Scorpii: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"moon\", \"alpha Scorpii\"], \"relation\": \"behind\", \"separation\": \"1 1/2 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 10th, beginning of the night, the moon was 1 1/2 cubits behind α Scorpii",
+    "generated": "Night of the 10th, beginning of the night, the moon was 1 1/2? cubits behind α Scorpii",
+    "meta": {
+      "text_id": "X300931",
+      "volume": "adart3",
+      "designation": "-93A",
+      "class": "conjunction",
+      "date_confidence": "low"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year SE 1, month IX, day 18\n  Watch: last part of the night\n  moon: observed\n  Mars: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"moon\", \"Mars\"], \"relation\": \"in front of\", \"separation\": \"8 fingers\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Month IX, the 18th, last part of the night, the moon stood 8 fingers in front of Mars to the west, it was set towards its inside. Year 5, month I, the 7th, in the middle watch, the moon was 3 fingers in front of Mars, the moon being a little low to the south",
+    "generated": "Night of the 18th, last part of the night, the moon was 8 fingers in front of Mars to the east",
+    "meta": {
+      "text_id": "X500059",
+      "volume": "adart5",
+      "designation": "ADART 5 58",
+      "class": "conjunction",
+      "date_confidence": "high"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month I, day 26\n  Watch: first part of the night\n  Mercury: observed\n  beta Tauri: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Mercury\", \"beta Tauri\"], \"relation\": \"below\", \"separation\": \"1 cubit 4 fingers\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 26th, first part of the night, Mercury was 1 cubit 4 fingers below β Tauri",
+    "generated": "Night of the 26th, first part of the night, Mercury was 1 cubit 4 finger below β Tauri",
+    "meta": {
+      "text_id": "X600078",
+      "volume": "adart6",
+      "designation": "ADART 6 77",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year SE 229, month XII2, day 15\n  Watch: last part of the night\n  moon: observed\n  beta Librae: observed\n  Conditions: mist\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"moon\", \"beta Librae\"], \"relation\": \"below\", \"separation\": \"2 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 15th, sunset to moonrise: nn°, measured (despite) mist; last part of the night, the moon was 2 cubits below β Librae",
+    "generated": "Night of the 15th, last part of the night, the moon was 2 cubits below β Librae; mist, I did not watch",
+    "meta": {
+      "text_id": "X300822",
+      "volume": "adart3",
+      "designation": "-82B",
+      "class": "conjunction",
+      "date_confidence": "high"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: year ArtII 32, month I, day 12\n  Watch: first part of the night\n  moon: observed\n  alpha Virginis: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"moon\", \"alpha Virginis\"], \"relation\": \"behind\", \"separation\": \"2 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 12th, first part of the night, the moon was 2 cubits behind α Virginis",
+    "generated": "Night of the 12th, first part of the night, the moon was 2 cubits behind α Virginis",
+    "meta": {
+      "text_id": "X103721",
+      "volume": "adart1",
+      "designation": "AD -372A",
+      "class": "conjunction",
+      "date_confidence": "low"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month II, day 20\n  Watch: first part of the night\n  Mercury: observed\n  alpha Geminorum: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Mercury\", \"alpha Geminorum\"], \"relation\": \"below\", \"separation\": \"4 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 20th, first part of the night, Mercury was 4 cubits below α Geminorum",
+    "generated": "Month II, night of the 20th?, first part of the night, Mercury was 4 cubits below α Geminorum",
+    "meta": {
+      "text_id": "X600078",
+      "volume": "adart6",
+      "designation": "ADART 6 77",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month IV, day 15\n  Watch: last part of the night\n  Venus: observed\n  alpha Geminorum: observed\n  beta Geminorum: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Venus\", \"alpha Geminorum\"], \"relation\": \"below\", \"separation\": \"4 1/2 cubits\"}, {\"event\": \"conjunction\", \"objects\": [\"Venus\", \"beta Geminorum\"], \"relation\": \"below\", \"separation\": \"3 1/2 cubits\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Night of the 15th, last part of the night, Venus was 4 1/2 cubits below α Geminorum. Night of the 20+xth, last part of the night, Venus was 3 1/2 cubits below β Geminorum",
+    "generated": "Night of the 15th, last part of the night, Venus was 4 1/2 cubes below α Geminorum; it stood 3 1/2 cubes above β Geminorum",
+    "meta": {
+      "text_id": "X600069",
+      "volume": "adart6",
+      "designation": "ADART 6 68",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  },
+  {
+    "state": "<TRADITION=BABYLONIAN>\n<GENRE=OBSERVATION>\n<OBSERVATION_STATE>\n  Date: month III, day 2\n  Watch: last part of the night\n  Venus: observed\n  alpha Tauri: observed\n  Events: [{\"event\": \"conjunction\", \"objects\": [\"Venus\", \"alpha Tauri\"], \"relation\": \"above\", \"separation\": \"20 fingers\"}]\n</OBSERVATION_STATE>\n<ENTRY>",
+    "reference": "Month III, night of the 2nd, last part of the night, Venus was 20 fingers above α Tauri",
+    "generated": "Month III, night of the 2nd, last part of the night, Venus was 20 fingers above α Tauri",
+    "meta": {
+      "text_id": "X600069",
+      "volume": "adart6",
+      "designation": "ADART 6 68",
+      "class": "conjunction",
+      "date_confidence": "unreliable"
+    }
+  }
+]

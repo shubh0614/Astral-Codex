@@ -25,7 +25,7 @@ This file exists because the project spans many sessions and Claude Code has no 
 ## Current Phase / Status
 
 **Phase:** 1, Babylonian Vertical Slice. Data layer, celestial engine and a first fine-tune all exist.
-**Status:** Phase 0 is complete, the table has all five rows. Phase 1 has the corpus expanded and rebalanced, the calendar and sky engines calibrated against the diaries' own eclipse records, and one QLoRA fine-tune run and scored. The fine-tune beat few-shot on register and lost to it on facts, and the fact failures look like decoding rather than training, so the next move is a decode-only rerun of the saved adapter. Plan remains LOCKED at v3.2, nothing found so far warrants an architecture revision.
+**Status:** Phase 0 is complete, the table has all five rows. Phase 1 has the corpus expanded and rebalanced, the calendar and sky engines calibrated against the diaries' own eclipse records, and one QLoRA fine-tune run, scored, and re-decoded under four settings. **The fine-tune beats few-shot on register, and the fact comparison between them is currently unmeasurable**: the 9-case eval set swings by half its held-out score on a change of RNG seed alone. The blocking item for the whole model layer is now the evaluation set, not the model. Plan remains LOCKED at v3.2, nothing found so far warrants an architecture revision.
 
 **Current Babylonian corpus (2026-08-16, all five ADART volumes):**
 
@@ -68,6 +68,16 @@ Do not act on these numbers without reading the notes, three of the four rows me
 ## Last Session Summary
 
 *(most recent entry on top)*
+
+**2026-08-19, re-decoded the adapter. The penalty made it worse and the eval set turned out to be too small to trust.**
+- Decode-only rerun, four settings, 10.7 min on one T4. No retraining. Full detail in `notes/redecode_result.md`.
+- **The repetition penalty made every score worse, 0/5 and 1/4 at best.** Mechanism is specific and worth remembering: `repetition_penalty=1.15` downweights any token already in context, and the diaries' register *is* repetition, so it pushed the model onto near-neighbour tokens. "1 cubit 8 fingers" became "8 finger", "1 1/2 cubits" became "1 1/2 cubes", "the 11th" became "the 11tih". Zero such corruptions without the penalty, 13 with it. Criterion (e) then fails on the mangled measurement: the model still knows the fact, it can no longer spell it. `no_repeat_ngram_size=6` is wrong for the same reason, since "clouds, I did not watch;" is a legitimately repeated six-gram.
+- **`greedy_firstline` was byte-identical to `greedy`.** No output ran past a newline, so the over-long continuations were single-line all along.
+- **The control did not reproduce, and that is the important finding.** Same adapter, same cases, same decode config as the previous run: **4/5 main and 3/4 held-out, against the previous 3/5 and 1/4.** The only difference is the RNG seed. The held-out set moved by half on sampling noise.
+- **Consequence: last session's headline claim is retracted.** "The fine-tune loses to few-shot on facts, not close" compared one noisy draw against another. Few-shot's 5/5 and 4/4 are also single draws and have never been repeated. The direction of the fact gap is not established.
+- **What survives is the register result**, because it is measured over 25 pairs and eleven marker counts rather than nine pass/fail bits. Zero modern drift in all four configs; few-shot drifted on every check. That is the one separation actually demonstrated.
+- **So the next move is the evaluation, not the model.** plan.md Section 1.5 already asked for a 30 to 50 case adversarial set and the 9 were a starting point that got treated as the instrument. Generation is cheap (10.7 min for four full sweeps), so every tier should be run over multiple seeds and reported as a range.
+- Fixed both scorers crashing with `UnicodeEncodeError` on a cp1252 console: the diaries are full of Greek letters. Totals were always correct, the per-case listing died halfway.
 
 **2026-08-18, the 7B fine-tune, scored. It wins on register and loses on facts.**
 - **Qwen2.5-7B-Instruct, QLoRA r=16, 3 epochs, 177 steps, 56 min on one T4.** Training clean: eval loss 0.2384 to 0.1487, monotone, no upturn. Flat from step 125, so it converged and then polished.
@@ -133,33 +143,36 @@ Do not act on these numbers without reading the notes, three of the four rows me
 
 ## Next Immediate Steps
 
-**Where the model layer stands. All tiers on the same cases, same scorer:**
+**Where the model layer stands. Read the caveat before the table.**
 
 | tier | main set | held-out generalization set |
 |---|---|---|
 | non-LLM template control | 0/5 | 0/4 |
 | qwen2.5:7b zero-shot | 0/5 | - |
-| qwen2.5:7b few-shot (5) | **5/5** | **4/4** |
-| qwen2.5:7b fine-tuned, QLoRA 3 epochs | 3/5 | 1/4 |
+| qwen2.5:7b few-shot (5) | 5/5 | 4/4 |
+| qwen2.5:7b fine-tuned, QLoRA 3 epochs | 3/5, then 4/5 on a rerun | 1/4, then 3/4 on a rerun |
 
-**The fine-tune lost on facts and won on register**, which is the split the run
-was designed to detect. Register scorer over 25 held-out pairs: zero modern drift
-on all seven checks, where few-shot drifted on every one. Every fact failure is
-the model looping or running long, not misunderstanding. Full analysis in
-`notes/finetune_7b_result.md`.
+**Every cell above is a single sample and the last row proves it matters.** The
+same adapter under the same decode config scored 3/5 and 1/4, then 4/5 and 3/4,
+on nothing but a different seed. The held-out set moved by half. No fact-score
+comparison between prompting and fine-tuning is currently supported, in either
+direction.
 
-1. **Run `training/redecode_kaggle.py`.** Loads the saved adapter and regenerates
-   under four decoder settings, no retraining. Add the training run's output as a
-   data source (Add Data, Notebook Output); the script finds the adapter itself.
-   T4, internet ON. Score each locally with `score_baseline.py` and
-   `score_register.py`. If a decoder setting recovers the facts while keeping the
-   register, fine-tuning has earned its cost outright.
-2. **If looping survives the decoder change, retrain at 2 epochs**, not 3. Eval
-   loss was flat from step 125, so the third epoch bought 0.0007 and plausibly
-   cost generation discipline. Only after that, consider `LORA_R=8`.
-3. **If neither works**, the honest architecture is per-phenomenon: few-shot for
-   the rare classes, the fine-tune for the common ones. The training counts that
-   decide it are already in `training_set_card.json`.
+**The one result that is solid is register**, because it is measured over 25
+pairs and eleven marker counts: the fine-tune has zero modern drift under every
+decoder tested, and few-shot drifts on every check. See `notes/redecode_result.md`.
+
+1. **Build the real evaluation set.** plan.md Section 1.5 asks for 30 to 50
+   hand-built adversarial cases; the 9 in use were a starting point that got
+   treated as the instrument. This is now the blocking item for the whole model
+   layer.
+2. **Re-run every tier over multiple seeds and report a range**, few-shot
+   included, since its 5/5 and 4/4 have never been repeated. Generation is cheap:
+   four full config sweeps took 10.7 min on one T4.
+3. **Do not retrain and do not change the decoder yet.** The 2-epoch retrain was
+   proposed to fix a fact gap that has not been shown to exist, and the
+   repetition penalty was tested and made things worse. `orig` decode settings
+   stand.
 4. **Resolve the 3-vs-5 fork.** The table is complete now, so it can finally be
    decided. My read: the split is not which traditions survive but which need
    *training* versus which are *genre demonstrators*. Babylonian carries volume.
@@ -234,6 +247,13 @@ the model looping or running long, not misunderstanding. Full analysis in
     - **The saved adapter is re-decoded before anything is retrained.** Every fact failure was a sampling loop or an over-long continuation, and decoding is minutes of GPU against 56 minutes for a retrain. If that fails, 2 epochs next, then `LORA_R=8`. Do not raise the rank.
     - **Fine-tuning has not yet earned its cost, and that is a real finding, not a failure.** plan.md Section 1.5 defines success independent of whether fine-tuning is needed. If prompting keeps winning on facts, the answer is a per-phenomenon split, not more training.
 
+18. **THE 9-CASE EVAL SET IS RETIRED AS A RANKING INSTRUMENT (2026-08-19).** A decode-only rerun of the same adapter under the same settings scored 4/5 and 3/4 where the previous run scored 3/5 and 1/4, differing only in RNG seed. Consequences, all recorded in `notes/redecode_result.md`:
+    - **Decision #17's claim that the fine-tune loses to few-shot on facts is withdrawn.** It compared single noisy draws. Few-shot's 5/5 and 4/4 are equally single draws. The direction of the gap is unknown, not adverse.
+    - **The register finding stands** and is now the only demonstrated separation between the tiers, because it is measured across 25 pairs and eleven marker counts rather than nine pass/fail bits. Method note worth keeping: aggregate marker counts are far more stable than small-n pass/fail, and cost the same to collect.
+    - **The 2-epoch retrain proposed in #17 is cancelled for now.** It was aimed at a fact gap that has not been shown to exist. Retraining against an instrument this noisy is tuning against the seed.
+    - **Repetition penalty is rejected for this corpus, with a reason.** The diaries' register is repetition, so penalising repeated tokens pushes the model onto near-neighbour tokens and corrupts the measurements it otherwise gets right ("cubits" to "cubes", "11th" to "11tih"). Do not reach for it again here.
+    - **Next action is building the 30 to 50 case adversarial set plan.md Section 1.5 already specified**, and re-running every tier over multiple seeds. Not a plan revision: the plan asked for this set and the 9 cases were only ever a starting point.
+
 ---
 
 ## Open Blockers / Questions
@@ -243,7 +263,8 @@ the model looping or running long, not misunderstanding. Full analysis in
 - **[NEW, blocking] Is the Roman path required to go through the celestial engine?** Decides whether Roman reads as 11% or ~100% usable, and therefore whether it gets cut.
 - **[NEW, blocking] Does the clean-triple ">2 sentences" rule apply at tablet level or observation-unit level?** The two give incompatible answers. Current numbers use unit-level.
 - **[NEW, blocking] Can English-translated Korean chronicle text be had at volume?** Extraction is solved; text is the obstacle. Korean is 5 usable prose records against Babylonian's 2,288. Answer this before treating Korean as a corpus tradition.
-- **[NEW] Does the fine-tune's fact loss survive a decoder change?** Decides whether fine-tuning earned its cost or whether the architecture goes per-phenomenon. `training/redecode_kaggle.py` answers it.
+- **[NEW, blocking] The evaluation set is too small to rank tiers.** 9 pass/fail cases; the held-out half moved 1/4 to 3/4 on a seed change. plan.md Section 1.5 asks for 30 to 50. Nothing about prompting vs fine-tuning can be settled until this exists.
+- **[RESOLVED] Does the fine-tune's fact loss survive a decoder change?** Wrong question, as it turned out. The penalty made every config worse and the apparent loss was mostly noise. See `notes/redecode_result.md`.
 - **[RESOLVED] Korean row in the decision table**: 5 usable / 26 ambiguous / 3 reject of 34. See `data/processed/annotation_korean.json`.
 - **[RESOLVED] GitHub remote**: `https://github.com/shubh0614/Astral-Codex.git`, pushing to `master`.
 - **[RESOLVED] Korean extraction method**: vision approach tested and passed at 0% field error. See `notes/korean_vision_test.md`.
@@ -269,7 +290,8 @@ the model looping or running long, not misunderstanding. Full analysis in
 - `notes/baseline_gate.md`: the three-tier baseline, the scorer criteria and why (d) to (g) were added beyond plan.md's three.
 - `notes/engine.md`: calendar and sky design, the DE406 substitution, the eclipse calibration.
 - `notes/finetune_smoke.md`: the 1.5B pipeline check. Not a result; it is where the 7B's failure modes were predicted.
-- `notes/finetune_7b_result.md`: **the fine-tune deliverable.** Loss curve, scores, the register table, the degeneration analysis and the recommended next step in order of cost.
+- `notes/finetune_7b_result.md`: the fine-tune run. Loss curve, scores, register table, degeneration analysis. **Its headline fact claim is superseded**, see the banner at the top of the file.
+- `notes/redecode_result.md`: **read this with the one above.** Why the repetition penalty backfired on this corpus, and why the 9-case set cannot rank the tiers.
 
 **Data (raw):**
 - `data/raw/babylonian/translations.jsonl`: 331 scraped ORACC tablets, the tracked raw snapshot.

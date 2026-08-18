@@ -1,0 +1,20 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "backend": "qlora",
+  "tier": "finetuned(3ep) decode=sampled",
+  "decode": {
+    "do_sample": true,
+    "temperature": 0.7,
+    "max_new_tokens": 80,
+    "repetition_penalty": 1.15,
+    "no_repeat_ngram_size": 6
+  },
+  "cases_file": "data/processed/baseline_cases.json",
+  "outputs": {
+    "bab-01-moon-star": "Night of the 11+?, beginning of the night, the moon was 1 cubit 8 finger in front of δ Capricorni; clouds, I did not watch; measured (despite) dust; the moon’s visibility? for all nights was high",
+    "bab-02-moon-planet": "Night of the 2nd, the moon was 1 1/2? cubits behind Jupiter, the moon being 1 cubit high (to the) north; clouds, I did not watch, when I watched, it was bright, measured; month IX, the xth, Alexander Severus entered Antioch",
+    "bab-03-planet-planet": "Night of the 24(th), first part of the night, Venus was 3 fingers below Mars, Venus being 2 fingers back to th? west; clouds, I did not watch, first part of the night?, very overcast, gusty wind, rain shower which fell; measured (despite) dust storm; all night, gusty wind",
+    "bab-04-heliacal-rising": "The 13th?, rising to sunrise: 10°; Venus’ ideal first appearance was on the 11th, it stood 2 fingers low to the south; clouds, I did not watch; it was bright, measured (despite) mist, its first appearance in the east in Scorpius, it was bright?",
+    "bab-05-lunar-first-visibility": "Month IX, the 1? (followed) the 30th; sunset to moonset: 17°; measured (despite) clouds; the xth, the moon was first visible, it reached a little below the south point of the arc; it stood 2 cubits above the eastern horizon at sunrise; it became bright; earthshine on it; it was"
+  }
+}

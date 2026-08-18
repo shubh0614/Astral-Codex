@@ -1,0 +1,133 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "tier": "finetuned(3ep) decode=sampled",
+  "passed": 0,
+  "total": 4,
+  "results": [
+    {
+      "case": "gen-01-stationary",
+      "phenomenon": "planetary retrograde station (ABSENT from few-shot)",
+      "g_no_degeneration": false,
+      "degeneration": [
+        "unfilled placeholder"
+      ],
+      "invented_stars": [],
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": false,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 40,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "Month X, until the xth?, Saturn was stationary to the east above β Virginis by 1/2 cubit; it stood 4 fingers back to (the west), which was good for the king’s life. Year 136, kings Antiochus VII and Antiochus VIII"
+    },
+    {
+      "case": "gen-02-last-appearance",
+      "phenomenon": "last appearance (heliacal setting) plus an explicit non-observation (ABSENT from few-shot)",
+      "g_no_degeneration": false,
+      "degeneration": [
+        "unfilled placeholder"
+      ],
+      "invented_stars": [],
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": false,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 36,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "The 18th?, Mercury’s last appearance in the west, in (the beginning) of Pisces; clouds, I did not watch; (ideal) first appearance on the xth, when it was so many cubits above the south point of Pisces"
+    },
+    {
+      "case": "gen-03-lunar-eclipse",
+      "phenomenon": "partial lunar eclipse with magnitude, side, sign, position and bystanding bodies (ABSENT from few-shot)",
+      "g_no_degeneration": false,
+      "degeneration": [
+        "unfilled placeholder"
+      ],
+      "invented_stars": [],
+      "a_all_objects_present": false,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": false,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": false,
+      "dropped_facts": [
+        "eclipse",
+        "3 fingers",
+        "east",
+        "libra",
+        "2 cubits",
+        "behind"
+      ],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": false,
+      "missing_objects": [
+        "librae"
+      ],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": false,
+        "is_bulleted": false,
+        "word_count": 46,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "Night of the 14?, moonrise to sunrise: 8°?; clouds, I did not watch; all night Jupiter was in Gemini; Sirius became visible; on the x+2nd, the moonset to sunrise being 6°; (ideal) first appearance of the moon on the x+5th, sunset to moonrise: 7°; the xth,"
+    },
+    {
+      "case": "gen-04-acronychal-rising",
+      "phenomenon": "acronychal rising of a fixed star, unobserved, with weather (ABSENT from few-shot)",
+      "g_no_degeneration": true,
+      "degeneration": [],
+      "invented_stars": [],
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": false,
+      "dropped_facts": [
+        "14th"
+      ],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": false,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 17,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "Month X, the 13+xth, Sirius’ acronychal rising; I did not watch it; clouds, all day, very overcast"
+    }
+  ]
+}

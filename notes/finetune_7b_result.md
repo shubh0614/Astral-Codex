@@ -1,5 +1,14 @@
 # Qwen2.5-7B QLoRA, 3 epochs (2026-08-16)
 
+> **Superseded in part, see `notes/redecode_result.md` (2026-08-19).** Re-running
+> the same adapter under the same decode settings scored 4/5 and 3/4 rather than
+> the 3/5 and 1/4 below, on nothing but a different RNG seed. The "loses to
+> few-shot on facts, not close" conclusion is therefore not supported: the 9-case
+> set cannot separate tiers this close. The register finding stands, since it is
+> measured over 25 pairs and eleven marker counts rather than nine pass/fail bits.
+> The recommended repetition penalty was also tested and made things worse, for a
+> reason worth reading.
+
 The real run. 177 steps, 55.7 min training, 61 min total on one T4.
 
 ## Training was clean

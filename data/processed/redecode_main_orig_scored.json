@@ -1,0 +1,147 @@
+{
+  "model": "Qwen/Qwen2.5-7B-Instruct",
+  "tier": "finetuned(3ep) decode=orig",
+  "passed": 4,
+  "total": 5,
+  "results": [
+    {
+      "case": "bab-01-moon-star",
+      "phenomenon": "moon-fixed star conjunction",
+      "g_no_degeneration": false,
+      "degeneration": [
+        "unfilled placeholder"
+      ],
+      "invented_stars": [],
+      "a_all_objects_present": true,
+      "b_no_extra_objects": false,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": false,
+      "missing_objects": [],
+      "hallucinated_objects": [
+        "sun"
+      ],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 78,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "Night of the 11th, beginning of the night, the moon was 1 cubit 8 fingers in front of δ Capricorni; clouds, I did not watch; measured (despite) clouds, the moon being high to the south, it was bright, high to the south, it stood high, its color was yellow, it was high to the south; first and 20th of each month, the moonrise to sunrise, 16°; first and 20th of each month, (ideal) first appearance on the xth"
+    },
+    {
+      "case": "bab-02-moon-planet",
+      "phenomenon": "moon-planet conjunction with latitude note",
+      "g_no_degeneration": true,
+      "degeneration": [],
+      "invented_stars": [],
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": true,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 60,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "Night of the 2nd, the moon was 1 1/2 cubits behind Jupiter to the west, the moon being 1 cubit high to the north, it stood 1/2 cubit high to the north, it stood 1 1/2 cubits behind Jupiter to the west, the moon being 1 cubit high to the north, (ideal) first appearance on the 30th of month VII"
+    },
+    {
+      "case": "bab-03-planet-planet",
+      "phenomenon": "planet-planet conjunction, very close separation",
+      "g_no_degeneration": true,
+      "degeneration": [],
+      "invented_stars": [],
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": true,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 38,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "Night of the 24th, first part of the night, Venus was 3 fingers below Mars, Venus being 2 fingers back to the west; clouds, I did not watch, first part of the night, very overcast, gusty north wind"
+    },
+    {
+      "case": "bab-04-heliacal-rising",
+      "phenomenon": "first appearance (heliacal rising) in a zodiacal sign, with ideal-date correction",
+      "g_no_degeneration": true,
+      "degeneration": [],
+      "invented_stars": [],
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": true,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 33,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "Month VIII, the 13th, Venus’ first appearance in the east in Scorpius; it was small, bright, rising to sunrise: 10°; ideal first appearance the 11th, when it was a little behind schedule, omitted"
+    },
+    {
+      "case": "bab-05-lunar-first-visibility",
+      "phenomenon": "first lunar visibility of the month with a lunar-six interval",
+      "g_no_degeneration": true,
+      "degeneration": [],
+      "invented_stars": [],
+      "a_all_objects_present": true,
+      "b_no_extra_objects": true,
+      "c_reads_as_entry": true,
+      "d_stays_in_observation_genre": true,
+      "e_hard_facts_preserved": true,
+      "dropped_facts": [],
+      "f_relation_order_correct": true,
+      "relation_detail": null,
+      "pass": true,
+      "missing_objects": [],
+      "hallucinated_objects": [],
+      "c_detail": {
+        "has_date_marker": true,
+        "is_bulleted": false,
+        "word_count": 102,
+        "length_ok": true
+      },
+      "genre_leak_interpretive_language": false,
+      "human_override": null,
+      "output": "Month IX, the 1st followed the 30th of the preceding month, the moon’s first visibility was 17° before sunset; it stood 1/2 cubit high behind the south point of the compass; it was bright, its earthshine being bright, it stood low to the sun; it was bright, first visibility on the 10th of the month, when it had passed 1/2 cubit to the east; (ideal) first visibility on the 9th; it was bright, rising of the moon to sunrise: 18°; (ideal) first visibility on the 9th; (ideal) first appearance on the 9th; it was bright, it stood 1/2 cubit high at sunrise;"
+    }
+  ]
+}
