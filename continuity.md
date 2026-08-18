@@ -152,51 +152,66 @@ Do not act on these numbers without reading the notes, three of the four rows me
 | qwen2.5:7b few-shot (5) | 5/5 | 4/4 |
 | qwen2.5:7b fine-tuned, QLoRA 3 epochs | 3/5, then 4/5 on a rerun | 1/4, then 3/4 on a rerun |
 
-**Every cell above is a single sample and the last row proves it matters.** The
-same adapter under the same decode config scored 3/5 and 1/4, then 4/5 and 3/4,
-on nothing but a different seed. The held-out set moved by half. No fact-score
-comparison between prompting and fine-tuning is currently supported, in either
-direction.
+**Every cell is a single sample and the last row proves it matters.** Same adapter,
+same decode config, different seed: the held-out score moved by half. No fact
+comparison between prompting and fine-tuning is currently supported in either
+direction. The one solid result is register, measured over 25 pairs and eleven
+marker counts: the fine-tune has zero modern drift under every decoder tested,
+few-shot drifts on every check. See `notes/redecode_result.md`.
 
-**The one result that is solid is register**, because it is measured over 25
-pairs and eleven marker counts: the fine-tune has zero modern drift under every
-decoder tested, and few-shot drifts on every check. See `notes/redecode_result.md`.
+---
 
-1. **Build the real evaluation set.** plan.md Section 1.5 asks for 30 to 50
-   hand-built adversarial cases; the 9 in use were a starting point that got
-   treated as the instrument. This is now the blocking item for the whole model
-   layer.
-2. **Re-run every tier over multiple seeds and report a range**, few-shot
-   included, since its 5/5 and 4/4 have never been repeated. Generation is cheap:
-   four full config sweeps took 10.7 min on one T4.
-3. **Do not retrain and do not change the decoder yet.** The 2-epoch retrain was
-   proposed to fix a fact gap that has not been shown to exist, and the
-   repetition penalty was tested and made things worse. `orig` decode settings
-   stand.
-4. **Add comet support to `engine/sky.py`.** Now on the critical path, not optional:
-   all nine Korean prose records and two of the five computable Roman entries are
-   comet apparitions, and both traditions are confirmed in scope. Halley is
-   tractable from orbital elements; arbitrary ancient comets are not, so scope
-   this to identified returns before promising more.
-5. **Answer the Korean text question**: can English-translated chronicle text be
-   had at volume? If not, Korean stays a demonstrator on 5 prose records.
-6. Consider Parker and Dubberstein's chronology tables to replace the computed
-   year start and settle intercalation. Highest-value single addition to the
-   calendar layer.
-7. **Wire the engine to the model.** Every training state was derived from diary
-   text; at inference they come from `engine/sky.py`. The two have never been
-   compared. This is the largest untested risk in the project and no session has
-   touched it yet.
+### A. Fix the evaluation. Blocking, nothing else in the model layer can proceed.
 
-**Still open from earlier phases, not superseded:**
+- [ ] **A1. Expand the case set to 30-50 hand-built cases.** From held-out diary
+      entries, every phenomenon class represented, weighted toward the rare ones
+      (stationary points, acronychal risings, eclipses) where both tiers are
+      weakest. plan.md Section 1.5 asked for this; the 9 were a placeholder that
+      got treated as the instrument.
+- [ ] **A2. Write a multi-seed runner.** 5 seeds per tier, report mean and range
+      rather than a single number. Four full config sweeps cost 10.7 min on one
+      T4, so this is cheap.
+- [ ] **A3. Re-run every tier through it**, few-shot included. Its 5/5 and 4/4
+      have never been repeated once.
+- [ ] **A4. Decide prompting vs fine-tuning, once, and stop revisiting it.**
+      Current expectation is fine-tuning, since the engine supplies the facts and
+      the model's real job is register, but that should be shown not assumed.
 
-- **Write the Maya katun sanity-check script** (plan.md Section 4) before any Maya
-  ML work. Phase 0 made this more urgent: 13 total states, 9 attested prophecies.
-- **Re-check the Phase 0 to Phase 1 gate checklist** in plan.md Section 7 line by
-  line. The engine and schema items are now built; the checklist was last read
-  when they were not.
-- Do NOT initiate another planning or stress-test round. Nothing found so far
-  justifies one.
+### B. Engine work. Runs independently of A, can be done in parallel.
+
+- [ ] **B1. Comet support in `engine/sky.py`**, scoped to identified returns
+      (Halley, sidus Iulium) from orbital elements. Arbitrary ancient comets are
+      not tractable, do not promise them. On the critical path because all 9
+      Korean prose records and 2 of 5 computable Roman entries are comets.
+- [ ] **B2. Parker and Dubberstein chronology tables** to replace the computed
+      year start and settle intercalation. Highest-value single addition to the
+      calendar layer. Optional but cheap.
+
+### C. Close the slice. The largest untested risk in the project.
+
+- [ ] **C1. Diff an engine-generated OBSERVATION_STATE against a training state.**
+      Every training state was derived from diary text; at inference they come
+      from `engine/sky.py`. The two have never been compared. If the formats
+      differ the model breaks exactly when it starts being used for real.
+- [ ] **C2. End-to-end run**: date to engine to state to model to entry, for one
+      real Babylonian night.
+- [ ] **C3. Wire the hard-facts-vs-interpretation guardrail** (plan.md Section 2).
+- [ ] **C4. Re-read the Phase 0 to Phase 1 gate checklist** in plan.md Section 7
+      line by line. It was last read before the engine and schema existed.
+
+### D. Per-tradition. Not before the Babylonian slice works.
+
+- [ ] **D1. Answer the Korean text question**: can English-translated chronicle
+      text be had at volume? If not, Korean stays a demonstrator on 5 prose
+      records.
+- [ ] **D2. Maya katun sanity-check script**, no ML, before any Maya modelling.
+      13 states, 9 attested, so the repetition problem is real.
+- [ ] **D3. Carve out the Vedic generative subset** (Adh 19, 20) from the
+      lookup-table bulk. They are not one register.
+- [ ] **D4. Roman stays a 5-entry few-shot demonstrator.** No further corpus work.
+
+**Standing:** do not initiate another planning or stress-test round, and do not
+retrain or change the decoder until A is done.
 
 ---
 
