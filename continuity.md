@@ -59,9 +59,9 @@ Do not act on these numbers without reading the notes, three of the four rows me
 **V1 traditions (genre-tagged, build order):**
 - [x] Babylonian: observation. **Gate passed, corpus since expanded and rebalanced.** See the table above. Confirmed as the vertical slice.
 - [x] Korean: observation. **15% usable, 5 usable prose records total.** Extraction is solved; the constraint is that the papers publish dates and classifications, not entry text. See below.
-- [ ] Roman: omen_interpretation. Lowest usable rate (11%), but for a reason that may be an architecture question rather than a corpus problem.
+- [x] Roman: omen_interpretation. **7% usable corpus-wide (5 of 81) now that the engine route is confirmed.** Kept in v1 as a genre demonstrator, not a training tradition.
 - [x] Vedic: omen_interpretation. **29% after re-sampling on a corrected chapter list**, pool 254 to 419. Voice-thinness mostly stands, with one real exception (Adh 19).
-- [ ] Maya: prophecy. Best usable rate, smallest state space (13 katuns total, 9 attested).
+- [x] Maya: prophecy. Best usable rate, smallest state space (13 katuns total, 9 attested). Kept in v1.
 
 ---
 
@@ -173,29 +173,20 @@ decoder tested, and few-shot drifts on every check. See `notes/redecode_result.m
    proposed to fix a fact gap that has not been shown to exist, and the
    repetition penalty was tested and made things worse. `orig` decode settings
    stand.
-4. **Resolve the 3-vs-5 fork.** The table is complete now, so it can finally be
-   decided. My read: the split is not which traditions survive but which need
-   *training* versus which are *genre demonstrators*. Babylonian carries volume.
-   Korean cannot, on current data. Roman, Vedic and Maya were always going to be
-   few-shot.
-5. **Answer the Korean text question** before any further Korean work: can
-   English-translated chronicle text be had at volume, or not? If not, Korean is a
-   demonstrator tradition, not the large corpus the plan assumed.
+4. **Add comet support to `engine/sky.py`.** Now on the critical path, not optional:
+   all nine Korean prose records and two of the five computable Roman entries are
+   comet apparitions, and both traditions are confirmed in scope. Halley is
+   tractable from orbital elements; arbitrary ancient comets are not, so scope
+   this to identified returns before promising more.
+5. **Answer the Korean text question**: can English-translated chronicle text be
+   had at volume? If not, Korean stays a demonstrator on 5 prose records.
 6. Consider Parker and Dubberstein's chronology tables to replace the computed
    year start and settle intercalation. Highest-value single addition to the
    calendar layer.
-
-**Two user decisions are still needed, these are blocking, don't guess at them:**
-
-1. **Does the Roman path have to go through the celestial engine?** Roman scores
-   11% usable measured as "astronomically conditionable" and roughly 100%
-   measured as "dated + prodigy + interpretation". That single answer moves Roman
-   from the worst tradition to the best, and it decides whether Roman gets cut.
-   plan.md Section 2's diagram implies yes, but it was never stated as a decision.
-2. **Is the clean-triple ">2 sentences" rule meant at tablet level or
-   observation-unit level?** They give incompatible answers (1.7% vs 31% usable on
-   Babylonian). All current numbers use the unit-level reading, since plan.md
-   Section 2 defines a training example that way. Confirm or correct.
+7. **Wire the engine to the model.** Every training state was derived from diary
+   text; at inference they come from `engine/sky.py`. The two have never been
+   compared. This is the largest untested risk in the project and no session has
+   touched it yet.
 
 **Still open from earlier phases, not superseded:**
 
@@ -254,14 +245,20 @@ decoder tested, and few-shot drifts on every check. See `notes/redecode_result.m
     - **Repetition penalty is rejected for this corpus, with a reason.** The diaries' register is repetition, so penalising repeated tokens pushes the model onto near-neighbour tokens and corrupts the measurements it otherwise gets right ("cubits" to "cubes", "11th" to "11tih"). Do not reach for it again here.
     - **Next action is building the 30 to 50 case adversarial set plan.md Section 1.5 already specified**, and re-running every tier over multiple seeds. Not a plan revision: the plan asked for this set and the 9 cases were only ever a starting point.
 
+19. **THREE OPEN FORKS CLOSED BY THE USER (2026-08-19).** All three had been carried as blocking for several sessions.
+    - **Roman must go through the celestial engine. Yes.** So Roman's usable rate is the engine-conditionable one: 11% on the sample, **7% corpus-wide, which is 5 hard-computable entries out of 81**. Roman is not a training tradition at any corpus size it can reach; it is a genre demonstrator. Recorded as the user's decision with the cost stated, not argued against.
+    - **The clean-triple rule is unit-level, confirmed.** All existing Babylonian numbers already use it (31% usable, 2,288 zero-gap units). Nothing to recompute.
+    - **All five traditions stay in the first cut.** The 3-vs-5 fork is closed in favour of 5. Note for future sessions: keeping five is a *scope* decision, not a claim that five can be fine-tuned. Only Babylonian has training volume (2,288 units against Korean's 5 and Roman's 5). The other four are few-shot or lookup-table traditions unless their corpora change.
+    - **Consequence that lands on the engine, not the corpus: comet support is now on the critical path.** Two of the five hard-computable Roman entries are comets (entry 20's star blazing 32 days, entry 68's sidus Iulium), and **all nine** Korean prose records are comet apparitions. With Roman routed through the engine and all five traditions kept, two traditions now depend on a capability `engine/sky.py` does not have. Halley is tractable from orbital elements, which is what the Korean source paper does; arbitrary ancient comets are not.
+
 ---
 
 ## Open Blockers / Questions
 
 *(carry forward from plan.md Section 9, update as resolved)*
 
-- **[NEW, blocking] Is the Roman path required to go through the celestial engine?** Decides whether Roman reads as 11% or ~100% usable, and therefore whether it gets cut.
-- **[NEW, blocking] Does the clean-triple ">2 sentences" rule apply at tablet level or observation-unit level?** The two give incompatible answers. Current numbers use unit-level.
+- **[RESOLVED 2026-08-19] Roman goes through the celestial engine.** User decision. Roman is therefore 7% usable corpus-wide, 5 computable entries, a demonstrator rather than a training tradition.
+- **[RESOLVED 2026-08-19] Clean-triple rule is unit-level.** User confirmed. All existing numbers already use it.
 - **[NEW, blocking] Can English-translated Korean chronicle text be had at volume?** Extraction is solved; text is the obstacle. Korean is 5 usable prose records against Babylonian's 2,288. Answer this before treating Korean as a corpus tradition.
 - **[NEW, blocking] The evaluation set is too small to rank tiers.** 9 pass/fail cases; the held-out half moved 1/4 to 3/4 on a seed change. plan.md Section 1.5 asks for 30 to 50. Nothing about prompting vs fine-tuning can be settled until this exists.
 - **[RESOLVED] Does the fine-tune's fact loss survive a decoder change?** Wrong question, as it turned out. The penalty made every config worse and the apparent loss was mostly noise. See `notes/redecode_result.md`.
